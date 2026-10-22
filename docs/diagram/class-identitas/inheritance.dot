@@ -1,0 +1,12 @@
+digraph { graph [bgcolor="white", pad="0.15", nodesep="0.35", ranksep="0.55", splines="polyline"]; node [shape="plain", fontname="Arial", fontsize="12"]; edge [fontname="Arial", fontsize="10", color="#475569", arrowsize="0.8"]; rankdir=BT;
+ manusia [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Manusia  abstract</B></TD></TR><TR><TD ALIGN="LEFT">id, nama, kontak</TD></TR><TR><TD ALIGN="LEFT">tampilkanInfo(): String</TD></TR></TABLE>>];
+ admin [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Admin</B></TD></TR><TR><TD ALIGN="LEFT">username, passwordHash, aktif</TD></TR><TR><TD ALIGN="LEFT">bolehKelolaAdmin(): boolean</TD></TR></TABLE>>];
+ super [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>SuperAdmin</B></TD></TR><TR><TD ALIGN="LEFT">Override kewenangan kelola Admin</TD></TR></TABLE>>];
+ pelanggan [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Pelanggan</B></TD></TR><TR><TD ALIGN="LEFT">kodePelanggan, diarsipkan</TD></TR><TR><TD ALIGN="LEFT">tampilkanInfo(): String</TD></TR></TABLE>>];
+ paket [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>PaketAkses  abstract</B></TD></TR><TR><TD ALIGN="LEFT">id, nama, harga, diarsipkan</TD></TR><TR><TD ALIGN="LEFT">hitungPeriode(konteks): PeriodeAkses</TD></TR></TABLE>>];
+ harian [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>PaketHarian</B></TD></TR><TR><TD ALIGN="LEFT">Periode hari pembayaran saja</TD></TR></TABLE>>];
+ member [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>PaketMembership</B></TD></TR><TR><TD ALIGN="LEFT">durasiBulan</TD></TR><TR><TD ALIGN="LEFT">Periode berdasarkan masa terbayar</TD></TR></TABLE>>];
+ admin -> manusia [arrowhead="onormal"]; pelanggan -> manusia [arrowhead="onormal"]; super -> admin [arrowhead="onormal"];
+ harian -> paket [arrowhead="onormal"]; member -> paket [arrowhead="onormal"];
+ {rank=same; manusia; paket;} {rank=same; admin; pelanggan; harian; member;}
+}

@@ -1,0 +1,13 @@
+digraph { graph [bgcolor="white", pad="0.15", nodesep="0.35", ranksep="0.55", splines="polyline"]; node [shape="plain", fontname="Arial", fontsize="12"]; edge [fontname="Arial", fontsize="10", color="#475569", arrowsize="0.8"];
+ pelanggan [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Pelanggan</B></TD></TR><TR><TD ALIGN="LEFT">Opsional untuk pembelian umum</TD></TR></TABLE>>];
+ transaksi [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Transaksi</B></TD></TR><TR><TD ALIGN="LEFT">pelanggan opsional, petugas</TD></TR><TR><TD ALIGN="LEFT">waktu, total, status, requestId</TD></TR><TR><TD ALIGN="LEFT">alasan dan petugas pembatalan</TD></TR></TABLE>>];
+ detail [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>DetailTransaksi</B></TD></TR><TR><TD ALIGN="LEFT">produk, jumlah</TD></TR><TR><TD ALIGN="LEFT">nama dan harga satuan saat penjualan</TD></TR><TR><TD ALIGN="LEFT">hitungSubtotal(): BigDecimal</TD></TR></TABLE>>];
+ produk [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Produk</B></TD></TR><TR><TD ALIGN="LEFT">kode, nama, harga, stok</TD></TR><TR><TD ALIGN="LEFT">diarsipkan</TD></TR><TR><TD ALIGN="LEFT">validasiJumlah(), kurangiStok()</TD></TR></TABLE>>];
+ mutasi [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>MutasiStok</B></TD></TR><TR><TD ALIGN="LEFT">produk, petugas, waktu</TD></TR><TR><TD ALIGN="LEFT">jenis, perubahanJumlah</TD></TR><TR><TD ALIGN="LEFT">referensi transaksi, keterangan</TD></TR></TABLE>>];
+ cetak [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Cetak  interface</B></TD></TR><TR><TD ALIGN="LEFT">cetakBukti(): String</TD></TR></TABLE>>];
+ pelanggan -> transaksi [label="0..1 pelanggan per transaksi"];
+ transaksi -> detail [label="1 ke 1..*"]; produk -> detail [headlabel="0..*", taillabel="1", labeldistance="2.2", labelfontsize="10"];
+ produk -> mutasi [label="1 ke 0..*"]; transaksi -> mutasi [label="referensi opsional"];
+ transaksi -> cetak [style=dashed, arrowhead="onormal", constraint=false];
+ {rank=same; transaksi; cetak;} {rank=same; detail; produk;}
+}

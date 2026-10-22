@@ -1,0 +1,13 @@
+digraph { graph [bgcolor="white", pad="0.15", nodesep="0.35", ranksep="0.55", splines="polyline"]; node [shape="plain", fontname="Arial", fontsize="12"]; edge [fontname="Arial", fontsize="10", color="#475569", arrowsize="0.8"];
+ node [fontsize="11"];
+ akun [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>akun_admin</B></TD></TR><TR><TD ALIGN="LEFT">PK id</TD></TR><TR><TD ALIGN="LEFT">Petugas penjualan dan stok</TD></TR></TABLE>>];
+ pelanggan [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>pelanggan</B></TD></TR><TR><TD ALIGN="LEFT">PK id</TD></TR><TR><TD ALIGN="LEFT">Pembeli terdaftar opsional</TD></TR></TABLE>>];
+ transaksi [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>transaksi_produk</B></TD></TR><TR><TD ALIGN="LEFT">PK id | UK request_id</TD></TR><TR><TD ALIGN="LEFT">FK pelanggan_id NULL, admin_id</TD></TR><TR><TD ALIGN="LEFT">FK dibatalkan_oleh NULL</TD></TR><TR><TD ALIGN="LEFT">waktu_utc, total_harga, status</TD></TR><TR><TD ALIGN="LEFT">dibatalkan_pada NULL, alasan NULL</TD></TR></TABLE>>];
+ produk [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>produk</B></TD></TR><TR><TD ALIGN="LEFT">PK id | UK kode_produk</TD></TR><TR><TD ALIGN="LEFT">nama, harga, stok, diarsipkan</TD></TR></TABLE>>];
+ detail [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>detail_transaksi</B></TD></TR><TR><TD ALIGN="LEFT">PK id | FK transaksi_id</TD></TR><TR><TD ALIGN="LEFT">FK produk_id</TD></TR><TR><TD ALIGN="LEFT">nama_produk_snapshot</TD></TR><TR><TD ALIGN="LEFT">jumlah, harga_satuan, subtotal</TD></TR><TR><TD ALIGN="LEFT">UK transaksi_id dan produk_id</TD></TR></TABLE>>];
+ mutasi [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>mutasi_stok</B></TD></TR><TR><TD ALIGN="LEFT">PK id | UK request_id</TD></TR><TR><TD ALIGN="LEFT">FK produk_id, admin_id</TD></TR><TR><TD ALIGN="LEFT">FK transaksi_id NULL</TD></TR><TR><TD ALIGN="LEFT">jenis, delta, waktu_utc, keterangan</TD></TR><TR><TD ALIGN="LEFT">UK transaksi_id produk_id jenis</TD></TR></TABLE>>];
+ akun -> transaksi [label="1 : N petugas"]; pelanggan -> transaksi [label="0..1 : N"];
+ transaksi -> detail [label="1 : 1..*"]; produk -> detail [label="1 : N"];
+ produk -> mutasi [label="1 : N"]; transaksi -> mutasi [label="0..1 : N"]; akun -> mutasi [label="1 : N"];
+ {rank=same; akun; pelanggan;} {rank=same; detail; produk;}
+}

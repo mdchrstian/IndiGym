@@ -1,0 +1,13 @@
+digraph { graph [bgcolor="white", pad="0.15", nodesep="0.35", ranksep="0.55", splines="polyline"]; node [shape="plain", fontname="Arial", fontsize="12"]; edge [fontname="Arial", fontsize="10", color="#475569", arrowsize="0.8"];
+ pelanggan [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Pelanggan</B></TD></TR><TR><TD ALIGN="LEFT">id, kode, nama, kontak</TD></TR><TR><TD ALIGN="LEFT">arsipkan(), aktifkanKembali()</TD></TR></TABLE>>];
+ paket [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>PaketAkses</B></TD></TR><TR><TD ALIGN="LEFT">nama, harga, jenis</TD></TR><TR><TD ALIGN="LEFT">hitungPeriode(konteks)</TD></TR></TABLE>>];
+ bayar [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>PembayaranAkses</B></TD></TR><TR><TD ALIGN="LEFT">pelanggan, paket, petugas</TD></TR><TR><TD ALIGN="LEFT">snapshot harga dan durasi, status</TD></TR><TR><TD ALIGN="LEFT">requestId, alasan pembatalan</TD></TR></TABLE>>];
+ hak [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>HakAksesGym</B></TD></TR><TR><TD ALIGN="LEFT">pembayaran, tanggalMulai</TD></TR><TR><TD ALIGN="LEFT">tanggalTerakhirBerlaku</TD></TR><TR><TD ALIGN="LEFT">mencakup(tanggal)</TD></TR></TABLE>>];
+ checkin [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>CheckIn</B></TD></TR><TR><TD ALIGN="LEFT">pelanggan, petugas, hak opsional</TD></TR><TR><TD ALIGN="LEFT">waktu, hasil, alasan, requestId</TD></TR></TABLE>>];
+ cetak [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Cetak  interface</B></TD></TR><TR><TD ALIGN="LEFT">cetakBukti(): String</TD></TR></TABLE>>];
+ pelanggan -> bayar [label="1 ke 0..*"]; paket -> bayar [label="1 ke 0..*"];
+ bayar -> hak [label="1 ke 1"]; pelanggan -> checkin [label="1 ke 0..*"];
+ hak -> checkin [headlabel="0..*", taillabel="0..1", labeldistance="2.2", labelfontsize="10"];
+ bayar -> cetak [style=dashed, arrowhead="onormal", constraint=false];
+ {rank=same; pelanggan; paket;} {rank=same; bayar; cetak;} {rank=same; hak; checkin;}
+}
