@@ -112,7 +112,7 @@ Pemilik seluruh JavaFX/FXML/CSS/controller. Class utama: MainApp, AppContext, Na
 
 - [ ] W1.5 Sediakan proses background, indikator pemuatan, validasi input, serta pesan gagal dasar.
 
-- [ ] W1.6 Demo navigasi dan alur awal; catat peta FXML/controller/service untuk seluruh kelompok.
+- [ ] W1.6 Demo navigasi dan alur awal; catat peta FXML/page_controllers/service untuk seluruh kelompok.
 
 ### Minggu 2 Hari 8 sampai 14
 

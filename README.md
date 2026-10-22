@@ -69,6 +69,25 @@ Rincian dan pengecualian tersedia pada [aturan bisnis](docs/aturan-bisnis.md).
 
 Arsitektur memisahkan tampilan dan controller, service untuk aturan bisnis, model untuk objek domain, serta repository untuk penyimpanan data. Pemisahan ini menjaga logika pembayaran, akses, dan stok tetap terpisah dari kode antarmuka.
 
+## Susunan kode aplikasi
+
+Folder utama di `src/main/java/id/indigym/` mengikuti perannya dalam sistem.
+
+| Folder | Isi |
+| --- | --- |
+| `application` | Titik awal aplikasi dan navigasi halaman. |
+| `page_controllers` | Penanganan tombol, formulir, dan pembaruan halaman. |
+| `model` | Objek pelanggan, paket, pembayaran, check-in, dan penjualan. |
+| `business_logic` | Aturan dan proses bisnis, seperti perpanjangan membership dan checkout. |
+| `data_access` | Kontrak penyimpanan data dan implementasi query MySQL. |
+| `database_connection` | Konfigurasi koneksi dan pengelolaan transaksi database. |
+| `data_transfer` | Data input dan hasil yang dikirim antar tampilan dan layanan. |
+| `login_security` | Sesi login dan pengamanan password. |
+| `errors` | Jenis kesalahan yang dapat ditangani aplikasi. |
+| `background_tasks` | Pekerjaan latar belakang agar tampilan tetap merespons. |
+
+Penjelasan setiap folder, contoh file, serta hubungan antar bagian tersedia di [panduan mengenal folder](docs/mengenal-folder.md).
+
 ## Penerapan PBO
 
 - **Abstraksi:** `Manusia` memodelkan identitas dasar dan `PaketAkses` memodelkan karakteristik umum paket gym.
