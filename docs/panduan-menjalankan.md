@@ -1,12 +1,9 @@
-# Panduan menjalankan
+# Menjalankan proyek
 
-Repository saat ini hanya berisi struktur folder dan file kosong. Belum ada perintah build, tes, atau menjalankan aplikasi yang dapat digunakan.
+Saat ini file implementasi dan pom.xml kosong, sehingga belum ada perintah build, tes atau run yang dapat digunakan. Dokumen ini diisi setelah setup dan implementasi benar-benar diverifikasi.
 
-Pada tahap implementasi, kelompok perlu:
+Tian dan Wika menyepakati versi Java/dependensi, mengisi pom.xml, dan memakai main class id.indigym.MainApp. Tian mengisi Database serta empat DAO, konfigurasi Aiven dan SQL. Wika membuat enam halaman FXML/CSS, startup/navigasi/dialog pada MainApp, serta enam controller.
 
-1. Mengisi konfigurasi Maven pada `pom.xml` dan menyepakati versi Java serta dependensi.
-2. Mengimplementasikan bootstrap JavaFX dan pemuatan FXML (Wika).
-3. Mengimplementasikan konfigurasi koneksi Aiven dan skema database (Tian).
-4. Menambahkan langkah setup, build, pengujian dan menjalankan aplikasi yang sudah benar-benar diverifikasi ke dokumen ini.
+Catat versi Java/Maven, key config lokal, TLS, urutan SQL 01–03, penyiapan akun awal melalui 04, data demo melalui 05 pada database terpisah, langkah build/test/run dan hasil clone baru. Dimas menentukan library hash dan cara setup password awal tanpa rahasia dalam Git. File SQL kosong belum merupakan skema yang diterapkan.
 
-Lihat [README](../README.md) untuk peta folder dan [peran anggota](peran-anggota.md) untuk tugas tiga minggu.
+[Gambaran proyek](../README.md) · [Kontrak integrasi](kontrak-integrasi.md)

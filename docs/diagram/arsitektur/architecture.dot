@@ -1,9 +1,0 @@
-digraph { graph [bgcolor="white", pad="0.15", nodesep="0.35", ranksep="0.55", splines="polyline"]; node [shape="plain", fontname="Arial", fontsize="12"]; edge [fontname="Arial", fontsize="10", color="#475569", arrowsize="0.8"];
- ui [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>UI FXML dan Controller</B></TD></TR><TR><TD ALIGN="LEFT">Wika</TD></TR><TR><TD ALIGN="LEFT">Input, navigasi, hasil, proses background</TD></TR></TABLE>>];
- akun [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Service akun dan akses</B></TD></TR><TR><TD ALIGN="LEFT">Dimas</TD></TR><TR><TD ALIGN="LEFT">Kewenangan, pembayaran, periode, pembatalan</TD></TR></TABLE>>];
- operasi [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Service operasional</B></TD></TR><TR><TD ALIGN="LEFT">Mahasurya</TD></TR><TR><TD ALIGN="LEFT">Pelanggan, visit, check-in, penjualan</TD></TR></TABLE>>];
- repo [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Repository dan transaksi database</B></TD></TR><TR><TD ALIGN="LEFT">Tian</TD></TR><TR><TD ALIGN="LEFT">JDBC, SQL, commit, rollback, penguncian</TD></TR></TABLE>>];
- db [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>MySQL bersama di Aiven</B></TD></TR><TR><TD ALIGN="LEFT">Data pengembangan dan demo terpisah</TD></TR></TABLE>>];
- ui -> akun; ui -> operasi; akun -> repo; operasi -> repo; repo -> db;
- {rank=same; akun; operasi;}
-}

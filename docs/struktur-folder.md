@@ -1,47 +1,41 @@
-# Struktur folder IndiGym
+# Struktur folder versi sederhana
 
-File Java, FXML, CSS, SQL, properties dan pom.xml adalah file kosong untuk diisi anggota kelompok. Dokumen rancangan tetap berisi panduan. Folder sementara dan output lokal tidak ditampilkan.
+32 file Java dan enam FXML; semua file implementasi masih kosong. Nama folder Maven src/main/java, src/main/resources dan src/test tetap dipakai.
 
-Arti setiap folder dan contoh isinya dijelaskan di [panduan mengenal folder](mengenal-folder.md).
+[Arti tiap bagian](mengenal-folder.md) · [Isi setiap file](panduan-file.md)
 
 ```text
 IndiGym/
 ├── config/
 │   └── application.example.properties
 ├── database/
-│   ├── initial_data/
-│   │   ├── data_awal.sql
-│   │   └── data_demo.sql
-│   └── schema_changes/
-│       ├── V001__akun_dan_pelanggan.sql
-│       ├── V002__paket_pembayaran_hak_checkin.sql
-│       └── V003__produk_transaksi_mutasi.sql
+│   ├── 01_akun_pelanggan.sql
+│   ├── 02_akses_checkin.sql
+│   ├── 03_penjualan_stok.sql
+│   ├── 04_data_awal.sql
+│   └── 05_data_demo.sql
 ├── docs/
 │   ├── diagram/
-│   │   ├── arsitektur/
-│   │   │   ├── architecture.dot
-│   │   │   └── architecture.svg
-│   │   ├── class-akses/
-│   │   │   ├── access.dot
-│   │   │   └── access.svg
-│   │   ├── class-identitas/
-│   │   │   ├── inheritance.dot
-│   │   │   └── inheritance.svg
-│   │   ├── class-penjualan/
-│   │   │   ├── sales.dot
-│   │   │   └── sales.svg
-│   │   ├── erd-akses/
-│   │   │   ├── erd_access.dot
-│   │   │   └── erd_access.svg
-│   │   ├── erd-penjualan/
-│   │   │   ├── erd_sales.dot
-│   │   │   └── erd_sales.svg
-│   │   └── README.md
+│   │   ├── access.dot
+│   │   ├── access.svg
+│   │   ├── architecture.dot
+│   │   ├── architecture.svg
+│   │   ├── erd_access.dot
+│   │   ├── erd_access.svg
+│   │   ├── erd_sales.dot
+│   │   ├── erd_sales.svg
+│   │   ├── inheritance.dot
+│   │   ├── inheritance.svg
+│   │   ├── README.md
+│   │   ├── sales.dot
+│   │   └── sales.svg
 │   ├── aturan-bisnis.md
 │   ├── checklist-uji.md
 │   ├── demo.md
+│   ├── kamus-data.md
 │   ├── kontrak-integrasi.md
 │   ├── mengenal-folder.md
+│   ├── panduan-file.md
 │   ├── panduan-menjalankan.md
 │   ├── Panduan_Kelompok_IndiGym.docx
 │   ├── peran-anggota.md
@@ -51,128 +45,57 @@ IndiGym/
 │   │   ├── java/
 │   │   │   └── id/
 │   │   │       └── indigym/
-│   │   │           ├── application/
-│   │   │           │   ├── AppContext.java
-│   │   │           │   ├── MainApp.java
-│   │   │           │   └── NavigationManager.java
-│   │   │           ├── background_tasks/
-│   │   │           │   └── UiTaskRunner.java
-│   │   │           ├── business_logic/
-│   │   │           │   ├── akses/
-│   │   │           │   │   ├── PaketAksesService.java
-│   │   │           │   │   └── PembayaranAksesService.java
-│   │   │           │   ├── akun/
-│   │   │           │   │   ├── AdminManagementService.java
-│   │   │           │   │   └── AuthService.java
-│   │   │           │   └── operasional/
-│   │   │           │       ├── CheckInService.java
-│   │   │           │       ├── PelangganService.java
-│   │   │           │       ├── PenjualanService.java
-│   │   │           │       ├── ProdukService.java
-│   │   │           │       └── VisitHarianService.java
-│   │   │           ├── data_access/
-│   │   │           │   ├── interfaces/
-│   │   │           │   │   ├── AkunRepository.java
-│   │   │           │   │   ├── CheckInRepository.java
-│   │   │           │   │   ├── HakAksesRepository.java
-│   │   │           │   │   ├── MutasiStokRepository.java
-│   │   │           │   │   ├── PaketAksesRepository.java
-│   │   │           │   │   ├── PelangganRepository.java
-│   │   │           │   │   ├── PembayaranAksesRepository.java
-│   │   │           │   │   ├── ProdukRepository.java
-│   │   │           │   │   └── TransaksiRepository.java
-│   │   │           │   └── mysql_queries/
-│   │   │           │       ├── JdbcAkunRepository.java
-│   │   │           │       ├── JdbcCheckInRepository.java
-│   │   │           │       ├── JdbcHakAksesRepository.java
-│   │   │           │       ├── JdbcMutasiStokRepository.java
-│   │   │           │       ├── JdbcPaketAksesRepository.java
-│   │   │           │       ├── JdbcPelangganRepository.java
-│   │   │           │       ├── JdbcPembayaranAksesRepository.java
-│   │   │           │       ├── JdbcProdukRepository.java
-│   │   │           │       └── JdbcTransaksiRepository.java
-│   │   │           ├── data_transfer/
-│   │   │           │   ├── akses/
-│   │   │           │   │   └── .gitkeep
-│   │   │           │   ├── akun/
-│   │   │           │   │   └── .gitkeep
-│   │   │           │   └── operasional/
-│   │   │           │       └── .gitkeep
-│   │   │           ├── database_connection/
-│   │   │           │   ├── ConnectionFactory.java
-│   │   │           │   ├── DatabaseConfig.java
-│   │   │           │   ├── TransactionManager.java
-│   │   │           │   └── TxContext.java
-│   │   │           ├── errors/
-│   │   │           │   └── .gitkeep
-│   │   │           ├── login_security/
-│   │   │           │   ├── PasswordHasher.java
-│   │   │           │   └── SessionContext.java
+│   │   │           ├── controller/
+│   │   │           │   ├── AdminController.java
+│   │   │           │   ├── AksesController.java
+│   │   │           │   ├── DashboardController.java
+│   │   │           │   ├── LoginController.java
+│   │   │           │   ├── PelangganController.java
+│   │   │           │   └── PenjualanController.java
+│   │   │           ├── database/
+│   │   │           │   ├── AksesDAO.java
+│   │   │           │   ├── AkunDAO.java
+│   │   │           │   ├── Database.java
+│   │   │           │   ├── PelangganDAO.java
+│   │   │           │   └── PenjualanDAO.java
 │   │   │           ├── model/
-│   │   │           │   ├── akses/
-│   │   │           │   │   ├── HakAksesGym.java
-│   │   │           │   │   ├── PaketAkses.java
-│   │   │           │   │   ├── PaketHarian.java
-│   │   │           │   │   ├── PaketMembership.java
-│   │   │           │   │   ├── PembayaranAkses.java
-│   │   │           │   │   └── PeriodeAkses.java
-│   │   │           │   ├── identitas/
-│   │   │           │   │   ├── Admin.java
-│   │   │           │   │   ├── Manusia.java
-│   │   │           │   │   ├── Pelanggan.java
-│   │   │           │   │   └── SuperAdmin.java
-│   │   │           │   ├── kontrak/
-│   │   │           │   │   └── Cetak.java
-│   │   │           │   └── operasional/
-│   │   │           │       ├── CheckIn.java
-│   │   │           │       ├── DetailTransaksi.java
-│   │   │           │       ├── MutasiStok.java
-│   │   │           │       ├── Produk.java
-│   │   │           │       └── Transaksi.java
-│   │   │           └── page_controllers/
-│   │   │               ├── AdminController.java
-│   │   │               ├── BuktiController.java
-│   │   │               ├── CheckInController.java
-│   │   │               ├── DashboardController.java
-│   │   │               ├── LoginController.java
-│   │   │               ├── PelangganController.java
-│   │   │               ├── PembayaranController.java
-│   │   │               ├── PenjualanController.java
-│   │   │               ├── ProdukController.java
-│   │   │               └── RiwayatController.java
+│   │   │           │   ├── Admin.java
+│   │   │           │   ├── Cetak.java
+│   │   │           │   ├── CheckIn.java
+│   │   │           │   ├── DetailTransaksi.java
+│   │   │           │   ├── HakAksesGym.java
+│   │   │           │   ├── Manusia.java
+│   │   │           │   ├── MutasiStok.java
+│   │   │           │   ├── PaketAkses.java
+│   │   │           │   ├── PaketHarian.java
+│   │   │           │   ├── PaketMembership.java
+│   │   │           │   ├── Pelanggan.java
+│   │   │           │   ├── PembayaranAkses.java
+│   │   │           │   ├── PeriodeAkses.java
+│   │   │           │   ├── Produk.java
+│   │   │           │   ├── SuperAdmin.java
+│   │   │           │   └── Transaksi.java
+│   │   │           ├── service/
+│   │   │           │   ├── AksesService.java
+│   │   │           │   ├── AkunService.java
+│   │   │           │   ├── PelangganService.java
+│   │   │           │   └── PenjualanService.java
+│   │   │           └── MainApp.java
 │   │   └── resources/
-│   │       └── id/
-│   │           └── indigym/
-│   │               ├── css/
-│   │               │   └── application.css
-│   │               ├── fxml/
-│   │               │   ├── admin.fxml
-│   │               │   ├── bukti.fxml
-│   │               │   ├── checkin.fxml
-│   │               │   ├── dashboard.fxml
-│   │               │   ├── login.fxml
-│   │               │   ├── pelanggan.fxml
-│   │               │   ├── pembayaran.fxml
-│   │               │   ├── penjualan.fxml
-│   │               │   ├── produk.fxml
-│   │               │   └── riwayat.fxml
-│   │               └── images/
-│   │                   └── .gitkeep
+│   │       ├── css/
+│   │       │   └── application.css
+│   │       └── fxml/
+│   │           ├── admin.fxml
+│   │           ├── akses.fxml
+│   │           ├── dashboard.fxml
+│   │           ├── login.fxml
+│   │           ├── pelanggan.fxml
+│   │           └── penjualan.fxml
 │   └── test/
 │       ├── java/
 │       │   └── id/
 │       │       └── indigym/
-│       │           ├── business_logic/
-│       │           │   ├── akses/
-│       │           │   │   └── .gitkeep
-│       │           │   ├── akun/
-│       │           │   │   └── .gitkeep
-│       │           │   └── operasional/
-│       │           │       └── .gitkeep
-│       │           ├── data_access/
-│       │           │   └── .gitkeep
-│       │           └── integration_tests/
-│       │               └── .gitkeep
+│       │           └── .gitkeep
 │       └── resources/
 │           └── application-test.example.properties
 ├── .gitignore

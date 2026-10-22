@@ -10,6 +10,6 @@ Alur berikut adalah target setelah implementasi, bukan fitur yang tersedia pada 
 6. Tunjukkan membership mulai besok setelah visit hari ini.
 7. Lakukan penjualan beberapa produk dan tampilkan struk.
 8. Batalkan transaksi dan periksa stok serta riwayat.
-9. Jelaskan PBO dan alur controller, service, repository, database.
+9. Jelaskan PBO dan alur controller, service, DAO, database.
 
 Setiap orang menjelaskan bagiannya dan satu bagian yang direview. Pastikan Aiven aktif serta koneksi perangkat presentasi tersedia.

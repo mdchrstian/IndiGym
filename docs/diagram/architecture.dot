@@ -1,0 +1,9 @@
+digraph { graph [bgcolor="white", pad="0.15", nodesep="0.35", ranksep="0.55", splines="polyline"]; node [shape="plain", fontname="Arial", fontsize="12"]; edge [fontname="Arial", fontsize="10", color="#475569", arrowsize="0.8"];
+ ui [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>MainApp dan enam controller</B></TD></TR><TR><TD ALIGN="LEFT">Wika</TD></TR><TR><TD ALIGN="LEFT">Enam FXML, navigasi, dialog bukti, Task JavaFX</TD></TR></TABLE>>];
+ akun [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>AkunService dan AksesService</B></TD></TR><TR><TD ALIGN="LEFT">Dimas</TD></TR><TR><TD ALIGN="LEFT">Login, akun, paket, pembayaran, periode</TD></TR></TABLE>>];
+ operasi [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>PelangganService dan PenjualanService</B></TD></TR><TR><TD ALIGN="LEFT">Mahasurya</TD></TR><TR><TD ALIGN="LEFT">Profil, check-in, visit, produk, penjualan</TD></TR></TABLE>>];
+ repo [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>Database dan empat DAO langsung</B></TD></TR><TR><TD ALIGN="LEFT">Tian</TD></TR><TR><TD ALIGN="LEFT">AkunDAO, PelangganDAO, AksesDAO, PenjualanDAO</TD></TR><TR><TD ALIGN="LEFT">Satu Connection per transaksi; commit atau rollback</TD></TR></TABLE>>];
+ db [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" COLOR="#64748b"><TR><TD BGCOLOR="#e8eef4"><B>MySQL bersama di Aiven</B></TD></TR><TR><TD ALIGN="LEFT">Data pengembangan dan demo terpisah</TD></TR></TABLE>>];
+ ui -> akun; ui -> operasi; akun -> repo; operasi -> repo; repo -> db;
+ {rank=same; akun; operasi;}
+}

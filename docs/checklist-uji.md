@@ -22,7 +22,7 @@ Ini daftar target pengujian aplikasi lengkap. Saat ini hanya tes pemuatan kerang
 | [ ] | U16 | Dua aplikasi membeli stok terakhir; total penjualan berhasil tidak melebihi stok. Dua perpanjangan bersamaan tidak saling menimpa. | Tian |
 | [ ] | U17 | Klik/permintaan pembayaran berulang memakai requestId yang sama; satu proses tersimpan. Respons hilang diperiksa sebelum pengulangan. | Tian dan Wika |
 | [ ] | U18 | Harga/nama produk diubah; bukti lama tetap menampilkan snapshot. Pembatalan tidak menghapus bukti asli. | Mahasurya dan Tian |
-| [ ] | U19 | Semua halaman FXML terbuka, kontrol bekerja, input kosong ditangani, dan UI merespons saat jaringan lambat/gagal. | Wika |
+| [ ] | U19 | Keenam halaman FXML terbuka, kontrol bekerja, input kosong ditangani, dan UI merespons saat jaringan lambat/gagal. | Wika |
 | [ ] | U20 | Dari clone baru, petunjuk konfigurasi cukup untuk menjalankan aplikasi. Data demo dapat disiapkan tanpa mengubah data uji anggota lain. | Semua anggota |
 
 Untuk setiap hasil, catat tanggal, penguji, hasil aktual, dan referensi perbaikan.

@@ -2,11 +2,11 @@
 
 ## Checklist Dimas selama tiga minggu
 
-Pemilik model/service akun dan akses. Class utama: Manusia, Admin, SuperAdmin, PaketAkses, PaketHarian, PaketMembership, PembayaranAkses, HakAksesGym, PeriodeAkses, Cetak, SessionContext, dan PasswordHasher.
+Pemilik model identitas/akses dan dua layanan: AkunService serta AksesService. Sesi login dan hash menjadi bagian AkunService. Cetak disepakati bersama Mahasurya.
 
 ### Minggu 1 Hari 1 sampai 7
 
-- [ ] D1.1 Sepakati model identitas, ID, role, sesi, DTO, dan kontrak repository dengan Tian/Mahasurya.
+- [ ] D1.1 Sepakati model identitas, ID, role, sesi, bentuk input/hasil, dan method DAO dengan Tian/Mahasurya.
 
 - [ ] D1.2 Implementasikan login/logout, hash password, serta kewenangan Admin dan SuperAdmin.
 
@@ -14,7 +14,7 @@ Pemilik model/service akun dan akses. Class utama: Manusia, Admin, SuperAdmin, P
 
 - [ ] D1.4 Sediakan service pembayaran membership dasar dan snapshot ketentuan pembelian.
 
-- [ ] D1.5 Berikan kontrak login/pembayaran dan contoh hasil kepada Wika; sambungkan repository Tian.
+- [ ] D1.5 Berikan kontrak login/pembayaran dan contoh hasil kepada Wika; sambungkan DAO Tian.
 
 - [ ] D1.6 Demo login dan pembayaran membership; tulis penjelasan PBO dan hasil uji awal.
 
@@ -24,7 +24,7 @@ Pemilik model/service akun dan akses. Class utama: Manusia, Admin, SuperAdmin, P
 
 - [ ] D2.2 Lengkapi perpanjangan awal, terlambat, berulang, akhir bulan, dan visit ke membership besok.
 
-- [ ] D2.3 Sediakan operasi pembayaran internal yang memakai TxContext visit milik Mahasurya.
+- [ ] D2.3 Sediakan operasi pembayaran internal yang menerima Connection transaksi visit milik Mahasurya.
 
 - [ ] D2.4 Implementasikan pembatalan membership terbaru/visit dengan alasan dan isi bukti Cetak.
 
@@ -50,11 +50,11 @@ Koordinasi wajib: Tian untuk akun/akses dan transaksi; Mahasurya untuk identitas
 
 ## Checklist Mahasurya selama tiga minggu
 
-Pemilik model/service pelanggan, check-in, dan penjualan. Class utama: Pelanggan, CheckIn, Produk, Transaksi, DetailTransaksi, MutasiStok, PelangganService, CheckInService, VisitHarianService, ProdukService, dan PenjualanService.
+Pemilik Pelanggan, CheckIn, Produk, Transaksi, DetailTransaksi dan MutasiStok, serta dua layanan: PelangganService dan PenjualanService.
 
 ### Minggu 1 Hari 1 sampai 7
 
-- [ ] M1.1 Sepakati turunan Pelanggan, Cetak, DTO, dan kontrak repository dengan Dimas/Tian.
+- [ ] M1.1 Sepakati turunan Pelanggan, Cetak, bentuk input/hasil, dan method DAO dengan Dimas/Tian.
 
 - [ ] M1.2 Implementasikan profil, pencarian, pembaruan, arsip, dan pengaktifan kembali pelanggan.
 
@@ -62,7 +62,7 @@ Pemilik model/service pelanggan, check-in, dan penjualan. Class utama: Pelanggan
 
 - [ ] M1.4 Implementasikan Produk, DetailTransaksi, keranjang, dan perhitungan subtotal/total.
 
-- [ ] M1.5 Berikan contoh data dan kontrak service kepada Wika; sambungkan repository Tian.
+- [ ] M1.5 Berikan contoh data dan kontrak service kepada Wika; sambungkan DAO Tian.
 
 - [ ] M1.6 Demo pendaftaran, check-in, dan penjualan sederhana; catat hasil uji serta penjelasan model.
 
@@ -84,7 +84,7 @@ Pemilik model/service pelanggan, check-in, dan penjualan. Class utama: Pelanggan
 
 - [ ] M3.1 Jalankan seluruh kasus pelanggan/check-in/penjualan; perbaiki temuan lintas bagian.
 
-- [ ] M3.2 Review repository Tian, relasi, rollback, dan penyimpanan transaksi gabungan.
+- [ ] M3.2 Review DAO Tian, relasi, rollback, dan penyimpanan transaksi gabungan.
 
 - [ ] M3.3 Periksa arsip/aktif kembali dan kunjungan setelah pembayaran sumber dibatalkan.
 
@@ -98,13 +98,13 @@ Koordinasi wajib: Dimas untuk pembayaran/hak akses dan Cetak; Tian untuk SQL/tra
 
 ## Checklist Wika selama tiga minggu
 
-Pemilik seluruh JavaFX/FXML/CSS/controller. Class utama: MainApp, AppContext, NavigationManager, UiTaskRunner, serta controller Login, Dashboard, Admin, Pelanggan, Pembayaran, CheckIn, Produk, Penjualan, Riwayat, dan Bukti.
+Pemilik MainApp, enam controller (Login, Dashboard, Admin, Pelanggan, Akses, Penjualan), enam FXML dan CSS. Riwayat berada di halaman modul; bukti memakai dialog bersama MainApp.
 
 ### Minggu 1 Hari 1 sampai 7
 
-- [ ] W1.1 Siapkan bootstrap JavaFX, resources FXML, controller factory, navigasi, dan stylesheet bersama.
+- [ ] W1.1 Siapkan MainApp untuk bootstrap, navigasi/controller factory, enam FXML dan CSS bersama.
 
-- [ ] W1.2 Sepakati DTO/kontrak dengan Dimas/Mahasurya; gunakan data contoh sambil menunggu integrasi.
+- [ ] W1.2 Sepakati input/hasil service dengan Dimas/Mahasurya; gunakan data contoh sambil menunggu integrasi.
 
 - [ ] W1.3 Bangun login/dashboard dan form pelanggan; sambungkan satu alur lengkap dengan Tian.
 
@@ -112,7 +112,7 @@ Pemilik seluruh JavaFX/FXML/CSS/controller. Class utama: MainApp, AppContext, Na
 
 - [ ] W1.5 Sediakan proses background, indikator pemuatan, validasi input, serta pesan gagal dasar.
 
-- [ ] W1.6 Demo navigasi dan alur awal; catat peta FXML/page_controllers/service untuk seluruh kelompok.
+- [ ] W1.6 Demo navigasi dan alur awal; catat peta FXML/controller/service untuk seluruh kelompok.
 
 ### Minggu 2 Hari 8 sampai 14
 
@@ -146,25 +146,25 @@ Koordinasi wajib: Dimas/Mahasurya untuk semua kontrak dan hasil service; Tian un
 
 ## Checklist Tian selama tiga minggu
 
-Pemilik database dan seluruh repository. Class utama: DatabaseConfig, ConnectionFactory, TransactionManager, TxContext, seluruh interface/implementasi repository, pemetaan data, serta skrip migration dan seed.
+Pemilik Database, AkunDAO, PelangganDAO, AksesDAO dan PenjualanDAO, lima SQL setup/data, konfigurasi Aiven dan pengujian database. DAO tidak memakai interface terpisah.
 
 ### Minggu 1 Hari 1 sampai 7
 
 - [ ] T1.1 Siapkan Aiven, TLS, konfigurasi contoh, dan database pengembangan/demo/uji yang dibutuhkan.
 
-- [ ] T1.2 Sepakati ERD, tipe ID/nominal/waktu, role, dan kontrak repository dengan Dimas/Mahasurya.
+- [ ] T1.2 Sepakati ERD, tipe ID/nominal/waktu, role, dan kontrak DAO dengan Dimas/Mahasurya.
 
-- [ ] T1.3 Sediakan interface repository, migration awal, akun SuperAdmin awal, dan contoh penyimpanan.
+- [ ] T1.3 Sepakati method empat DAO, siapkan skema awal, akun SuperAdmin awal, dan contoh penyimpanan.
 
-- [ ] T1.4 Implementasikan repository akun/pelanggan/paket/pembayaran/hak akses untuk alur pertama.
+- [ ] T1.4 Implementasikan operasi awal pada AkunDAO, PelangganDAO dan AksesDAO.
 
-- [ ] T1.5 Siapkan TransactionManager dan repository check-in/produk/penjualan dasar.
+- [ ] T1.5 Siapkan Database.jalankanTransaksi dan operasi check-in/penjualan pada DAO terkait.
 
 - [ ] T1.6 Demo data bersama, jalankan migration dari awal, dan dokumentasikan konfigurasi tanpa rahasia.
 
 ### Minggu 2 Hari 8 sampai 14
 
-- [ ] T2.1 Lengkapi repository, constraint, indeks, audit petugas, snapshot, dan pemetaan subclass.
+- [ ] T2.1 Lengkapi DAO, constraint, indeks, audit petugas, snapshot, dan pemetaan subclass.
 
 - [ ] T2.2 Hubungkan pembayaran Dimas dan check-in Mahasurya ke satu koneksi/transaksi untuk visit.
 
