@@ -1,0 +1,20 @@
+Hasil Pengujian UI Login IndiGym
+Modul:Login
+Penguji:Wika
+Tanggal:30 Oktober 2026
+
+-Tujuan Pengujian
+Memastikan halaman login dapat menerima input dan melakukan validasi username serta password.
+
+-Hasil Pengujian
+| ID | Skenario | Hasil Aktual | Status |
+| UI-LOGIN-01 | Username dan password kosong | Username wajib diisi! | Lulus |
+| UI-LOGIN-02 | Username terisi, password kosong | Password wajib diisi! | Lulus |
+| UI-LOGIN-03 | Kedua input terisi | Form berhasil divalidasi | Lulus |
+
+-Kesimpulan
+Ketiga skenario pengujian berhasil dijalankan.
+FXML, Controller, dan CSS sudah terhubung dan berfungsi untuk validasi input login.
+
+-Catatan:
+Autentikasi belum terhubung dengan AuthService dan database. Pengujian masih berfokus pada validasi antarmuka pengguna.

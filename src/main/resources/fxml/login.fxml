@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/27"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="id.indigym.controller.LoginController"
+      alignment="CENTER"
+      spacing="14.0"
+      prefWidth="1100.0"
+      prefHeight="720.0"
+      styleClass="login-root">
+
+    <padding>
+        <Insets top="40.0"
+                right="40.0"
+                bottom="40.0"
+                left="40.0"/>
+    </padding>
+
+    <Label text="IndiGym"
+           styleClass="app-title"/>
+
+    <Label text="Gym Management System"
+           styleClass="app-subtitle"/>
+
+    <TextField fx:id="usernameField"
+               promptText="Masukkan username"
+               maxWidth="320.0"/>
+
+    <PasswordField fx:id="passwordField"
+                   promptText="Masukkan password"
+                   maxWidth="320.0"/>
+
+    <Button text="MASUK"
+            onAction="#handleLogin"
+            maxWidth="320.0"
+            styleClass="primary-button"/>
+
+    <Label fx:id="messageLabel"
+           wrapText="true"
+           maxWidth="320.0"
+           styleClass="message-label"/>
+
+</VBox>
