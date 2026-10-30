@@ -1,0 +1,43 @@
+.root {
+    -fx-font-family: "Arial";
+    -fx-background-color: #F5F7FA;
+}
+.login-root{
+    -fx-background-color: #F5F7FA;
+}
+.app-title{
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #19324D;
+}
+.app-subtitle{
+    -fx-font-size: 15px;
+    -fx-text-fill: #64748B;
+}
+.text-field,
+.password-field{
+    -fx-pref-height: 42px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #D5DDE6;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
+    -fx-padding: 8px 12px;
+}
+.primary-button{
+    -fx-background-color: #E87535;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 44px;
+    -fx-background-radius: 7px;
+    -fx-cursor: hand;
+}
+.primary-button:hover{
+    -fx-background-color: #d96529;
+}
+.message-label{
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748B;
+}
+
