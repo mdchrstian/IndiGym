@@ -1,0 +1,5 @@
+target/
+config/db.properties
+.DS_Store
+.idea/
+*.iml
