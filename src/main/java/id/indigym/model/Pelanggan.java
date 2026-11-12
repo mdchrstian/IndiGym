@@ -3,7 +3,7 @@ package id.indigym.model;
 public class Pelanggan extends Manusia {
     private String kode;
     private String kontak;
-    private String diarsipkan; 
+    private boolean diarsipkan; 
 
     public Pelanggan (Long id, String kode, String nama, String kontak, boolean diarsipkan) {
         super(id, nama);
@@ -20,8 +20,8 @@ public class Pelanggan extends Manusia {
     }
 
     @Override 
-    public String tampilkaninfo() {
-        return kode + "-" + getnama();
+    public String tampilkanInfo() {
+        return kode + "-" + getNama();
     }
 
     public String getkode() {
@@ -36,7 +36,8 @@ public class Pelanggan extends Manusia {
         return kontak;
     }
 
-    public void setKontak() {
+    public void setKontak(String kontak) {
+
         this.kontak = kontak;
     }
 
@@ -44,7 +45,7 @@ public class Pelanggan extends Manusia {
         return diarsipkan;
     }
 
-    public void setDiarsipkan() {
+    public void setDiarsipkan(boolean diarsipkan) {
         this.diarsipkan = diarsipkan;
     }
 }
