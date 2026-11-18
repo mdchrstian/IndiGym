@@ -1,34 +1,35 @@
 package id.indigym.model;
 
 public class Pelanggan extends Manusia {
+
     private String kode;
     private String kontak;
-    private boolean diarsipkan; 
+    private boolean diarsipkan;
 
-    public Pelanggan (Long id, String kode, String nama, String kontak, boolean diarsipkan) {
+    public Pelanggan(Long id, String kode, String nama, String kontak, boolean diarsipkan) {
         super(id, nama);
         this.kode = kode;
         this.kontak = kontak;
         this.diarsipkan = diarsipkan;
     }
 
-    public String getstatus () {
+    public String getStatus() {
         if (diarsipkan) {
-            return "diarsipkan";
+            return "Diarsipkan";
         }
-        return "aktif";
+        return "Aktif";
     }
 
-    @Override 
+    @Override
     public String tampilkanInfo() {
-        return kode + "-" + getNama();
+        return kode + " - " + getNama();
     }
 
-    public String getkode() {
+    public String getKode() {
         return kode;
     }
 
-    public void setkode(String kode) {
+    public void setKode(String kode) {
         this.kode = kode;
     }
 
@@ -37,7 +38,6 @@ public class Pelanggan extends Manusia {
     }
 
     public void setKontak(String kontak) {
-
         this.kontak = kontak;
     }
 
