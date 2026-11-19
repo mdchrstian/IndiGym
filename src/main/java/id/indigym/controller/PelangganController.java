@@ -27,58 +27,41 @@ public class PelangganController {
 
     @FXML
     private TextField fieldCari;
-
     @FXML
     private TableView<Pelanggan> tabelPelanggan;
-
     @FXML
     private TextField fieldNamaBaru;
-
     @FXML
     private TextField fieldKontakBaru;
 
     @FXML
     private VBox kotakKosong;
-
     @FXML
     private VBox kotakDetail;
-
     @FXML
     private Label labelKodeDetail;
-
     @FXML
     private Label labelNamaDetail;
-
     @FXML
     private Label labelKontakDetail;
-
     @FXML
     private VBox kotakAkses;
-
     @FXML
     private Label labelStatusAkses;
-
     @FXML
     private Label labelDetailAkses;
-
     @FXML
     private Button tombolCheckIn;
-
     @FXML
     private Button tombolVisit;
-
     @FXML
     private Button tombolMembership;
-
     @FXML
     private TableView<CheckIn> tabelRiwayat;
-
     @FXML
     private TextField fieldNama;
-
     @FXML
     private TextField fieldKontak;
-
     @FXML
     private Button tombolArsip;
 
@@ -92,6 +75,7 @@ public class PelangganController {
         muatTabel();
         tampilkanDetail(null);
     }
+
 
     @FXML
     private void cari() {
@@ -109,20 +93,19 @@ public class PelangganController {
     @FXML
     private void daftarBaru() {
         try {
-            Pelanggan baru = pelangganService.daftar(
-                    fieldNamaBaru.getText(), fieldKontakBaru.getText());
+            Pelanggan baru = pelangganService.daftar(fieldNamaBaru.getText(), fieldKontakBaru.getText());
             fieldNamaBaru.clear();
             fieldKontakBaru.clear();
             fieldCari.clear();
             muatTabel();
             pilihDiTabel(baru.getId());
-            MainApp.pesanBerhasil(labelPesan,
-                    baru.getNama() + " terdaftar dengan kode " + baru.getKode()
-                            + ". Jual visit atau membership agar bisa check-in.");
+            MainApp.pesanBerhasil(labelPesan, baru.getNama() + " terdaftar dengan kode " + baru.getKode()
+                    + ". Jual visit atau membership agar bisa check-in.");
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
     }
+
 
     @FXML
     private void checkIn() {
@@ -130,22 +113,17 @@ public class PelangganController {
             CheckIn hasil = pelangganService.checkIn(terpilih.getKode(), false);
 
             if (hasil == null) {
-                if (!MainApp.konfirmasi(terpilih.getNama()
-                        + " sudah check-in hari ini.\nCatat kunjungan tambahan tanpa biaya?")) {
-                    MainApp.pesanBerhasil(labelPesan,
-                            "Kunjungan tambahan dibatalkan. Tidak ada yang dicatat.");
+                if (!MainApp.konfirmasi(terpilih.getNama() + " sudah check-in hari ini.\nCatat kunjungan tambahan tanpa biaya?")) {
+                    MainApp.pesanBerhasil(labelPesan, "Kunjungan tambahan dibatalkan. Tidak ada yang dicatat.");
                     return;
                 }
                 hasil = pelangganService.checkIn(terpilih.getKode(), true);
             }
 
             if (hasil.diizinkan()) {
-                MainApp.pesanBerhasil(labelPesan,
-                        "Check-in diizinkan untuk " + terpilih.getNama() + ".");
+                MainApp.pesanBerhasil(labelPesan, "Check-in diizinkan untuk " + terpilih.getNama() + ".");
             } else {
-                MainApp.pesanGagal(labelPesan,
-                        "Check-in ditolak: " + hasil.getAlasan()
-                                + " Penolakan tetap tercatat di riwayat.");
+                MainApp.pesanGagal(labelPesan, "Check-in ditolak: " + hasil.getAlasan() + " Penolakan tetap tercatat di riwayat.");
             }
             tampilkanDetail(terpilih);
         } catch (IllegalArgumentException e) {
@@ -158,20 +136,15 @@ public class PelangganController {
         try {
             PaketAkses paketHarian = aksesService.cariPaketHarian();
             if (paketHarian == null) {
-                MainApp.pesanGagal(labelPesan,
-                        "Paket harian belum tersedia. Tambahkan di layar Membership.");
+                MainApp.pesanGagal(labelPesan, "Paket harian belum tersedia. Tambahkan di layar Membership.");
                 return;
             }
-            if (!MainApp.konfirmasi("Terima pembayaran LUNAS "
-                    + paketHarian.getHargaTeks() + " untuk "
-                    + paketHarian.getNama() + "?\nCheck-in pertama "
-                    + terpilih.getNama() + " langsung dicatat.")) {
+            if (!MainApp.konfirmasi("Terima pembayaran LUNAS " + paketHarian.getHargaTeks() + " untuk "
+                    + paketHarian.getNama() + "?\nCheck-in pertama " + terpilih.getNama() + " langsung dicatat.")) {
                 return;
             }
-            PembayaranAkses pembayaran =
-                    pelangganService.beliVisit(terpilih.getKode());
-            MainApp.pesanBerhasil(labelPesan,
-                    "Visit dibayar dan check-in " + terpilih.getNama() + " tercatat.");
+            PembayaranAkses pembayaran = pelangganService.beliVisit(terpilih.getKode());
+            MainApp.pesanBerhasil(labelPesan, "Visit dibayar dan check-in " + terpilih.getNama() + " tercatat.");
             tampilkanDetail(terpilih);
             MainApp.tampilkanBukti(pembayaran);
         } catch (IllegalArgumentException e) {
@@ -188,8 +161,7 @@ public class PelangganController {
     @FXML
     private void simpanPerubahan() {
         try {
-            pelangganService.ubah(
-                    terpilih, fieldNama.getText(), fieldKontak.getText());
+            pelangganService.ubah(terpilih, fieldNama.getText(), fieldKontak.getText());
             Long id = terpilih.getId();
             muatTabel();
             pilihDiTabel(id);
@@ -205,13 +177,10 @@ public class PelangganController {
             Long id = terpilih.getId();
             if (terpilih.isDiarsipkan()) {
                 pelangganService.aktifkan(terpilih);
-                MainApp.pesanBerhasil(labelPesan,
-                        terpilih.getNama() + " aktif kembali.");
+                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " aktif kembali.");
             } else {
                 pelangganService.arsipkan(terpilih);
-                MainApp.pesanBerhasil(labelPesan,
-                        terpilih.getNama()
-                                + " diarsipkan. Riwayatnya tetap tersimpan.");
+                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " diarsipkan. Riwayatnya tetap tersimpan.");
             }
             muatTabel();
             pilihDiTabel(id);
@@ -219,6 +188,7 @@ public class PelangganController {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
     }
+
 
     private void tampilkanDetail(Pelanggan pelanggan) {
         terpilih = pelanggan;
@@ -231,8 +201,7 @@ public class PelangganController {
             return;
         }
 
-        labelKodeDetail.setText(
-                pelanggan.getKode() + " / " + pelanggan.getStatus().toUpperCase());
+        labelKodeDetail.setText(pelanggan.getKode() + " / " + pelanggan.getStatus().toUpperCase());
         labelNamaDetail.setText(pelanggan.getNama());
         if (pelanggan.getKontak() == null) {
             labelKontakDetail.setText("Tanpa kontak");
@@ -248,8 +217,7 @@ public class PelangganController {
         }
 
         try {
-            List<CheckIn> riwayat =
-                    pelangganService.riwayatCheckIn(pelanggan.getKode());
+            List<CheckIn> riwayat = pelangganService.riwayatCheckIn(pelanggan.getKode());
             tabelRiwayat.setItems(FXCollections.observableArrayList(riwayat));
             tampilkanStatusAkses(pelanggan, riwayat);
         } catch (IllegalArgumentException e) {
@@ -262,8 +230,7 @@ public class PelangganController {
 
         if (pelanggan.isDiarsipkan()) {
             labelStatusAkses.setText("PROFIL DIARSIPKAN");
-            labelDetailAkses.setText(
-                    "Check-in akan ditolak. Aktifkan kembali profil di bagian Ubah Data.");
+            labelDetailAkses.setText("Check-in akan ditolak. Aktifkan kembali profil di bagian Ubah Data.");
             tombolCheckIn.setText("Catat check-in (akan ditolak)");
             tombolVisit.setDisable(true);
             tombolMembership.setDisable(true);
@@ -276,8 +243,7 @@ public class PelangganController {
         if (akses == null) {
             kotakAkses.getStyleClass().add("akses-tidak");
             labelStatusAkses.setText("BELUM PUNYA AKSES");
-            labelDetailAkses.setText(
-                    "Check-in akan ditolak. Jual visit harian atau membership dulu.");
+            labelDetailAkses.setText("Check-in akan ditolak. Jual visit harian atau membership dulu.");
             tombolCheckIn.setText("Catat check-in (akan ditolak)");
             tombolVisit.setDisable(false);
             tombolMembership.setDisable(false);
@@ -287,13 +253,11 @@ public class PelangganController {
 
         kotakAkses.getStyleClass().add("akses-ada");
         labelStatusAkses.setText("BOLEH MASUK");
-        String keterangan =
-                akses.getNamaPaket() + ", berlaku " + akses.getPeriode() + ".";
+        String keterangan = akses.getNamaPaket() + ", berlaku " + akses.getPeriode() + ".";
         CheckIn hariIni = cariCheckInHariIni(riwayat);
         if (hariIni != null) {
             keterangan = keterangan + " Sudah check-in hari ini pukul "
-                    + hariIni.getWaktu().format(
-                            DateTimeFormatter.ofPattern("HH:mm")) + ".";
+                    + hariIni.getWaktu().format(DateTimeFormatter.ofPattern("HH:mm")) + ".";
         }
         labelDetailAkses.setText(keterangan);
         tombolCheckIn.setText("Catat check-in");
@@ -313,18 +277,17 @@ public class PelangganController {
 
     private CheckIn cariCheckInHariIni(List<CheckIn> riwayat) {
         for (CheckIn checkIn : riwayat) {
-            if (checkIn.diizinkan()
-                    && checkIn.getWaktu().toLocalDate().equals(LocalDate.now())) {
+            if (checkIn.diizinkan() && checkIn.getWaktu().toLocalDate().equals(LocalDate.now())) {
                 return checkIn;
             }
         }
         return null;
     }
 
+
     private void muatTabel() {
         try {
-            tabelPelanggan.setItems(FXCollections.observableArrayList(
-                    pelangganService.cari(fieldCari.getText())));
+            tabelPelanggan.setItems(FXCollections.observableArrayList(pelangganService.cari(fieldCari.getText())));
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
