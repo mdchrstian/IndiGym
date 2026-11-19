@@ -1,0 +1,508 @@
+@font-face {
+    font-family: "JetBrainsMonoNL NFM";
+    src: url("../fonts/JetBrainsMono-Regular.ttf");
+}
+
+@font-face {
+    font-family: "JetBrainsMonoNL NFM";
+    font-weight: bold;
+    src: url("../fonts/JetBrainsMono-Bold.ttf");
+}
+
+.root {
+    warna-latar:        #18181b;
+    warna-grid:         #212126;
+    warna-panel:        #1f1f23;
+    warna-panel-naik:   #27272c;
+    warna-garis:        #2f2f36;
+    warna-garis-kuat:   #4a4a53;
+    warna-teks:         #f4f4f5;
+    warna-teks-redup:   #a1a1aa;
+    warna-teks-samar:   #71717a;
+    warna-aksen:        #6a5cf5;
+    warna-aksen-terang: #8b80f8;
+    warna-aksen-teks:   #b0a7fa;
+    warna-aksen-latar:  #2c2858;
+    warna-sukses:       #5fd39a;
+    warna-sukses-latar: #16291f;
+    warna-peringatan:   #e8c468;
+    warna-peringatan-latar: #2a2414;
+    warna-bahaya:       #f07178;
+    warna-bahaya-latar: #2c1719;
+
+    -fx-base: warna-panel;
+    -fx-background: warna-latar;
+    -fx-control-inner-background: warna-panel;
+    -fx-control-inner-background-alt: warna-panel;
+    -fx-accent: warna-aksen;
+    -fx-focus-color: warna-aksen;
+    -fx-faint-focus-color: transparent;
+    -fx-selection-bar: warna-aksen-latar;
+    -fx-selection-bar-non-focused: warna-aksen-latar;
+    -fx-table-cell-border-color: warna-garis;
+
+    -fx-background-color:
+        warna-latar,
+        linear-gradient(from 0px 0px to 40px 0px, repeat, warna-grid 0%, warna-grid 2.5%, transparent 2.5%, transparent 100%),
+        linear-gradient(from 0px 0px to 0px 40px, repeat, warna-grid 0%, warna-grid 2.5%, transparent 2.5%, transparent 100%);
+    -fx-font-size: 13px;
+}
+
+* {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.label {
+    -fx-text-fill: warna-teks;
+}
+
+.judul {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.judul-sedang {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.label-atas {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 11px;
+    -fx-text-fill: warna-aksen-teks;
+}
+
+.label-bagian {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 11px;
+    -fx-text-fill: warna-teks-redup;
+}
+
+.teks-redup {
+    -fx-text-fill: warna-teks-redup;
+}
+
+.teks-mono {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+}
+
+.angka-besar {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.pesan {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+    -fx-max-width: Infinity;
+}
+
+.pesan-berhasil {
+    -fx-text-fill: warna-sukses;
+    -fx-background-color: warna-sukses, warna-sukses-latar;
+    -fx-background-insets: 0, 0 0 0 2;
+    -fx-padding: 8 12 8 12;
+}
+
+.pesan-gagal {
+    -fx-text-fill: warna-bahaya;
+    -fx-background-color: warna-bahaya, warna-bahaya-latar;
+    -fx-background-insets: 0, 0 0 0 2;
+    -fx-padding: 8 12 8 12;
+}
+
+.pesan-error {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+    -fx-text-fill: warna-bahaya;
+}
+
+.navigasi {
+    -fx-background-color: warna-garis, warna-panel;
+    -fx-background-insets: 0, 0 1 0 0;
+    -fx-padding: 22 14 18 14;
+    -fx-spacing: 4;
+}
+
+.logo {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.logo-kursor {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: warna-aksen;
+}
+
+.isi-layar {
+    -fx-padding: 24 28 20 28;
+    -fx-spacing: 14;
+}
+
+.garis-putus {
+    -fx-border-color: warna-garis-kuat transparent transparent transparent;
+    -fx-border-style: segments(4, 4);
+    -fx-border-width: 1 0 0 0;
+    -fx-min-height: 1;
+    -fx-max-height: 1;
+}
+
+.panel {
+    -fx-background-color: warna-garis, warna-panel;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 18;
+    -fx-spacing: 10;
+}
+
+.kartu {
+    -fx-background-color: warna-garis, warna-panel;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 16 18 16 18;
+    -fx-spacing: 6;
+}
+
+.judul-kartu {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.kotak-akses {
+    -fx-background-color: warna-garis-kuat, warna-panel-naik;
+    -fx-background-insets: 0, 0 0 0 3;
+    -fx-padding: 12 14 12 16;
+    -fx-spacing: 4;
+}
+
+.kotak-akses.akses-ada {
+    -fx-background-color: warna-sukses, warna-sukses-latar;
+}
+
+.kotak-akses.akses-tidak {
+    -fx-background-color: warna-peringatan, warna-peringatan-latar;
+}
+
+.status-akses {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.akses-ada .status-akses {
+    -fx-text-fill: warna-sukses;
+}
+
+.akses-tidak .status-akses {
+    -fx-text-fill: warna-peringatan;
+}
+
+.kotak-ringkasan {
+    -fx-background-color: warna-garis-kuat, warna-panel-naik;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 14;
+    -fx-spacing: 4;
+}
+
+.button {
+    -fx-background-color: warna-garis-kuat, warna-panel;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: warna-teks;
+    -fx-padding: 7 16 7 16;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: warna-teks-redup, warna-panel-naik;
+}
+
+.button:focused {
+    -fx-background-color: warna-aksen, warna-panel;
+}
+
+.button:pressed {
+    -fx-background-color: warna-teks-redup, warna-latar;
+}
+
+.button:disabled {
+    -fx-opacity: 0.35;
+}
+
+.tombol-utama {
+    -fx-background-color: warna-aksen, warna-aksen;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.tombol-utama:focused {
+    -fx-background-color: warna-aksen-teks, warna-aksen;
+}
+
+.tombol-utama:hover {
+    -fx-background-color: warna-aksen-terang, warna-aksen-terang;
+}
+
+.tombol-utama:pressed {
+    -fx-background-color: warna-aksen, warna-aksen;
+}
+
+.tombol-bahaya {
+    -fx-text-fill: warna-bahaya;
+}
+
+.tombol-bahaya:hover {
+    -fx-background-color: warna-bahaya, warna-panel-naik;
+}
+
+.tombol-navigasi {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 13px;
+    -fx-text-fill: warna-teks-redup;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 9 12 9 12;
+}
+
+.tombol-navigasi:hover,
+.tombol-navigasi:focused {
+    -fx-background-color: warna-panel-naik;
+    -fx-text-fill: warna-teks;
+}
+
+.tombol-navigasi.aktif {
+    -fx-background-color: warna-aksen, warna-panel-naik;
+    -fx-background-insets: 0, 0 0 0 2;
+    -fx-text-fill: warna-teks;
+}
+
+.kartu-aksi {
+    -fx-background-color: warna-garis-kuat, warna-panel;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 16 18 16 18;
+    -fx-alignment: TOP_LEFT;
+    -fx-cursor: hand;
+}
+
+.kartu-aksi:hover,
+.kartu-aksi:focused {
+    -fx-background-color: warna-aksen, warna-panel-naik;
+}
+
+.text-input {
+    -fx-background-color: warna-garis-kuat, warna-panel-naik;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: warna-teks;
+    -fx-prompt-text-fill: warna-teks-samar;
+    -fx-highlight-fill: warna-aksen;
+    -fx-highlight-text-fill: white;
+    -fx-padding: 7 10 7 10;
+}
+
+.text-input:focused {
+    -fx-background-color: warna-aksen, warna-panel-naik;
+}
+
+.kolom-cari {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+}
+
+.text-area {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+}
+
+.text-area .content {
+    -fx-background-color: warna-latar;
+}
+
+.combo-box {
+    -fx-background-color: warna-garis-kuat, warna-panel-naik;
+    -fx-background-insets: 0, 1;
+}
+
+.combo-box:focused {
+    -fx-background-color: warna-aksen, warna-panel-naik;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: warna-teks;
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: warna-teks-redup;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: warna-garis-kuat, warna-panel;
+    -fx-background-insets: 0, 1;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: warna-panel;
+    -fx-text-fill: warna-teks;
+}
+
+.combo-box-popup .list-view .list-cell:hover,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: warna-aksen-latar;
+}
+
+.table-view {
+    -fx-background-color: warna-garis, warna-panel;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: warna-panel-naik;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent warna-garis warna-garis transparent;
+    -fx-border-width: 0 1 1 0;
+    -fx-size: 30;
+}
+
+.table-view .column-header .label {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 11px;
+    -fx-text-fill: warna-teks-redup;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 8 0 8;
+}
+
+.table-row-cell,
+.table-row-cell:odd {
+    -fx-background-color: warna-garis, warna-panel;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-cell-size: 32;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: warna-garis, warna-panel-naik;
+}
+
+.table-row-cell:selected,
+.table-row-cell:selected:hover {
+    -fx-background-color: warna-aksen, warna-aksen-latar;
+    -fx-background-insets: 0, 0 0 1 2;
+}
+
+.table-cell {
+    -fx-text-fill: warna-teks;
+    -fx-padding: 0 8 0 8;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.kolom-mono {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+}
+
+.table-cell.kolom-angka {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.table-view .column-header.kolom-angka .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.table-view .placeholder .label {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+    -fx-text-fill: warna-teks-samar;
+}
+
+.table-view .corner {
+    -fx-background-color: warna-panel-naik;
+}
+
+.tab-pane > .tab-header-area {
+    -fx-padding: 0;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: warna-garis-kuat, warna-latar;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 7 16 7 16;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-border-color: warna-aksen;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+    -fx-text-fill: warna-teks-redup;
+}
+
+.tab-pane .tab:selected .tab-label,
+.tab-pane .tab:hover .tab-label {
+    -fx-text-fill: warna-teks;
+}
+
+.tab-pane .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.tab-pane > .tab-content-area {
+    -fx-background-color: transparent;
+    -fx-padding: 14 0 0 0;
+}
+
+.dialog-pane {
+    -fx-background-color: warna-garis-kuat, warna-panel;
+    -fx-background-insets: 0, 1;
+}
+
+.dialog-pane > .content {
+    -fx-padding: 20 20 12 20;
+}
+
+.dialog-pane > .button-bar > .container {
+    -fx-padding: 8 20 20 20;
+}
+
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: warna-garis-kuat;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 2 0 2;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
