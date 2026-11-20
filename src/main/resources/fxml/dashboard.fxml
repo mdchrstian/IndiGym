@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.DashboardController">
+    <left>
+        <fx:include source="navigasi.fxml" />
+    </left>
+    <center>
+        <VBox styleClass="isi-layar">
+            <Label styleClass="label-atas" text="INDIGYM / BERANDA" />
+            <Label fx:id="labelSelamat" styleClass="judul" />
+            <Label fx:id="labelTanggal" styleClass="teks-mono, teks-redup" />
+            <Region minHeight="6" />
+            <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
+
+            <Label styleClass="label-bagian" text="RINGKASAN HARI INI" />
+            <HBox spacing="12">
+                <VBox styleClass="kartu" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <Label styleClass="label-bagian" text="CHECK-IN DIIZINKAN" />
+                    <Label fx:id="labelJumlahCheckIn" styleClass="angka-besar" text="0" />
+                    <Label styleClass="teks-redup" text="kunjungan yang masuk hari ini" />
+                </VBox>
+                <VBox styleClass="kartu" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <Label styleClass="label-bagian" text="PELANGGAN BOLEH MASUK" />
+                    <Label fx:id="labelJumlahBerakses" styleClass="angka-besar" text="0" />
+                    <Label styleClass="teks-redup" text="punya membership atau visit yang berlaku" />
+                </VBox>
+                <VBox styleClass="kartu" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <Label styleClass="label-bagian" text="PENJUALAN PRODUK" />
+                    <Label fx:id="labelTotalPenjualan" styleClass="angka-besar" text="Rp 0" />
+                    <Label styleClass="teks-redup" text="transaksi lunas, tanpa yang dibatalkan" />
+                </VBox>
+            </HBox>
+
+            <Region minHeight="6" />
+            <Label styleClass="label-bagian" text="APA YANG INGIN DILAKUKAN?" />
+            <HBox spacing="12">
+                <Button maxWidth="Infinity" onAction="#bukaPelanggan" prefHeight="112" styleClass="kartu-aksi" HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <VBox spacing="6">
+                            <Label styleClass="label-atas" text="&gt; PELANGGAN" />
+                            <Label styleClass="judul-kartu" text="Check-in pelanggan" />
+                            <Label styleClass="teks-redup" text="Lihat akses hari ini lalu catat kedatangan." />
+                        </VBox>
+                    </graphic>
+                </Button>
+                <Button maxWidth="Infinity" onAction="#bukaAkses" prefHeight="112" styleClass="kartu-aksi" HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <VBox spacing="6">
+                            <Label styleClass="label-atas" text="&gt; MEMBERSHIP" />
+                            <Label styleClass="judul-kartu" text="Jual membership" />
+                            <Label styleClass="teks-redup" text="Pilih paket, cek periode, terima pembayaran." />
+                        </VBox>
+                    </graphic>
+                </Button>
+                <Button maxWidth="Infinity" onAction="#bukaPenjualan" prefHeight="112" styleClass="kartu-aksi" HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <VBox spacing="6">
+                            <Label styleClass="label-atas" text="&gt; KASIR" />
+                            <Label styleClass="judul-kartu" text="Jual produk" />
+                            <Label styleClass="teks-redup" text="Isi keranjang, checkout, cetak struk." />
+                        </VBox>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
