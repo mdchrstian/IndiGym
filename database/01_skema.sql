@@ -4,13 +4,13 @@ CREATE TABLE akun_admin (
     nama          VARCHAR(100) NOT NULL,
     username      VARCHAR(50)  NOT NULL UNIQUE,
     password_hash VARCHAR(64)  NOT NULL,
-    role          VARCHAR(20)  NOT NULL,           -- ADMIN atau SUPERADMIN
+    role          VARCHAR(20)  NOT NULL,
     aktif         BOOLEAN      NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE pelanggan (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    kode       VARCHAR(20) UNIQUE,                 -- diisi "PLG"+id setelah insert
+    kode       VARCHAR(20) UNIQUE,
     nama       VARCHAR(100) NOT NULL,
     kontak     VARCHAR(50) NULL,
     diarsipkan BOOLEAN NOT NULL DEFAULT FALSE
@@ -18,10 +18,10 @@ CREATE TABLE pelanggan (
 
 CREATE TABLE paket_akses (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    jenis       VARCHAR(20)  NOT NULL,             -- HARIAN atau MEMBERSHIP
+    jenis       VARCHAR(20)  NOT NULL,
     nama        VARCHAR(100) NOT NULL,
     harga       DECIMAL(12,2) NOT NULL,
-    durasi_bulan INT NULL,                         -- NULL untuk HARIAN
+    durasi_bulan INT NULL,
     diarsipkan  BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -30,8 +30,8 @@ CREATE TABLE pembayaran_akses (
     pelanggan_id  BIGINT NOT NULL,
     paket_id      BIGINT NOT NULL,
     admin_id      BIGINT NOT NULL,
-    nama_paket    VARCHAR(100)  NOT NULL,          -- salinan saat transaksi
-    harga         DECIMAL(12,2) NOT NULL,          -- salinan saat transaksi
+    nama_paket    VARCHAR(100)  NOT NULL,
+    harga         DECIMAL(12,2) NOT NULL,
     waktu_bayar   DATETIME NOT NULL,
     tanggal_mulai DATE NOT NULL,
     tanggal_akhir DATE NOT NULL,
@@ -44,9 +44,9 @@ CREATE TABLE checkin (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
     pelanggan_id  BIGINT NOT NULL,
     admin_id      BIGINT NOT NULL,
-    pembayaran_id BIGINT NULL,                     -- NULL jika DITOLAK
+    pembayaran_id BIGINT NULL,
     waktu         DATETIME NOT NULL,
-    hasil         VARCHAR(20) NOT NULL,            -- DIIZINKAN atau DITOLAK
+    hasil         VARCHAR(20) NOT NULL,
     alasan        VARCHAR(200) NULL,
     FOREIGN KEY (pelanggan_id)  REFERENCES pelanggan(id),
     FOREIGN KEY (admin_id)      REFERENCES akun_admin(id),
@@ -64,11 +64,11 @@ CREATE TABLE produk (
 
 CREATE TABLE transaksi_produk (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    pelanggan_id BIGINT NULL,                      -- NULL = pembeli umum
+    pelanggan_id BIGINT NULL,
     admin_id     BIGINT NOT NULL,
     waktu        DATETIME NOT NULL,
     total        DECIMAL(12,2) NOT NULL,
-    status       VARCHAR(20) NOT NULL DEFAULT 'LUNAS',  -- LUNAS atau BATAL
+    status       VARCHAR(20) NOT NULL DEFAULT 'LUNAS',
     alasan_batal VARCHAR(200) NULL,
     FOREIGN KEY (pelanggan_id) REFERENCES pelanggan(id),
     FOREIGN KEY (admin_id)     REFERENCES akun_admin(id)
@@ -78,8 +78,8 @@ CREATE TABLE detail_transaksi (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY,
     transaksi_id BIGINT NOT NULL,
     produk_id    BIGINT NOT NULL,
-    nama_produk  VARCHAR(100) NOT NULL,            -- salinan saat transaksi
-    harga_satuan DECIMAL(12,2) NOT NULL,           -- salinan saat transaksi
+    nama_produk  VARCHAR(100) NOT NULL,
+    harga_satuan DECIMAL(12,2) NOT NULL,
     jumlah       INT NOT NULL,
     subtotal     DECIMAL(12,2) NOT NULL,
     FOREIGN KEY (transaksi_id) REFERENCES transaksi_produk(id),
