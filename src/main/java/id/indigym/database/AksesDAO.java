@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AksesDAO{
+    //TAMBAHAN. Mengambil data pembayaran sekaligus nama admin yang melayaninya
+    private static final String BAGIAN_SELECT = "SELECT p.*, a.nama AS nama_admin "
+    + "FROM pembayaran_akses p "
+    + " JOIN akun_admin a ON a.id = p.admin_id";
+
     //Segmen 1. Mengambil daftar paket MySQL
     public List<PaketAkses> daftarPaket() throws SQLException{
         String sql = "SELECT id, jenis, nama, harga, durasi_bulan, diarsipkan "
@@ -142,5 +147,41 @@ public class AksesDAO{
                 return null;
             }
         }
+    }
+    //Segemen 6 Mencari pembayaran yang masih berlaku pada tanggal tertentu
+    public PembayaranAkses cariAksesAktif(Pelanggan pelanggan, LocalDate tanggal) throws SQLException{
+        String sql = BAGIAN_SELECT
+        + " WHERE p.pelanggan_id = ? "
+        + "AND p.tanggal_mulai <= ? "
+        + "AND p.tanggal_akhir >= ? "
+        + "ORDER BY p.tanggal_akhir DESC "
+        + " LIMIT 1";
+        try (Connection koneksi = Database.getConnection();
+            PreparedStatement perintah = koneksi.prepareStatement(sql)
+        ){
+            perintah.setLong(1, pelanggan.getId());
+            perintah.setObject(2, tanggal);
+            perintah.setObject(3, tanggal);
+            try (ResultSet hasil = perintah.executeQuery()){
+                if(hasil.next()){
+                    return bacaPembayaran(hasil, pelanggan);
+                }
+                return null;
+            }
+        }
+    }
+    //Helper method bacaPembayaran()
+    private PembayaranAkses bacaPembayaran(ResultSet hasil, Pelanggan pelanggan) throws SQLException{
+        return new PembayaranAkses(
+            hasil.getLong("id"), 
+            pelanggan, hasil.getLong("paket_id"), 
+            hasil.getLong("admin_id"), 
+            hasil.getString("nama_admin"), 
+            hasil.getString("nama_paket"), 
+            hasil.getBigDecimal("harga"), 
+            hasil.getObject("waktu_bayar", java.time.LocalDateTime.class), 
+            hasil.getObject("tanggal_mulai", LocalDate.class), 
+            hasil.getObject("tanggal_akhir", LocalDate.class)
+        );
     }
 }
