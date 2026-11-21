@@ -175,7 +175,7 @@ public class PenjualanService {
     public BigDecimal totalPenjualanHariIni() {
         pastikanLogin();
         try {
-            return penjualanDAO.totalPenjualan(LocalDate.now());
+            return penjualanDAO.totalPenjualan(LocalDate.now(), LocalDate.now());
         } catch (SQLException e) {
             throw errorDatabase(e);
         }

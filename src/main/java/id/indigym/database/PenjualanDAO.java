@@ -145,11 +145,12 @@ public class PenjualanDAO {
         }
     }
 
-    public BigDecimal totalPenjualan(LocalDate tanggal) throws SQLException {
-        String sql = "SELECT COALESCE(SUM(total), 0) FROM transaksi_produk WHERE status = 'LUNAS' AND DATE(waktu) = ?";
+    public BigDecimal totalPenjualan(LocalDate dari, LocalDate sampai) throws SQLException {
+        String sql = "SELECT COALESCE(SUM(total), 0) FROM transaksi_produk WHERE status = 'LUNAS' AND DATE(waktu) BETWEEN ? AND ?";
         try (Connection koneksi = Database.getConnection();
              PreparedStatement perintah = koneksi.prepareStatement(sql)) {
-            perintah.setObject(1, tanggal);
+            perintah.setObject(1, dari);
+            perintah.setObject(2, sampai);
             ResultSet hasil = perintah.executeQuery();
             hasil.next();
             return hasil.getBigDecimal(1);
