@@ -1,0 +1,25 @@
+JetBrainsMono-Regular.ttf dan JetBrainsMono-Bold.ttf
+
+Font  : JetBrains Mono (versi Nerd Fonts "JetBrainsMonoNL Nerd Font Mono")
+Sumber: https://www.jetbrains.com/lp/mono/ dan https://www.nerdfonts.com/
+Lisensi: SIL Open Font License 1.1 (OFL-1.1)
+Teks lisensi lengkap: https://openfontlicense.org/open-font-license-official-text/
+
+Font ini boleh dipakai, disertakan, dan dibagikan bersama aplikasi, tetapi
+tidak boleh dijual tersendiri. Jika repositori dibuat publik, sertakan teks
+lisensi OFL lengkap dari tautan di atas di samping file ini.
+
+------------------------------------------------------------------------
+
+PlusJakartaSans-Regular.ttf, -Medium.ttf, -SemiBold.ttf, dan -Bold.ttf
+
+Font  : Plus Jakarta Sans (Tokotype)
+Sumber: https://github.com/tokotype/PlusJakartaSans
+Lisensi: SIL Open Font License 1.1 (OFL-1.1)
+Teks lisensi lengkap: OFL-PlusJakartaSans.txt di folder ini.
+
+------------------------------------------------------------------------
+
+Foto login: src/main/resources/gambar/login-gym.jpg
+Sumber: Unsplash, https://images.unsplash.com/photo-1534438327276-14e5300c3a48
+Lisensi: Unsplash License, boleh dipakai gratis tanpa atribusi wajib.
