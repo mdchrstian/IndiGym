@@ -184,4 +184,43 @@ public class AksesDAO{
             hasil.getObject("tanggal_akhir", LocalDate.class)
         );
     }
+
+    //Segmen 7 Menghitung jumlah pelanggan berbeda yang memiliki akses berlaku
+    public int hitungPelangganBerakses(LocalDate tanggal) throws SQLException{
+        String sql = "SELECT COUNT(DISTINCT pelanggan_id) "
+        + "FROM pembayaran_akses "
+        + "WHERE tanggal_mulai <= ? "
+        + "AND tanggal_akhir >= ?";
+        try (Connection koneksi = Database.getConnection();
+        PreparedStatement perintah = koneksi.prepareStatement(sql)
+        ){
+            perintah.setObject(1, tanggal);
+            perintah.setObject(2, tanggal);
+            try (ResultSet hasil =perintah.executeQuery()){
+                if (hasil.next()){
+                    return hasil.getInt(1);
+                }
+                return 0;
+            }
+        }
+    }
+
+    //Segmen 8 Mengambil Seluruh riwayat Pembayaran milik pelanggan
+    public List<PembayaranAkses> daftarPembayaran(Pelanggan pelanggan) throws SQLException{
+        String sql = BAGIAN_SELECT
+        + " WHERE p.pelanggan_id = ? "
+        + "ORDER BY p.id DESC";
+        List<PembayaranAkses> daftar = new ArrayList<>();
+        try (Connection koneksi = Database.getConnection();
+        PreparedStatement perintah = koneksi.prepareStatement(sql)
+        ){
+            perintah.setLong(1, pelanggan.getId());
+            try (ResultSet hasil =perintah.executeQuery()){
+                while (hasil.next()) {
+                    daftar.add(bacaPembayaran(hasil, pelanggan));
+                }
+            }
+        }
+        return daftar;
+    }
 }
