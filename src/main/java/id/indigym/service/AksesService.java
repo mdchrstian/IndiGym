@@ -13,12 +13,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 // Aturan bisnis untuk paket dan pembayaran akses.
-// Visit harian disimpan oleh PelangganService (bersama check-in pertama), memakai siapkanPembayaranHarian di sini.
 public class AksesService {
 
     private AksesDAO aksesDAO = new AksesDAO();
 
-    // ---------- Paket ----------
+    // Pengelolaan Paket
 
     public List<PaketAkses> daftarPaket() {
         pastikanLogin();
@@ -28,7 +27,7 @@ public class AksesService {
             throw errorDatabase(e);
         }
     }
-
+    // Menambahkan paket membership setelah validasi.
     public void tambahPaketMembership(String nama, BigDecimal harga, int durasiBulan) {
         pastikanLogin();
         if (nama == null || nama.isBlank()) {
@@ -47,7 +46,7 @@ public class AksesService {
         }
     }
 
-    // Paket yang diarsipkan tidak dijual lagi, tapi pembayaran lama tetap utuh.
+    // Paket harian tidak boleh diarsipkan.
     public void arsipkanPaket(PaketAkses paket) {
         pastikanLogin();
         if (paket == null) {
@@ -64,8 +63,7 @@ public class AksesService {
         }
     }
 
-    // ---------- Pembayaran membership ----------
-
+    // Pembayaran membership
     // Menghitung periode tanpa menyimpan apa pun, untuk ditampilkan sebelum petugas menekan Bayar.
     public PembayaranAkses pratinjauPeriode(Pelanggan pelanggan, PaketAkses paket) {
         pastikanLogin();
@@ -73,21 +71,19 @@ public class AksesService {
         pastikanPaketDipilih(paket);
 
         LocalDate mulai = hitungTanggalMulai(pelanggan);
-        LocalDate akhir = paket.hitungTanggalAkhir(mulai); // polimorfisme: cara hitung tergantung jenis paket
-
+        //Polimorfisme: perhitungan dilakukan oleh class paket.
+        LocalDate akhir = paket.hitungTanggalAkhir(mulai); 
         return new PembayaranAkses(null, pelanggan, paket.getId(), Sesi.adminLogin.getId(),
                 Sesi.adminLogin.getNama(), paket.getNama(), paket.getHarga(), null, mulai, akhir);
     }
 
-    // Mencatat pembayaran lunas dan mengembalikan pembayaran yang sudah tersimpan (siap dicetak).
+    // Mencatat pembayaran membership yang sudah diterima.
     public PembayaranAkses bayarMembership(Pelanggan pelanggan, PaketAkses paket) {
         PembayaranAkses pembayaran = pratinjauPeriode(pelanggan, paket);
 
-        // profil yang diarsipkan tidak boleh membeli akses baru
         if (pelanggan.isDiarsipkan()) {
             throw new IllegalArgumentException("Profil pelanggan diarsipkan. Aktifkan dulu sebelum membeli akses.");
         }
-        // paket harian hanya dijual lewat tombol "Jual visit harian" di layar Pelanggan
         if (!paket.getJenis().equals("MEMBERSHIP")) {
             throw new IllegalArgumentException("Paket harian dijual lewat tombol Jual visit harian di layar Pelanggan.");
         }
@@ -100,7 +96,7 @@ public class AksesService {
         }
         return pembayaran;
     }
-
+    // Mengambil riwayat pembayaran pelanggan.
     public List<PembayaranAkses> riwayatPembayaran(Pelanggan pelanggan) {
         pastikanLogin();
         pastikanPelangganDipilih(pelanggan);
@@ -111,7 +107,7 @@ public class AksesService {
         }
     }
 
-    // Akses yang berlaku hari ini, atau null. Dipakai check-in, visit, dan panel Pelanggan.
+    // Mencari akses pelanggan yang berlaku hari ini.
     public PembayaranAkses cariAksesAktifHariIni(Pelanggan pelanggan) {
         pastikanLogin();
         try {
@@ -121,7 +117,7 @@ public class AksesService {
         }
     }
 
-    // Jumlah pelanggan yang boleh masuk hari ini (untuk Beranda).
+    // Menghitung jumlah pelanggan yang memiliki akses hari ini.
     public int jumlahPelangganBeraksesHariIni() {
         pastikanLogin();
         try {
@@ -131,9 +127,8 @@ public class AksesService {
         }
     }
 
-    // ---------- Untuk Visit (dipakai PelangganService) ----------
-
-    // Paket harian yang masih dijual, atau null jika tidak ada.
+    //Untuk Visit (dipakai PelangganService)
+    //Mengambil paket harian yang masih tersedia.
     public PaketAkses cariPaketHarian() {
         for (PaketAkses paket : daftarPaket()) {
             if (paket.getJenis().equals("HARIAN")) {
@@ -143,8 +138,8 @@ public class AksesService {
         return null;
     }
 
-    // Menyusun pembayaran harian (berlaku hari ini saja) tanpa menyimpannya.
-    // Penyimpanan dilakukan PelangganService bersama check-in dalam satu transaksi.
+    // Menyiapkan pembayaran harian tanpa menyimpannya.
+    // Penyimpanan dilakukan bersama proses check-in oleh PelangganService.
     public PembayaranAkses siapkanPembayaranHarian(Pelanggan pelanggan) {
         pastikanLogin();
         PaketAkses paket = cariPaketHarian();
@@ -157,7 +152,7 @@ public class AksesService {
                 hariIni, paket.hitungTanggalAkhir(hariIni));
     }
 
-    // ---------- Aturan tanggal mulai ----------
+    //Aturan tanggal mulai
 
     // Mengambil data dari database, lalu menyerahkan keputusan ke tentukanTanggalMulai.
     private LocalDate hitungTanggalMulai(Pelanggan pelanggan) {
@@ -169,18 +164,18 @@ public class AksesService {
         }
     }
 
-    // Aturan tanggal mulai membership. Tidak menyentuh database, jadi bisa dites langsung (AksesServiceTest).
-    // Belum punya akses, atau semua aksesnya sudah lewat -> mulai hari ini.
-    // Masih punya akses (termasuk visit hari ini) -> mulai sehari setelah akses paling jauh berakhir.
+    // Menentukan tanggal mulai membership.
+    // Method static agar bisa diuji tanpa koneksi database.
     public static LocalDate tentukanTanggalMulai(LocalDate akhirTerjauh, LocalDate hariIni) {
+        // Belum memiliki akses atau seluruh akses sudah lewat.
         if (akhirTerjauh == null || akhirTerjauh.isBefore(hariIni)) {
             return hariIni;
         }
+        // Masih memiliki akses, mulai sehari setelah tanggal akhir.
         return akhirTerjauh.plusDays(1);
     }
 
-    // ---------- Pemeriksaan kecil ----------
-
+    // Validasi
     private void pastikanLogin() {
         if (!Sesi.sudahLogin()) {
             throw new IllegalArgumentException("Silakan login dulu.");
@@ -198,7 +193,7 @@ public class AksesService {
             throw new IllegalArgumentException("Pilih paket dulu.");
         }
     }
-
+    // Mengubah SQLException menjadi pesan kesalahan untuk lapisan aplikasi.
     private IllegalArgumentException errorDatabase(SQLException e) {
         return new IllegalArgumentException("Tidak bisa terhubung ke database: " + e.getMessage());
     }
