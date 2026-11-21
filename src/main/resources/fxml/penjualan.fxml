@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.PenjualanController">
+    <left>
+        <fx:include source="navigasi.fxml" />
+    </left>
+    <center>
+        <VBox styleClass="isi-layar">
+            <Label styleClass="label-atas" text="INDIGYM / KASIR" />
+            <Label styleClass="judul" text="Kasir dan produk" />
+            <Label styleClass="teks-redup" text="Jual produk ke pelanggan terdaftar atau pembeli umum. Stok baru berkurang saat checkout." />
+            <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
+
+            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <!-- ===== KASIR ===== -->
+                    <Tab text="Kasir">
+                        <HBox spacing="16">
+                            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="fieldCariKasir" onKeyReleased="#cariProduk" promptText="Ketik nama atau kode produk" styleClass="kolom-cari" />
+                                <TableView fx:id="tabelProdukKasir" onMouseClicked="#klikProdukKasir" VBox.vgrow="ALWAYS">
+                                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                    <placeholder><Label text="Tidak ada produk yang cocok." /></placeholder>
+                                    <columns>
+                                        <TableColumn prefWidth="90" styleClass="kolom-mono" text="Kode">
+                                            <cellValueFactory><PropertyValueFactory property="kode" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Produk">
+                                            <cellValueFactory><PropertyValueFactory property="nama" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="110" styleClass="kolom-angka" text="Harga">
+                                            <cellValueFactory><PropertyValueFactory property="hargaTeks" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="70" styleClass="kolom-angka" text="Stok">
+                                            <cellValueFactory><PropertyValueFactory property="stok" /></cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label styleClass="label-bagian" text="JUMLAH" />
+                                    <TextField fx:id="fieldJumlah" onAction="#tambahKeKeranjang" prefWidth="70" styleClass="kolom-cari" text="1" />
+                                    <Button minWidth="-Infinity" onAction="#tambahKeKeranjang" text="Tambah ke keranjang" />
+                                    <Label styleClass="teks-redup" text="atau klik dua kali produk" />
+                                </HBox>
+                            </VBox>
+
+                            <VBox minWidth="370" prefWidth="390" spacing="10" styleClass="panel">
+                                <Label styleClass="label-bagian" text="KERANJANG" />
+                                <TableView fx:id="tabelKeranjang" VBox.vgrow="ALWAYS">
+                                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                    <placeholder><Label text="Keranjang kosong." /></placeholder>
+                                    <columns>
+                                        <TableColumn prefWidth="150" text="Produk">
+                                            <cellValueFactory><PropertyValueFactory property="namaProduk" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="50" styleClass="kolom-angka" text="Jml">
+                                            <cellValueFactory><PropertyValueFactory property="jumlah" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" styleClass="kolom-angka" text="Subtotal">
+                                            <cellValueFactory><PropertyValueFactory property="subtotalTeks" /></cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <HBox spacing="8">
+                                    <Button minWidth="-Infinity" onAction="#hapusDariKeranjang" text="Hapus baris" />
+                                    <Button minWidth="-Infinity" onAction="#kosongkanKeranjang" text="Kosongkan" />
+                                </HBox>
+                                <VBox styleClass="kotak-ringkasan">
+                                    <Label styleClass="label-bagian" text="TOTAL" />
+                                    <Label fx:id="labelTotal" styleClass="angka-besar" text="Rp 0" />
+                                </VBox>
+                                <Label styleClass="label-bagian" text="PEMBELI (KOSONGKAN UNTUK PEMBELI UMUM)" />
+                                <TextField fx:id="fieldKodePelanggan" promptText="Kode pelanggan, contoh PLG1" styleClass="kolom-cari" />
+                                <Button fx:id="tombolCheckout" maxWidth="Infinity" onAction="#checkout" styleClass="tombol-utama" text="Checkout dan terima pembayaran" />
+                            </VBox>
+                        </HBox>
+                    </Tab>
+
+                    <!-- ===== PRODUK DAN STOK ===== -->
+                    <Tab text="Produk dan stok">
+                        <VBox spacing="10">
+                            <TableView fx:id="tabelProdukKelola" onKeyReleased="#pilihProdukKelola" onMouseClicked="#pilihProdukKelola" VBox.vgrow="ALWAYS">
+                                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                <placeholder><Label text="Belum ada produk." /></placeholder>
+                                <columns>
+                                    <TableColumn prefWidth="110" styleClass="kolom-mono" text="Kode">
+                                        <cellValueFactory><PropertyValueFactory property="kode" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="280" text="Produk">
+                                        <cellValueFactory><PropertyValueFactory property="nama" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="140" styleClass="kolom-angka" text="Harga">
+                                        <cellValueFactory><PropertyValueFactory property="hargaTeks" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="90" styleClass="kolom-angka" text="Stok">
+                                        <cellValueFactory><PropertyValueFactory property="stok" /></cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+
+                            <Label fx:id="labelProdukTerpilih" styleClass="label-bagian" text="PRODUK TERPILIH: BELUM ADA (KLIK BARIS DI TABEL)" />
+                            <HBox spacing="8">
+                                <TextField fx:id="fieldNamaProduk" promptText="Nama" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="fieldHargaProduk" promptText="Harga" />
+                                <Button minWidth="-Infinity" fx:id="tombolSimpanProduk" disable="true" onAction="#simpanPerubahanProduk" text="Simpan perubahan" />
+                                <TextField fx:id="fieldTambahStok" prefWidth="110" promptText="Stok masuk" />
+                                <Button minWidth="-Infinity" fx:id="tombolTambahStok" disable="true" onAction="#tambahStok" text="Tambah stok" />
+                                <Button minWidth="-Infinity" fx:id="tombolArsipProduk" disable="true" onAction="#arsipkanProduk" styleClass="tombol-bahaya" text="Arsipkan" />
+                            </HBox>
+
+                            <Region styleClass="garis-putus" />
+                            <Label styleClass="label-bagian" text="PRODUK BARU" />
+                            <HBox spacing="8">
+                                <TextField fx:id="fieldKodeProduk" prefWidth="120" promptText="Kode: PRD004" styleClass="kolom-cari" />
+                                <TextField fx:id="fieldNamaProdukBaru" promptText="Nama" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="fieldHargaProdukBaru" promptText="Harga" />
+                                <TextField fx:id="fieldStokAwal" prefWidth="100" promptText="Stok awal" />
+                                <Button minWidth="-Infinity" onAction="#tambahProduk" styleClass="tombol-utama" text="Tambah produk" />
+                            </HBox>
+                        </VBox>
+                    </Tab>
+
+                    <!-- ===== RIWAYAT ===== -->
+                    <Tab text="Riwayat penjualan">
+                        <VBox spacing="10">
+                            <TableView fx:id="tabelRiwayat" onMouseClicked="#klikRiwayat" VBox.vgrow="ALWAYS">
+                                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                <placeholder><Label text="Belum ada penjualan." /></placeholder>
+                                <columns>
+                                    <TableColumn prefWidth="60" styleClass="kolom-mono" text="No.">
+                                        <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="150" styleClass="kolom-mono" text="Waktu">
+                                        <cellValueFactory><PropertyValueFactory property="waktuTeks" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="230" text="Pembeli">
+                                        <cellValueFactory><PropertyValueFactory property="namaPelanggan" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="130" styleClass="kolom-angka" text="Total">
+                                        <cellValueFactory><PropertyValueFactory property="totalTeks" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="90" styleClass="kolom-mono" text="Status">
+                                        <cellValueFactory><PropertyValueFactory property="status" /></cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Button minWidth="-Infinity" onAction="#lihatStruk" text="Lihat struk" />
+                                <Label styleClass="teks-redup" text="atau klik dua kali transaksi" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="fieldAlasanBatal" prefWidth="280" promptText="Alasan pembatalan (wajib)" />
+                                <Button minWidth="-Infinity" onAction="#batalkanTransaksi" styleClass="tombol-bahaya" text="Batalkan transaksi" />
+                            </HBox>
+                        </VBox>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
+    </center>
+</BorderPane>
