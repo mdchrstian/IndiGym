@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.LoginController">
+    <VBox maxHeight="-Infinity" maxWidth="380" spacing="14">
+        <HBox>
+            <Label styleClass="logo" text="indigym" />
+            <Label styleClass="logo-kursor" text="_" />
+        </HBox>
+        <VBox spacing="10" styleClass="panel">
+            <Label styleClass="label-atas" text="PANEL PETUGAS" />
+            <Label styleClass="judul" text="Masuk" />
+            <Label styleClass="teks-redup" text="Gunakan akun petugas yang dibuat oleh SuperAdmin." wrapText="true" />
+            <Region minHeight="4" />
+            <Label styleClass="label-bagian" text="USERNAME" />
+            <TextField fx:id="fieldUsername" promptText="contoh: superadmin" styleClass="kolom-cari" />
+            <Label styleClass="label-bagian" text="PASSWORD" />
+            <PasswordField fx:id="fieldPassword" onAction="#masuk" />
+            <Region minHeight="4" />
+            <Button defaultButton="true" maxWidth="Infinity" onAction="#masuk" styleClass="tombol-utama" text="Masuk" />
+            <Label fx:id="labelError" managed="false" minHeight="-Infinity" styleClass="pesan-error" visible="false" wrapText="true" />
+        </VBox>
+        <Label styleClass="label-bagian" text="v1.0 / PROYEK AKHIR PBO" />
+    </VBox>
+</StackPane>
