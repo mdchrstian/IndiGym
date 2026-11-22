@@ -25,7 +25,6 @@
             <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
 
             <HBox spacing="24" VBox.vgrow="ALWAYS">
-                <!-- Kiri: akun yang sedang login (untuk semua petugas) -->
                 <VBox maxHeight="-Infinity" minWidth="300" prefWidth="340" styleClass="panel">
                     <VBox spacing="4">
                         <Label fx:id="labelNamaSaya" styleClass="judul-kartu" />
@@ -39,7 +38,6 @@
                     <Button maxWidth="Infinity" onAction="#gantiPasswordSendiri" styleClass="tombol-utama" text="Ganti password" />
                 </VBox>
 
-                <!-- Kanan: kelola akun Admin (hanya SuperAdmin; disembunyikan AdminController untuk Admin biasa) -->
                 <VBox fx:id="kotakKelola" spacing="16" HBox.hgrow="ALWAYS">
                     <TableView fx:id="tabelAdmin" onKeyReleased="#pilihAdmin" onMouseClicked="#pilihAdmin" VBox.vgrow="ALWAYS">
                         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>

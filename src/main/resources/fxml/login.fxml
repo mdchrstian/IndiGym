@@ -12,7 +12,6 @@
 <?import javafx.scene.shape.SVGPath?>
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.LoginController">
-    <!-- Kiri: foto gym (lihat .foto-login di CSS), lapisan gelap, lalu nama aplikasi dan judul -->
     <StackPane prefWidth="560" styleClass="foto-login" HBox.hgrow="ALWAYS">
         <Region styleClass="lapisan-login" />
         <VBox styleClass="panel-login-gambar">
@@ -27,7 +26,6 @@
         </VBox>
     </StackPane>
 
-    <!-- Kanan: formulir masuk -->
     <StackPane prefWidth="520" HBox.hgrow="ALWAYS">
         <VBox maxHeight="-Infinity" maxWidth="360" spacing="20">
             <VBox spacing="4">

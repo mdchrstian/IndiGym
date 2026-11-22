@@ -11,8 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<!-- Navigasi samping. Disisipkan ke setiap layar dengan <fx:include source="navigasi.fxml" />.
-     Ikon: SVGPath 24x24 diperkecil menjadi 18px (skala 0,75). -->
 <VBox minWidth="240" prefWidth="240" styleClass="navigasi" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.NavigasiController">
     <HBox alignment="CENTER_LEFT" minHeight="32" spacing="8">
         <padding><Insets left="12" /></padding>

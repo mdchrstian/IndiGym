@@ -16,7 +16,6 @@
     </left>
     <center>
         <VBox styleClass="isi-layar">
-            <!-- Tanggal menjadi judul, sapaan menjadi teks kecil di atasnya -->
             <VBox spacing="4">
                 <Label fx:id="labelSelamat" styleClass="subjudul" />
                 <Label fx:id="labelTanggal" styleClass="judul" />
@@ -24,7 +23,6 @@
             <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
             <Region minHeight="8" />
 
-            <!-- Strip angka hari ini: satu kartu, check-in paling besar -->
             <HBox styleClass="kartu, strip">
                 <VBox maxWidth="Infinity" prefWidth="420" styleClass="sel-strip" HBox.hgrow="ALWAYS">
                     <Label styleClass="subjudul" text="Check-in hari ini" />
