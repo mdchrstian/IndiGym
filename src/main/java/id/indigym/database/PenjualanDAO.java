@@ -103,7 +103,7 @@ public class PenjualanDAO {
 
     public void simpanTransaksi(Transaksi transaksi) throws SQLException {
         try (Connection koneksi = Database.getConnection()) {
-            koneksi.setAutoCommit(false); // mulai transaksi database
+            koneksi.setAutoCommit(false);
             try {
                 simpanKepalaTransaksi(koneksi, transaksi);
                 for (DetailTransaksi detail : transaksi.getDaftarDetail()) {
