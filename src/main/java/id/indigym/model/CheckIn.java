@@ -8,8 +8,7 @@ public class CheckIn {
     public static final String DIIZINKAN = "DIIZINKAN";
     public static final String DITOLAK = "DITOLAK";
 
-    private static final DateTimeFormatter FORMAT_WAKTU =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private static final DateTimeFormatter FORMAT_WAKTU = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     private Long id;
     private Pelanggan pelanggan;
@@ -19,9 +18,10 @@ public class CheckIn {
     private LocalDateTime waktu;
     private String hasil;
     private String alasan;
+    private String namaPaket;
 
-    public CheckIn(Long id, Pelanggan pelanggan, Long adminId, String namaAdmin,
-                   Long pembayaranId, LocalDateTime waktu, String hasil, String alasan) {
+    public CheckIn(Long id, Pelanggan pelanggan, Long adminId, String namaAdmin, Long pembayaranId,
+                   LocalDateTime waktu, String hasil, String alasan) {
         this.id = id;
         this.pelanggan = pelanggan;
         this.adminId = adminId;
@@ -33,14 +33,17 @@ public class CheckIn {
     }
 
     public boolean diizinkan() {
-        return DIIZINKAN.equals(hasil);
+        return hasil.equals(DIIZINKAN);
     }
 
     public String getKeterangan() {
-        if (diizinkan()) {
-            return hasil + " / akses no. " + pembayaranId;
+        if (!diizinkan()) {
+            return "Ditolak: " + alasan;
         }
-        return hasil + " / " + alasan;
+        if (namaPaket == null) {
+            return "Diizinkan";
+        }
+        return "Diizinkan, " + namaPaket;
     }
 
     public String getWaktuTeks() {
@@ -73,6 +76,14 @@ public class CheckIn {
 
     public void setPembayaranId(Long pembayaranId) {
         this.pembayaranId = pembayaranId;
+    }
+
+    public String getNamaPaket() {
+        return namaPaket;
+    }
+
+    public void setNamaPaket(String namaPaket) {
+        this.namaPaket = namaPaket;
     }
 
     public LocalDateTime getWaktu() {
