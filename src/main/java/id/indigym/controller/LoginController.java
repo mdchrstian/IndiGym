@@ -22,6 +22,8 @@ public class LoginController {
 
     private AkunService akunService = new AkunService();
 
+    // Dipanggil saat tombol Masuk diklik atau Enter ditekan di kolom password.
+    @FXML
     private void masuk() {
         tampilkanError(null);
         try {
