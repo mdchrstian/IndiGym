@@ -2,8 +2,6 @@ package id.indigym.model;
 
 import java.math.BigDecimal;
 
-// Satu baris produk di dalam transaksi (atau di keranjang).
-// Nama dan harga disalin dari produk agar struk lama tidak berubah saat katalog diubah.
 public class DetailTransaksi {
 
     private Long produkId;
