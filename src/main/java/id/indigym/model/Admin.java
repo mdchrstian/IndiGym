@@ -1,5 +1,6 @@
 package id.indigym.model;
 
+// Petugas gym biasa. Admin mewarisi (extends) Manusia.
 public class Admin extends Manusia {
 
     private String username;
@@ -13,14 +14,17 @@ public class Admin extends Manusia {
         this.aktif = aktif;
     }
 
+    // Admin biasa tidak boleh mengelola akun Admin lain.
     public boolean bolehKelolaAdmin() {
         return false;
     }
 
+    // Nama peran yang disimpan di database.
     public String getRole() {
         return "ADMIN";
     }
 
+    // Teks untuk kolom Status di tabel.
     public String getStatus() {
         if (aktif) {
             return "Aktif";

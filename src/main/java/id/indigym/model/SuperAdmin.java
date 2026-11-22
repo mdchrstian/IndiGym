@@ -1,5 +1,7 @@
 package id.indigym.model;
 
+// SuperAdmin adalah Admin yang punya kewenangan lebih.
+// Method yang ditulis ulang (override) memakai @Override: inilah contoh polimorfisme.
 public class SuperAdmin extends Admin {
 
     public SuperAdmin(Long id, String nama, String username, String passwordHash, boolean aktif) {

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+// Beranda: sapaan, ringkasan angka hari ini, dan pintasan ke tugas yang paling sering.
 public class DashboardController {
 
     @FXML
@@ -29,9 +30,11 @@ public class DashboardController {
     private void initialize() {
         labelSelamat.setText("Halo, " + Sesi.adminLogin.getNama());
 
+        // contoh hasil: "Selasa, 10 November 2026"
         DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale.of("id", "ID"));
         labelTanggal.setText(LocalDate.now().format(formatTanggal));
 
+        // TODO: panggil muatRingkasan() setelah service Pelanggan, Akses, dan Penjualan selesai.
     }
 
     @FXML
