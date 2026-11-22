@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.LaporanController">
+    <left>
+        <fx:include source="navigasi.fxml" />
+    </left>
+    <center>
+        <VBox styleClass="isi-layar">
+            <VBox spacing="4">
+                <Label styleClass="judul" text="Laporan pendapatan" />
+                <Label fx:id="labelPeriode" styleClass="subjudul, teks-mono" />
+            </VBox>
+            <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
+
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="panel, toolbar">
+                <HBox styleClass="segmen">
+                    <Button fx:id="tombolHariIni" minWidth="-Infinity" onAction="#pilihHariIni" text="Hari ini" />
+                    <Button fx:id="tombolBulanIni" minWidth="-Infinity" onAction="#pilihBulanIni" text="Bulan ini" />
+                    <Button fx:id="tombolTahunIni" minWidth="-Infinity" onAction="#pilihTahunIni" text="Tahun ini" />
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label styleClass="teks-redup" text="Dari" />
+                <DatePicker fx:id="tanggalDari" prefWidth="160" />
+                <Label styleClass="teks-redup" text="sampai" />
+                <DatePicker fx:id="tanggalSampai" prefWidth="160" />
+                <Button minWidth="-Infinity" onAction="#tampilkan" styleClass="tombol-utama" text="Tampilkan" />
+            </HBox>
+
+            <VBox styleClass="kotak-total">
+                <VBox spacing="8">
+                    <Label text="Total pendapatan" />
+                    <Label fx:id="labelTotal" styleClass="angka-total" text="Rp 0" />
+                </VBox>
+                <Region styleClass="garis-putus" />
+                <HBox spacing="24">
+                    <VBox maxWidth="Infinity" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Membership" />
+                        <Label fx:id="labelMembership" styleClass="angka-rincian" text="Rp 0" />
+                    </VBox>
+                    <VBox maxWidth="Infinity" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Visit harian" />
+                        <Label fx:id="labelHarian" styleClass="angka-rincian" text="Rp 0" />
+                    </VBox>
+                    <VBox maxWidth="Infinity" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Penjualan produk" />
+                        <Label fx:id="labelProduk" styleClass="angka-rincian" text="Rp 0" />
+                        <Label styleClass="teks-meta" text="tidak termasuk yang dibatalkan" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
