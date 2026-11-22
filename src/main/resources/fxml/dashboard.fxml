@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.DashboardController">
     <left>
@@ -13,62 +16,70 @@
     </left>
     <center>
         <VBox styleClass="isi-layar">
-            <Label styleClass="label-atas" text="INDIGYM / BERANDA" />
-            <Label fx:id="labelSelamat" styleClass="judul" />
-            <Label fx:id="labelTanggal" styleClass="teks-mono, teks-redup" />
-            <Region minHeight="6" />
+            <!-- Tanggal menjadi judul, sapaan menjadi teks kecil di atasnya -->
+            <VBox spacing="4">
+                <Label fx:id="labelSelamat" styleClass="subjudul" />
+                <Label fx:id="labelTanggal" styleClass="judul" />
+            </VBox>
             <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
+            <Region minHeight="8" />
 
-            <Label styleClass="label-bagian" text="RINGKASAN HARI INI" />
-            <HBox spacing="12">
-                <VBox styleClass="kartu" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                    <Label styleClass="label-bagian" text="CHECK-IN DIIZINKAN" />
-                    <Label fx:id="labelJumlahCheckIn" styleClass="angka-besar" text="0" />
-                    <Label styleClass="teks-redup" text="kunjungan yang masuk hari ini" />
+            <!-- Strip angka hari ini: satu kartu, check-in paling besar -->
+            <HBox styleClass="kartu, strip">
+                <VBox maxWidth="Infinity" prefWidth="420" styleClass="sel-strip" HBox.hgrow="ALWAYS">
+                    <Label styleClass="subjudul" text="Check-in hari ini" />
+                    <Label fx:id="labelJumlahCheckIn" styleClass="angka-utama" text="0" />
+                    <Label styleClass="teks-meta" text="pelanggan sudah datang" />
                 </VBox>
-                <VBox styleClass="kartu" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                    <Label styleClass="label-bagian" text="PELANGGAN BOLEH MASUK" />
+                <VBox maxWidth="Infinity" prefWidth="320" styleClass="sel-strip, garis-kiri" HBox.hgrow="ALWAYS">
+                    <Label styleClass="subjudul" text="Akses aktif" />
                     <Label fx:id="labelJumlahBerakses" styleClass="angka-besar" text="0" />
-                    <Label styleClass="teks-redup" text="punya membership atau visit yang berlaku" />
+                    <Label styleClass="teks-meta" text="membership atau visit yang berlaku" />
                 </VBox>
-                <VBox styleClass="kartu" HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                    <Label styleClass="label-bagian" text="PENJUALAN PRODUK" />
+                <VBox maxWidth="Infinity" prefWidth="320" styleClass="sel-strip, garis-kiri" HBox.hgrow="ALWAYS">
+                    <Label styleClass="subjudul" text="Penjualan produk" />
                     <Label fx:id="labelTotalPenjualan" styleClass="angka-besar" text="Rp 0" />
-                    <Label styleClass="teks-redup" text="transaksi lunas, tanpa yang dibatalkan" />
+                    <Label styleClass="teks-meta" text="tidak termasuk yang dibatalkan" />
                 </VBox>
             </HBox>
 
-            <Region minHeight="6" />
-            <Label styleClass="label-bagian" text="APA YANG INGIN DILAKUKAN?" />
-            <HBox spacing="12">
-                <Button maxWidth="Infinity" onAction="#bukaPelanggan" prefHeight="112" styleClass="kartu-aksi" HBox.hgrow="ALWAYS">
+            <Region minHeight="8" />
+            <Label styleClass="label-bagian" text="Pintasan" />
+            <VBox styleClass="daftar-pintasan">
+                <Button maxWidth="Infinity" onAction="#bukaPelanggan" styleClass="baris-pintasan, baris-pertama">
                     <graphic>
-                        <VBox spacing="6">
-                            <Label styleClass="label-atas" text="&gt; PELANGGAN" />
-                            <Label styleClass="judul-kartu" text="Check-in pelanggan" />
-                            <Label styleClass="teks-redup" text="Lihat akses hari ini lalu catat kedatangan." />
-                        </VBox>
+                        <HBox alignment="CENTER_LEFT" spacing="16">
+                            <StackPane styleClass="kotak-ikon"><Group><SVGPath content="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-4M10 17l5 -5l-5 -5M15 12H3" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane>
+                            <VBox spacing="2">
+                                <Label styleClass="nama-pintasan" text="Check-in pelanggan" />
+                                <Label styleClass="teks-redup" text="Cari pelanggan, lalu catat kedatangannya" />
+                            </VBox>
+                        </HBox>
                     </graphic>
                 </Button>
-                <Button maxWidth="Infinity" onAction="#bukaAkses" prefHeight="112" styleClass="kartu-aksi" HBox.hgrow="ALWAYS">
+                <Button maxWidth="Infinity" onAction="#bukaAkses" styleClass="baris-pintasan, garis-atas">
                     <graphic>
-                        <VBox spacing="6">
-                            <Label styleClass="label-atas" text="&gt; MEMBERSHIP" />
-                            <Label styleClass="judul-kartu" text="Jual membership" />
-                            <Label styleClass="teks-redup" text="Pilih paket, cek periode, terima pembayaran." />
-                        </VBox>
+                        <HBox alignment="CENTER_LEFT" spacing="16">
+                            <StackPane styleClass="kotak-ikon"><Group><SVGPath content="M4.5 5h15a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-15a2 2 0 0 1 -2 -2V7a2 2 0 0 1 2 -2zM2.5 10h19M6.5 15h4" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane>
+                            <VBox spacing="2">
+                                <Label styleClass="nama-pintasan" text="Jual membership" />
+                                <Label styleClass="teks-redup" text="Pilih pelanggan dan paket, lalu bayar" />
+                            </VBox>
+                        </HBox>
                     </graphic>
                 </Button>
-                <Button maxWidth="Infinity" onAction="#bukaPenjualan" prefHeight="112" styleClass="kartu-aksi" HBox.hgrow="ALWAYS">
+                <Button maxWidth="Infinity" onAction="#bukaPenjualan" styleClass="baris-pintasan, garis-atas, baris-terakhir">
                     <graphic>
-                        <VBox spacing="6">
-                            <Label styleClass="label-atas" text="&gt; KASIR" />
-                            <Label styleClass="judul-kartu" text="Jual produk" />
-                            <Label styleClass="teks-redup" text="Isi keranjang, checkout, cetak struk." />
-                        </VBox>
+                        <HBox alignment="CENTER_LEFT" spacing="16">
+                            <StackPane styleClass="kotak-ikon"><Group><SVGPath content="M7.7 20a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M16.7 20a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M2.5 3.5h2.6l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5 -1.1L21 7.5H6" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane>
+                            <VBox spacing="2">
+                                <Label styleClass="nama-pintasan" text="Jual produk" />
+                                <Label styleClass="teks-redup" text="Masukkan produk ke keranjang, lalu bayar" />
+                            </VBox>
+                        </HBox>
                     </graphic>
                 </Button>
-            </HBox>
+            </VBox>
         </VBox>
     </center>
 </BorderPane>

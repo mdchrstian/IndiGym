@@ -1,33 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
-<VBox minWidth="210" prefWidth="210" styleClass="navigasi" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.NavigasiController">
-    <HBox>
+<!-- Navigasi samping. Disisipkan ke setiap layar dengan <fx:include source="navigasi.fxml" />.
+     Ikon: SVGPath 24x24 diperkecil menjadi 18px (skala 0,75). -->
+<VBox minWidth="240" prefWidth="240" styleClass="navigasi" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.NavigasiController">
+    <HBox alignment="CENTER_LEFT" minHeight="32" spacing="8">
+        <padding><Insets left="12" /></padding>
+        <Group styleClass="logo-ikon"><SVGPath content="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11" scaleX="0.85" scaleY="0.85" styleClass="ikon" /></Group>
         <Label styleClass="logo" text="indigym" />
-        <Label styleClass="logo-kursor" text="_" />
     </HBox>
-    <Label styleClass="label-bagian" text="ADMINISTRASI GYM" />
-    <Region minHeight="18" />
-    <Region styleClass="garis-putus" />
-    <Region minHeight="10" />
+    <Region minHeight="20" />
 
-    <Button fx:id="tombolBeranda" maxWidth="Infinity" onAction="#bukaBeranda" styleClass="tombol-navigasi" text="Beranda" />
-    <Button fx:id="tombolPelanggan" maxWidth="Infinity" onAction="#bukaPelanggan" styleClass="tombol-navigasi" text="Pelanggan" />
-    <Button fx:id="tombolAkses" maxWidth="Infinity" onAction="#bukaAkses" styleClass="tombol-navigasi" text="Membership" />
-    <Button fx:id="tombolPenjualan" maxWidth="Infinity" onAction="#bukaPenjualan" styleClass="tombol-navigasi" text="Kasir dan produk" />
-    <Button fx:id="tombolAkun" maxWidth="Infinity" onAction="#bukaAkun" styleClass="tombol-navigasi" text="Akun" />
+    <Button fx:id="tombolBeranda" maxWidth="Infinity" onAction="#bukaBeranda" styleClass="tombol-navigasi" text="Beranda">
+        <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+    </Button>
+    <Button fx:id="tombolPelanggan" maxWidth="Infinity" onAction="#bukaPelanggan" styleClass="tombol-navigasi" text="Pelanggan">
+        <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M5.5 8a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0 -7 0M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.7 3 2.5 3.5 5.2" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+    </Button>
+    <Button fx:id="tombolAkses" maxWidth="Infinity" onAction="#bukaAkses" styleClass="tombol-navigasi" text="Membership">
+        <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M4.5 5h15a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-15a2 2 0 0 1 -2 -2V7a2 2 0 0 1 2 -2zM2.5 10h19M6.5 15h4" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+    </Button>
+    <Button fx:id="tombolPenjualan" maxWidth="Infinity" onAction="#bukaPenjualan" styleClass="tombol-navigasi" text="Kasir dan produk">
+        <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M7.7 20a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M16.7 20a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M2.5 3.5h2.6l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5 -1.1L21 7.5H6" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+    </Button>
+    <Button fx:id="tombolLaporan" maxWidth="Infinity" onAction="#bukaLaporan" styleClass="tombol-navigasi" text="Laporan">
+        <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M3.5 3.5v17h17M8 16v-5M12.5 16V7M17 16v-8" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+    </Button>
+    <Button fx:id="tombolAkun" maxWidth="Infinity" onAction="#bukaAkun" styleClass="tombol-navigasi" text="Akun">
+        <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M4 15a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M11 12l9 -9M16.5 6.5L19 9M14 9l2 2" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+    </Button>
 
     <Region VBox.vgrow="ALWAYS" />
-    <Region styleClass="garis-putus" />
-    <Region minHeight="10" />
-    <Label styleClass="label-bagian" text="MASUK SEBAGAI" />
-    <Label fx:id="labelPetugas" styleClass="judul-kartu" wrapText="true" />
-    <Label fx:id="labelPeran" styleClass="label-atas" />
-    <Region minHeight="8" />
-    <Button maxWidth="Infinity" onAction="#keluar" text="Keluar" />
+    <Region styleClass="garis-sisi" />
+    <Region minHeight="12" />
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <padding><Insets left="12" /></padding>
+        <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
+            <Label fx:id="labelPetugas" styleClass="nama-petugas" wrapText="true" />
+            <Label fx:id="labelPeran" minHeight="-Infinity" styleClass="peran-petugas" wrapText="true" />
+        </VBox>
+        <Button accessibleText="Keluar" onAction="#keluar" styleClass="tombol-keluar">
+            <tooltip><Tooltip text="Keluar" /></tooltip>
+            <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M9 21H5a1 1 0 0 1 -1 -1V4a1 1 0 0 1 1 -1h4M16 17l5 -5l-5 -5M21 12H9" scaleX="0.75" scaleY="0.75" styleClass="ikon" /></Group></StackPane></graphic>
+        </Button>
+    </HBox>
 </VBox>
