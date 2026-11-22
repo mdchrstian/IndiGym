@@ -14,18 +14,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Layar Membership: pilih pelanggan (kiri), pilih paket dan bayar (kanan).
 public class AksesController {
 
     @FXML
     private Label labelPesan;
 
-    // tab Jual membership
     @FXML
     private TextField fieldCari;
     @FXML
@@ -47,7 +46,11 @@ public class AksesController {
     @FXML
     private TableView<PembayaranAkses> tabelRiwayat;
 
-    // tab Daftar paket
+    @FXML
+    private TableView<PembayaranAkses> tabelMembershipAktif;
+    @FXML
+    private Label labelJumlahMember;
+
     @FXML
     private TableView<PaketAkses> tabelPaket;
     @FXML
@@ -64,22 +67,23 @@ public class AksesController {
     private AksesService aksesService = new AksesService();
     private PelangganService pelangganService = new PelangganService();
 
+    private boolean datangDariPelanggan = false;
+
     @FXML
     private void initialize() {
         muatPelanggan();
         muatPaket();
+        muatMembershipAktif();
 
-        // datang dari tombol "Jual membership" di layar Pelanggan: langsung pilih pelanggannya
         if (MainApp.pelangganDibawa != null) {
             fieldCari.setText(MainApp.pelangganDibawa.getKode());
             muatPelanggan();
             pilihPelangganDenganId(MainApp.pelangganDibawa.getId());
             MainApp.pelangganDibawa = null;
+            datangDariPelanggan = true;
         }
         perbaruiRingkasan();
     }
-
-    // Tab Jual membership
 
     @FXML
     private void cariPelanggan() {
@@ -92,43 +96,50 @@ public class AksesController {
         perbaruiRingkasan();
     }
 
-    // Mengisi kotak "PERIKSA SEBELUM BAYAR". Tombol bayar hanya menyala jika pelanggan dan paket sudah dipilih.
     @FXML
     private void perbaruiRingkasan() {
         Pelanggan pelanggan = tabelPelanggan.getSelectionModel().getSelectedItem();
         PaketAkses paket = comboPaket.getValue();
 
         if (pelanggan == null) {
-            labelPelangganRingkas.setText("Pelanggan : belum dipilih");
+            labelPelangganRingkas.setText("Pelanggan: belum dipilih");
         } else {
-            labelPelangganRingkas.setText("Pelanggan : " + pelanggan.tampilkanInfo());
+            labelPelangganRingkas.setText("Pelanggan: " + pelanggan.tampilkanInfo());
         }
         if (paket == null) {
-            labelPaketRingkas.setText("Paket     : belum dipilih");
+            labelPaketRingkas.setText("Paket: belum dipilih");
             labelHargaRingkas.setText("Rp 0");
         } else {
-            labelPaketRingkas.setText("Paket     : " + paket.getNama() + " (" + paket.getDurasiTeks() + ")");
+            labelPaketRingkas.setText("Paket: " + paket.getNama() + " (" + paket.getDurasiTeks() + ")");
             labelHargaRingkas.setText(paket.getHargaTeks());
         }
 
         tombolBayar.setDisable(pelanggan == null || paket == null);
         labelPeriodeRingkas.setText("");
-        labelCatatanRingkas.setText("Pilih pelanggan dan paket untuk melihat periode berlakunya.");
+        labelCatatanRingkas.setText("");
         if (pelanggan == null || paket == null) {
             return;
         }
 
         try {
-            PembayaranAkses pratinjau = aksesService.pratinjauPeriode(pelanggan, paket);
-            labelPeriodeRingkas.setText("Berlaku   : " + pratinjau.getPeriode());
-            if (pratinjau.getTanggalMulai().isAfter(LocalDate.now())) {
-                labelCatatanRingkas.setText("Dimulai setelah akses yang sekarang berakhir, jadi tidak ada hari yang terbuang.");
-            } else {
-                labelCatatanRingkas.setText("Dimulai hari ini.");
-            }
             if (pelanggan.isDiarsipkan()) {
                 tombolBayar.setDisable(true);
-                labelCatatanRingkas.setText("Profil diarsipkan. Aktifkan kembali di layar Pelanggan sebelum membeli.");
+                labelCatatanRingkas.setText("Profil ini diarsipkan. Aktifkan lagi di layar Pelanggan.");
+                return;
+            }
+            PembayaranAkses membershipLama = aksesService.cariMembershipBelumBerakhir(pelanggan);
+            if (membershipLama != null) {
+                tombolBayar.setDisable(true);
+                labelCatatanRingkas.setText("Masih punya membership (" + membershipLama.getPeriode()
+                        + "). Bisa beli lagi setelah itu berakhir.");
+                return;
+            }
+
+            PembayaranAkses pratinjau = aksesService.pratinjauPeriode(pelanggan, paket);
+            labelPeriodeRingkas.setText("Berlaku: " + pratinjau.getPeriode());
+
+            if (pratinjau.getTanggalMulai().isAfter(LocalDate.now())) {
+                labelCatatanRingkas.setText("Mulai besok, karena hari ini sudah memakai visit harian.");
             }
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
@@ -136,26 +147,39 @@ public class AksesController {
     }
 
     @FXML
-    private void bayar() {
+    private void bayar() throws IOException {
         Pelanggan pelanggan = tabelPelanggan.getSelectionModel().getSelectedItem();
         PaketAkses paket = comboPaket.getValue();
         try {
             PembayaranAkses pratinjau = aksesService.pratinjauPeriode(pelanggan, paket);
-            if (!MainApp.konfirmasi("Terima pembayaran LUNAS " + paket.getHargaTeks() + " dari " + pelanggan.getNama()
+            if (!MainApp.konfirmasi("Terima pembayaran " + paket.getHargaTeks() + " dari " + pelanggan.getNama()
                     + "?\n" + paket.getNama() + ", berlaku " + pratinjau.getPeriode())) {
                 return;
             }
             PembayaranAkses tersimpan = aksesService.bayarMembership(pelanggan, paket);
-            MainApp.pesanBerhasil(labelPesan, "Pembayaran " + pelanggan.getNama() + " tersimpan. Berlaku " + tersimpan.getPeriode() + ".");
+            MainApp.pesanBerhasil(labelPesan, "Membership " + pelanggan.getNama() + " aktif, berlaku " + tersimpan.getPeriode() + ".");
             muatRiwayat();
+            muatMembershipAktif();
             perbaruiRingkasan();
             MainApp.tampilkanBukti(tersimpan);
+            if (datangDariPelanggan) {
+                MainApp.pelangganDibawa = pelanggan;
+                MainApp.gantiLayar("pelanggan");
+            }
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
     }
 
-    // ---------- Tab Daftar paket ----------
+    private void muatMembershipAktif() {
+        try {
+            List<PembayaranAkses> daftar = aksesService.daftarMembershipAktif();
+            tabelMembershipAktif.setItems(FXCollections.observableArrayList(daftar));
+            labelJumlahMember.setText(daftar.size() + " member. Yang paling cepat berakhir ada di atas.");
+        } catch (IllegalArgumentException e) {
+            MainApp.pesanGagal(labelPesan, e.getMessage());
+        }
+    }
 
     @FXML
     private void pilihPaket() {
@@ -163,11 +187,10 @@ public class AksesController {
         if (paket == null) {
             return;
         }
-        labelPaketTerpilih.setText("Terpilih: " + paket.getNama());
-        // paket harian dipakai untuk visit, jadi tombol arsip dimatikan
+        labelPaketTerpilih.setText(paket.getNama());
         tombolArsipPaket.setDisable(!paket.getJenis().equals("MEMBERSHIP"));
         if (!paket.getJenis().equals("MEMBERSHIP")) {
-            labelPaketTerpilih.setText("Terpilih: " + paket.getNama() + " (paket harian tidak bisa diarsipkan)");
+            labelPaketTerpilih.setText(paket.getNama() + " (paket harian tidak bisa diarsipkan)");
         }
     }
 
@@ -181,7 +204,7 @@ public class AksesController {
             fieldHargaPaket.clear();
             fieldDurasiPaket.clear();
             muatPaket();
-            MainApp.pesanBerhasil(labelPesan, "Paket baru ditambahkan dan sudah bisa dijual.");
+            MainApp.pesanBerhasil(labelPesan, "Paket ditambahkan.");
         } catch (NumberFormatException e) {
             MainApp.pesanGagal(labelPesan, "Harga dan durasi harus berupa angka, contoh 700000 dan 3.");
         } catch (IllegalArgumentException e) {
@@ -197,7 +220,7 @@ public class AksesController {
                 MainApp.pesanGagal(labelPesan, "Pilih paket di tabel dulu.");
                 return;
             }
-            if (!MainApp.konfirmasi("Arsipkan " + paket.getNama() + "?\nPaket tidak bisa dijual lagi, tetapi pembayaran lama tetap utuh.")) {
+            if (!MainApp.konfirmasi("Arsipkan " + paket.getNama() + "?\nPaket ini tidak bisa dijual lagi. Riwayat pembayarannya tetap ada.")) {
                 return;
             }
             aksesService.arsipkanPaket(paket);
@@ -207,8 +230,6 @@ public class AksesController {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
     }
-
-    // ---------- Memuat data ----------
 
     private void muatPelanggan() {
         try {
@@ -233,7 +254,6 @@ public class AksesController {
             List<PaketAkses> semuaPaket = aksesService.daftarPaket();
             tabelPaket.setItems(FXCollections.observableArrayList(semuaPaket));
 
-            // pilihan di ComboBox hanya membership; paket harian dijual lewat layar Pelanggan
             List<PaketAkses> paketMembership = new ArrayList<>();
             for (PaketAkses paket : semuaPaket) {
                 if (paket.getJenis().equals("MEMBERSHIP")) {
@@ -244,8 +264,7 @@ public class AksesController {
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
-        // tabel dimuat ulang = pilihan hilang, jadi tombol arsip dimatikan lagi
-        labelPaketTerpilih.setText("Klik paket di tabel untuk mengarsipkannya.");
+        labelPaketTerpilih.setText("Pilih paket di tabel untuk mengarsipkan.");
         tombolArsipPaket.setDisable(true);
     }
 
