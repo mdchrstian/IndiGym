@@ -1,4 +1,25 @@
 @font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url("../fonts/PlusJakartaSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    font-weight: bold;
+    src: url("../fonts/PlusJakartaSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Plus Jakarta Sans Medium";
+    src: url("../fonts/PlusJakartaSans-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Plus Jakarta Sans SemiBold";
+    src: url("../fonts/PlusJakartaSans-SemiBold.ttf");
+}
+
+@font-face {
     font-family: "JetBrainsMonoNL NFM";
     src: url("../fonts/JetBrainsMono-Regular.ttf");
 }
@@ -10,304 +31,636 @@
 }
 
 .root {
-    warna-latar:        #18181b;
-    warna-grid:         #212126;
-    warna-panel:        #1f1f23;
-    warna-panel-naik:   #27272c;
-    warna-garis:        #2f2f36;
-    warna-garis-kuat:   #4a4a53;
-    warna-teks:         #f4f4f5;
-    warna-teks-redup:   #a1a1aa;
-    warna-teks-samar:   #71717a;
-    warna-aksen:        #6a5cf5;
-    warna-aksen-terang: #8b80f8;
-    warna-aksen-teks:   #b0a7fa;
-    warna-aksen-latar:  #2c2858;
-    warna-sukses:       #5fd39a;
-    warna-sukses-latar: #16291f;
-    warna-peringatan:   #e8c468;
-    warna-peringatan-latar: #2a2414;
-    warna-bahaya:       #f07178;
-    warna-bahaya-latar: #2c1719;
+    warna-latar:        #f5f5f4;   /* latar jendela */
+    warna-panel:        #ffffff;   /* kartu, tabel, kolom input */
+    warna-naik:         #f0f0ef;   /* hover, baris terpilih, kepala tab */
+    warna-garis:        rgba(23, 23, 23, 0.08);  /* garis tipis */
+    warna-garis-kuat:   rgba(23, 23, 23, 0.16);  /* tepi input dan tombol */
+    warna-teks:         #171717;   /* teks utama */
+    warna-teks-2:       #525252;   /* teks pendukung */
+    warna-teks-redup:   #737373;   /* meta, placeholder, kepala tabel */
 
-    -fx-base: warna-panel;
+    warna-sisi:         #111112;   /* sidebar */
+    warna-sisi-naik:    #1d1d1f;   /* menu hover dan aktif */
+    warna-sisi-garis:   rgba(255, 255, 255, 0.08);
+    warna-sisi-teks:    #a1a1a6;
+    warna-sisi-terang:  #ededed;
+
+    warna-aksen:        #d4f23c;   /* lime: menu aktif, tombol transaksi, angka total */
+    warna-aksen-tekan:  #c5e32b;
+
+    warna-sukses:       #15803d;
+    warna-sukses-latar: #ecf7ef;
+    warna-peringatan:   #f0b429;   /* pita kartu "belum punya akses" */
+    warna-peringatan-teks: #a16207;
+    warna-bahaya:       #b91c1c;
+    warna-bahaya-latar: #fdeeee;
+
+    -fx-base: #f0f0ef;
     -fx-background: warna-latar;
     -fx-control-inner-background: warna-panel;
     -fx-control-inner-background-alt: warna-panel;
-    -fx-accent: warna-aksen;
-    -fx-focus-color: warna-aksen;
+    -fx-accent: warna-teks;
+    -fx-focus-color: warna-teks;
     -fx-faint-focus-color: transparent;
-    -fx-selection-bar: warna-aksen-latar;
-    -fx-selection-bar-non-focused: warna-aksen-latar;
+    -fx-selection-bar: warna-naik;
+    -fx-selection-bar-non-focused: warna-naik;
+    -fx-selection-bar-text: warna-teks;
     -fx-table-cell-border-color: warna-garis;
 
-    -fx-background-color:
-        warna-latar,
-        linear-gradient(from 0px 0px to 40px 0px, repeat, warna-grid 0%, warna-grid 2.5%, transparent 2.5%, transparent 100%),
-        linear-gradient(from 0px 0px to 0px 40px, repeat, warna-grid 0%, warna-grid 2.5%, transparent 2.5%, transparent 100%);
-    -fx-font-size: 13px;
+    -fx-background-color: warna-latar;
+    -fx-font-family: "Plus Jakarta Sans";
+    -fx-font-size: 14px;
 }
 
-* {
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-}
-
+/* ---------- 2. Teks ---------- */
 .label {
     -fx-text-fill: warna-teks;
 }
 
 .judul {
-    -fx-font-size: 26px;
-    -fx-font-weight: bold;
+    -fx-font-size: 28px;
+    -fx-font-family: "Plus Jakarta Sans Medium";
 }
 
 .judul-sedang {
     -fx-font-size: 20px;
-    -fx-font-weight: bold;
+    -fx-font-family: "Plus Jakarta Sans Medium";
 }
 
-.label-atas {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 11px;
-    -fx-text-fill: warna-aksen-teks;
+.subjudul {
+    -fx-text-fill: warna-teks-2;
 }
 
+/* Judul kecil per bagian, contoh "Daftarkan pelanggan baru" */
 .label-bagian {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 11px;
-    -fx-text-fill: warna-teks-redup;
+    -fx-font-size: 13px;
+    -fx-text-fill: warna-teks-2;
 }
 
 .teks-redup {
+    -fx-text-fill: warna-teks-2;
+}
+
+.teks-meta {
+    -fx-font-size: 12px;
     -fx-text-fill: warna-teks-redup;
 }
 
+/* Teks monospace biasa: kode pelanggan, tanggal, harga di panel */
 .teks-mono {
     -fx-font-family: "JetBrainsMonoNL NFM";
 }
 
+/* Angka besar di kartu ringkasan dan total keranjang */
 .angka-besar {
     -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
+    -fx-font-size: 30px;
 }
 
-.pesan {
+/* Angka paling penting di Beranda */
+.angka-utama {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 40px;
+}
+
+/* Ciri khas: kode sebagai tag kecil, seperti tag kunci loker */
+.tag {
     -fx-font-family: "JetBrainsMonoNL NFM";
     -fx-font-size: 12px;
+    -fx-text-fill: warna-teks-2;
+    -fx-background-color: warna-garis, warna-naik;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+    -fx-padding: 2 6 2 6;
+}
+
+/* ---------- 3. Pesan hasil aksi ----------
+   Label "labelPesan" di setiap layar. Kelasnya diganti otomatis oleh
+   MainApp.pesanBerhasil / MainApp.pesanGagal. */
+.pesan {
+    -fx-font-size: 14px;
     -fx-max-width: Infinity;
 }
 
 .pesan-berhasil {
     -fx-text-fill: warna-sukses;
-    -fx-background-color: warna-sukses, warna-sukses-latar;
-    -fx-background-insets: 0, 0 0 0 2;
-    -fx-padding: 8 12 8 12;
+    -fx-background-color: rgba(21, 128, 61, 0.16), warna-sukses-latar;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-padding: 12 16 12 16;
 }
 
 .pesan-gagal {
     -fx-text-fill: warna-bahaya;
-    -fx-background-color: warna-bahaya, warna-bahaya-latar;
-    -fx-background-insets: 0, 0 0 0 2;
-    -fx-padding: 8 12 8 12;
+    -fx-background-color: rgba(185, 28, 28, 0.16), warna-bahaya-latar;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-padding: 12 16 12 16;
 }
 
 .pesan-error {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
     -fx-text-fill: warna-bahaya;
+    -fx-background-color: warna-bahaya-latar;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
 }
 
+/* ---------- 4. Ikon (SVGPath dalam Group berskala 0,75 = 18px) ----------
+   Kotak 18x18 menjaga semua ikon di satu kolom, berapa pun lebar gambarnya. */
+.kotak-ikon {
+    -fx-min-width: 18;
+    -fx-pref-width: 18;
+    -fx-max-width: 18;
+    -fx-min-height: 18;
+    -fx-pref-height: 18;
+    -fx-max-height: 18;
+}
+
+.ikon {
+    -fx-fill: transparent;
+    -fx-stroke: warna-teks-redup;
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+/* ---------- 5. Navigasi samping ---------- */
 .navigasi {
-    -fx-background-color: warna-garis, warna-panel;
-    -fx-background-insets: 0, 0 1 0 0;
-    -fx-padding: 22 14 18 14;
+    -fx-background-color: warna-sisi;
+    -fx-padding: 20 16 16 16;
     -fx-spacing: 4;
 }
 
 .logo {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
+    -fx-font-size: 17px;
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
+    -fx-text-fill: warna-sisi-terang;
 }
 
-.logo-kursor {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: warna-aksen;
+.navigasi .logo-ikon .ikon,
+.panel-login-gambar .logo-ikon .ikon {
+    -fx-stroke: warna-aksen;
+    -fx-stroke-width: 2.6;
 }
 
-.isi-layar {
-    -fx-padding: 24 28 20 28;
-    -fx-spacing: 14;
-}
-
-.garis-putus {
-    -fx-border-color: warna-garis-kuat transparent transparent transparent;
-    -fx-border-style: segments(4, 4);
-    -fx-border-width: 1 0 0 0;
+.garis-sisi {
+    -fx-background-color: warna-sisi-garis;
     -fx-min-height: 1;
     -fx-max-height: 1;
 }
 
-.panel {
+.nama-petugas {
+    -fx-text-fill: warna-sisi-terang;
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
+}
+
+.peran-petugas {
+    -fx-font-size: 12px;
+    -fx-text-fill: warna-sisi-teks;
+}
+
+/* Isi layar di kanan navigasi */
+.isi-layar {
+    -fx-padding: 32;
+    -fx-spacing: 16;
+}
+
+/* Pembatas bagian: garis tipis */
+.garis-putus {
+    -fx-background-color: warna-garis;
+    -fx-min-height: 1;
+    -fx-max-height: 1;
+}
+
+/* ---------- 6. Kartu dan panel ---------- */
+.panel,
+.kartu,
+.daftar-pintasan {
     -fx-background-color: warna-garis, warna-panel;
     -fx-background-insets: 0, 1;
-    -fx-padding: 18;
-    -fx-spacing: 10;
+    -fx-background-radius: 12, 11;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);
+}
+
+.panel {
+    -fx-padding: 20;
+    -fx-spacing: 12;
 }
 
 .kartu {
-    -fx-background-color: warna-garis, warna-panel;
-    -fx-background-insets: 0, 1;
-    -fx-padding: 16 18 16 18;
-    -fx-spacing: 6;
+    -fx-padding: 20 24 20 24;
+    -fx-spacing: 4;
+}
+
+.panel-lega {
+    -fx-spacing: 20;
+}
+
+/* Bilah alat di Laporan */
+.toolbar {
+    -fx-padding: 12 16 12 16;
+}
+
+/* Isi panel detail pelanggan */
+.panel-detail {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.kotak-kosong {
+    -fx-padding: 48 16 48 16;
+}
+
+/* Strip angka di Beranda: satu kartu, sel dipisah garis tipis */
+.strip {
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+/* Daftar pintasan di Beranda: satu kartu berisi baris */
+.daftar-pintasan {
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+.nama-pintasan {
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
+}
+
+.sel-strip {
+    -fx-padding: 20 24 20 24;
+    -fx-spacing: 4;
+}
+
+.sel-strip.garis-kiri {
+    -fx-border-color: transparent transparent transparent warna-garis;
+    -fx-border-width: 0 0 0 1;
 }
 
 .judul-kartu {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-font-family: "Plus Jakarta Sans Medium";
 }
 
-.kotak-akses {
-    -fx-background-color: warna-garis-kuat, warna-panel-naik;
-    -fx-background-insets: 0, 0 0 0 3;
-    -fx-padding: 12 14 12 16;
-    -fx-spacing: 4;
-}
-
-.kotak-akses.akses-ada {
-    -fx-background-color: warna-sukses, warna-sukses-latar;
-}
-
-.kotak-akses.akses-tidak {
-    -fx-background-color: warna-peringatan, warna-peringatan-latar;
-}
-
-.status-akses {
+/* Langkah bernomor di layar Membership */
+.nomor-langkah {
     -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: warna-teks-2;
+    -fx-alignment: CENTER;
+    -fx-min-width: 24;
+    -fx-min-height: 24;
+    -fx-background-color: warna-garis, warna-naik;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+}
+
+.judul-langkah {
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
+}
+
+/* Kotak ringkasan sebelum bayar: seperti struk */
+.kotak-ringkasan {
+    -fx-background-color: #fafafa;
+    -fx-background-radius: 8;
+    -fx-border-color: warna-garis-kuat;
+    -fx-border-style: segments(4, 4);
+    -fx-border-radius: 8;
+    -fx-padding: 16;
+    -fx-spacing: 8;
+}
+
+/* Momen 1: status akses tampil sebagai kartu member.
+   Tanpa kelas = profil diarsipkan (abu-abu). Kelas akses-ada / akses-tidak
+   dipasang PelangganController. Lapisan pertama adalah pita bawah. */
+.kartu-member {
+    -fx-background-color: #c9c9c7, #e9e9e7;
+    -fx-background-insets: 0, 0 0 8 0;
+    -fx-background-radius: 12, 12 12 0 0;
+    -fx-padding: 20 20 28 20;
+    -fx-spacing: 12;
+}
+
+.kartu-member.akses-ada,
+.kartu-member.akses-tidak {
+    -fx-background-color: warna-aksen, linear-gradient(to bottom right, #242424, #121212);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.14), 18, 0, 0, 6);
+}
+
+.kartu-member.akses-tidak {
+    -fx-background-color: warna-peringatan, linear-gradient(to bottom right, #242424, #121212);
+}
+
+.kartu-member .merek {
+    -fx-font-size: 13px;
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
+    -fx-text-fill: warna-teks-2;
+}
+
+.kartu-member .nama-member {
+    -fx-font-size: 22px;
+    -fx-font-family: "Plus Jakarta Sans Medium";
+}
+
+.kartu-member .kontak-member {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 12px;
+    -fx-text-fill: warna-teks-2;
+}
+
+.kartu-member .detail-member {
+    -fx-font-size: 13px;
+    -fx-text-fill: warna-teks-2;
+}
+
+.kartu-member .tag {
+    -fx-background-color: warna-garis, white;
+}
+
+/* Status: kotak kecil berwarna pita */
+.status-akses {
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
+    -fx-text-fill: warna-teks-2;
+    -fx-background-color: #c9c9c7;
+    -fx-background-radius: 8;
+    -fx-padding: 6 12 6 12;
 }
 
 .akses-ada .status-akses {
-    -fx-text-fill: warna-sukses;
+    -fx-background-color: warna-aksen;
+    -fx-text-fill: warna-teks;
 }
 
 .akses-tidak .status-akses {
-    -fx-text-fill: warna-peringatan;
+    -fx-background-color: warna-peringatan;
+    -fx-text-fill: warna-teks;
 }
 
-.kotak-ringkasan {
-    -fx-background-color: warna-garis-kuat, warna-panel-naik;
-    -fx-background-insets: 0, 1;
-    -fx-padding: 14;
-    -fx-spacing: 4;
+.akses-ada .merek,
+.akses-tidak .merek,
+.akses-ada .kontak-member,
+.akses-tidak .kontak-member {
+    -fx-text-fill: #a1a1a6;
 }
 
+.akses-ada .nama-member,
+.akses-tidak .nama-member {
+    -fx-text-fill: #ededed;
+}
+
+.akses-ada .detail-member,
+.akses-tidak .detail-member {
+    -fx-text-fill: #c4c4c4;
+}
+
+.akses-ada .tag,
+.akses-tidak .tag {
+    -fx-text-fill: #d4d4d4;
+    -fx-background-color: rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.08);
+}
+
+/* Momen 2: total pendapatan di Laporan */
+.kotak-total {
+    -fx-background-color: linear-gradient(to bottom right, #1f1f1f, #121212);
+    -fx-background-radius: 16;
+    -fx-padding: 32;
+    -fx-spacing: 24;
+}
+
+.kotak-total .label {
+    -fx-text-fill: #a1a1a6;
+}
+
+.kotak-total .angka-total {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 52px;
+    -fx-text-fill: warna-aksen;
+}
+
+.kotak-total .angka-rincian {
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-font-size: 22px;
+    -fx-text-fill: #ededed;
+}
+
+.kotak-total .teks-meta {
+    -fx-text-fill: #85858b;
+}
+
+.kotak-total .garis-putus {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- 7. Tombol ---------- */
 .button {
     -fx-background-color: warna-garis-kuat, warna-panel;
     -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
     -fx-text-fill: warna-teks;
-    -fx-padding: 7 16 7 16;
+    -fx-font-size: 14px;
+    -fx-padding: 9 16 9 16;
     -fx-cursor: hand;
 }
 
 .button:hover {
-    -fx-background-color: warna-teks-redup, warna-panel-naik;
+    -fx-background-color: warna-garis-kuat, warna-naik;
 }
 
 .button:focused {
-    -fx-background-color: warna-aksen, warna-panel;
+    -fx-background-color: warna-teks, warna-panel;
 }
 
 .button:pressed {
-    -fx-background-color: warna-teks-redup, warna-latar;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
 }
 
+/* Tombol nonaktif: redup, supaya jelas tidak bisa dipakai saat ini */
 .button:disabled {
-    -fx-opacity: 0.35;
+    -fx-opacity: 0.4;
 }
 
+/* Tindakan utama di formulir: hitam */
 .tombol-utama {
-    -fx-background-color: warna-aksen, warna-aksen;
+    -fx-background-color: warna-teks, warna-teks;
     -fx-text-fill: white;
-    -fx-font-weight: bold;
 }
 
+.tombol-utama:hover,
 .tombol-utama:focused {
-    -fx-background-color: warna-aksen-teks, warna-aksen;
+    -fx-background-color: warna-teks, #2b2b2b;
 }
 
-.tombol-utama:hover {
-    -fx-background-color: warna-aksen-terang, warna-aksen-terang;
-}
-
-.tombol-utama:pressed {
+/* Tindakan transaksi (Check-in, Bayar, Terima pembayaran): lime.
+   Di panel detail pelanggan, tombol yang diberi "tombol-utama" oleh
+   PelangganController ikut menjadi lime lewat selector .panel-detail. */
+.tombol-transaksi,
+.panel-detail .tombol-utama {
     -fx-background-color: warna-aksen, warna-aksen;
+    -fx-text-fill: warna-teks;
+    -fx-font-family: "Plus Jakarta Sans SemiBold";
 }
 
+.tombol-transaksi:hover,
+.tombol-transaksi:focused,
+.panel-detail .tombol-utama:hover,
+.panel-detail .tombol-utama:focused {
+    -fx-background-color: warna-teks, warna-aksen-tekan;
+}
+
+.panel-detail .tombol-utama .ikon {
+    -fx-stroke: warna-teks;
+}
+
+.tombol-besar {
+    -fx-font-size: 15px;
+    -fx-padding: 13 16 13 16;
+}
+
+/* Arsipkan, nonaktifkan, batalkan */
 .tombol-bahaya {
     -fx-text-fill: warna-bahaya;
 }
 
 .tombol-bahaya:hover {
-    -fx-background-color: warna-bahaya, warna-panel-naik;
+    -fx-background-color: warna-garis-kuat, warna-bahaya-latar;
 }
 
+/* Pilihan periode di Laporan: tombol berderet, yang aktif diberi
+   "tombol-utama" oleh LaporanController lalu tampil putih. */
+.segmen {
+    -fx-background-color: #e9e9e8;
+    -fx-background-radius: 12;
+    -fx-padding: 4;
+    -fx-spacing: 4;
+}
+
+.segmen .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: warna-teks-2;
+    -fx-padding: 6 16 6 16;
+}
+
+.segmen .button:hover {
+    -fx-text-fill: warna-teks;
+}
+
+.segmen .tombol-utama,
+.segmen .tombol-utama:hover,
+.segmen .tombol-utama:focused {
+    -fx-background-color: warna-panel;
+    -fx-background-radius: 8;
+    -fx-text-fill: warna-teks;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 2, 0, 0, 1);
+}
+
+/* Tombol navigasi ditulis SETELAH .button,
+   karena aturan yang ditulis belakangan menimpa aturan sebelumnya. */
 .tombol-navigasi {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 13px;
-    -fx-text-fill: warna-teks-redup;
+    -fx-background-radius: 8;
+    -fx-text-fill: warna-sisi-teks;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 9 12 9 12;
+    -fx-graphic-text-gap: 12;
+    -fx-padding: 8 12 8 12;
+}
+
+.tombol-navigasi .ikon {
+    -fx-stroke: warna-sisi-teks;
 }
 
 .tombol-navigasi:hover,
 .tombol-navigasi:focused {
-    -fx-background-color: warna-panel-naik;
-    -fx-text-fill: warna-teks;
+    -fx-background-color: warna-sisi-naik;
+    -fx-text-fill: warna-sisi-terang;
 }
 
+/* Layar yang sedang dibuka: garis lime 3px di kiri */
 .tombol-navigasi.aktif {
-    -fx-background-color: warna-aksen, warna-panel-naik;
-    -fx-background-insets: 0, 0 0 0 2;
-    -fx-text-fill: warna-teks;
+    -fx-background-color: warna-aksen, warna-sisi-naik;
+    -fx-background-insets: 10 0 10 0, 0 0 0 3;
+    -fx-background-radius: 0 2 2 0, 0 8 8 0;
+    -fx-text-fill: warna-sisi-terang;
 }
 
-.kartu-aksi {
+.tombol-navigasi:hover .ikon,
+.tombol-navigasi.aktif .ikon {
+    -fx-stroke: warna-sisi-terang;
+}
+
+.tombol-keluar {
+    -fx-background-color: transparent;
+    -fx-padding: 9;
+}
+
+.tombol-keluar .ikon {
+    -fx-stroke: warna-sisi-teks;
+}
+
+.tombol-keluar:hover,
+.tombol-keluar:focused {
+    -fx-background-color: warna-sisi-naik;
+}
+
+/* Baris pintasan di Beranda */
+.baris-pintasan {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 16 20 16 20;
+}
+
+.baris-pintasan.garis-atas {
+    -fx-border-color: warna-garis transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.baris-pintasan:hover,
+.baris-pintasan:focused {
+    -fx-background-color: warna-naik;
+}
+
+.baris-pintasan.baris-pertama:hover,
+.baris-pintasan.baris-pertama:focused {
+    -fx-background-radius: 12 12 0 0;
+}
+
+.baris-pintasan.baris-terakhir:hover,
+.baris-pintasan.baris-terakhir:focused {
+    -fx-background-radius: 0 0 12 12;
+}
+
+.baris-pintasan:pressed {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+/* ---------- 8. Kolom input ---------- */
+.text-input {
     -fx-background-color: warna-garis-kuat, warna-panel;
     -fx-background-insets: 0, 1;
-    -fx-padding: 16 18 16 18;
-    -fx-alignment: TOP_LEFT;
-    -fx-cursor: hand;
-}
-
-.kartu-aksi:hover,
-.kartu-aksi:focused {
-    -fx-background-color: warna-aksen, warna-panel-naik;
-}
-
-.text-input {
-    -fx-background-color: warna-garis-kuat, warna-panel-naik;
-    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
     -fx-text-fill: warna-teks;
-    -fx-prompt-text-fill: warna-teks-samar;
+    -fx-prompt-text-fill: warna-teks-redup;
     -fx-highlight-fill: warna-aksen;
-    -fx-highlight-text-fill: white;
-    -fx-padding: 7 10 7 10;
+    -fx-highlight-text-fill: warna-teks;
+    -fx-padding: 9 12 9 12;
+}
+
+.text-input:hover {
+    -fx-background-color: rgba(23, 23, 23, 0.28), warna-panel;
 }
 
 .text-input:focused {
-    -fx-background-color: warna-aksen, warna-panel-naik;
+    -fx-background-color: warna-teks, warna-panel;
 }
 
+/* Kolom cari: ada ruang di kiri untuk ikon kaca pembesar */
 .kolom-cari {
-    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-padding: 9 12 9 40;
 }
 
 .text-area {
@@ -315,67 +668,93 @@
 }
 
 .text-area .content {
-    -fx-background-color: warna-latar;
+    -fx-background-color: warna-panel;
 }
 
-.combo-box {
-    -fx-background-color: warna-garis-kuat, warna-panel-naik;
+.combo-box,
+.date-picker {
+    -fx-background-color: warna-garis-kuat, warna-panel;
     -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
 }
 
-.combo-box:focused {
-    -fx-background-color: warna-aksen, warna-panel-naik;
+.combo-box:hover,
+.date-picker:hover {
+    -fx-background-color: rgba(23, 23, 23, 0.28), warna-panel;
+}
+
+.combo-box:focused,
+.date-picker:focused {
+    -fx-background-color: warna-teks, warna-panel;
 }
 
 .combo-box .list-cell {
     -fx-text-fill: warna-teks;
     -fx-background-color: transparent;
+    -fx-padding: 9 12 9 12;
 }
 
-.combo-box .arrow-button {
+.date-picker > .text-field,
+.date-picker > .text-field.date-picker-display-node {
     -fx-background-color: transparent;
+    -fx-font-family: "JetBrainsMonoNL NFM";
+    -fx-padding: 9 4 9 12;
 }
 
-.combo-box .arrow {
+.combo-box .arrow-button,
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 12 0 8;
+}
+
+.combo-box .arrow,
+.date-picker .arrow {
     -fx-background-color: warna-teks-redup;
 }
 
 .combo-box-popup .list-view {
     -fx-background-color: warna-garis-kuat, warna-panel;
     -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 16, 0, 0, 6);
 }
 
 .combo-box-popup .list-view .list-cell {
     -fx-background-color: warna-panel;
     -fx-text-fill: warna-teks;
+    -fx-padding: 9 12 9 12;
 }
 
 .combo-box-popup .list-view .list-cell:hover,
 .combo-box-popup .list-view .list-cell:filled:selected {
-    -fx-background-color: warna-aksen-latar;
+    -fx-background-color: warna-naik;
+    -fx-text-fill: warna-teks;
 }
 
+/* ---------- 9. Tabel ---------- */
 .table-view {
     -fx-background-color: warna-garis, warna-panel;
     -fx-background-insets: 0, 1;
+    -fx-background-radius: 12, 11;
     -fx-padding: 1;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: warna-panel-naik;
+    -fx-background-color: warna-panel;
+    -fx-background-radius: 11 11 0 0;
+    -fx-border-color: transparent transparent warna-garis transparent;
+    -fx-border-width: 0 0 1 0;
 }
 
 .table-view .column-header,
 .table-view .filler {
     -fx-background-color: transparent;
-    -fx-border-color: transparent warna-garis warna-garis transparent;
-    -fx-border-width: 0 1 1 0;
-    -fx-size: 30;
+    -fx-border-color: transparent;
+    -fx-size: 40;
 }
 
 .table-view .column-header .label {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
     -fx-text-fill: warna-teks-redup;
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 0 8 0 8;
@@ -385,33 +764,47 @@
 .table-row-cell:odd {
     -fx-background-color: warna-garis, warna-panel;
     -fx-background-insets: 0, 0 0 1 0;
-    -fx-cell-size: 32;
+    -fx-cell-size: 40;
 }
 
-.table-row-cell:hover {
-    -fx-background-color: warna-garis, warna-panel-naik;
+.table-row-cell:filled:hover {
+    -fx-background-color: warna-garis, #fafafa;
 }
 
-.table-row-cell:selected,
-.table-row-cell:selected:hover {
-    -fx-background-color: warna-aksen, warna-aksen-latar;
-    -fx-background-insets: 0, 0 0 1 2;
+.table-row-cell:filled:selected,
+.table-row-cell:filled:selected:hover {
+    -fx-background-color: warna-garis, warna-teks, warna-naik;
+    -fx-background-insets: 0, 0 0 1 0, 0 0 1 2;
+}
+
+/* Baris kosong di bawah data: tanpa garis */
+.table-row-cell:empty,
+.table-row-cell:empty:hover {
+    -fx-background-color: transparent;
 }
 
 .table-cell {
     -fx-text-fill: warna-teks;
     -fx-padding: 0 8 0 8;
     -fx-alignment: CENTER_LEFT;
+    -fx-border-color: transparent;
 }
 
-.kolom-mono {
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: warna-teks;
+}
+
+/* Kolom berisi kode atau tanggal: pasang di TableColumn (Style Class) */
+.table-cell.kolom-mono {
     -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
+    -fx-text-fill: warna-teks-2;
 }
 
+/* Kolom angka (harga, stok, total): rata kanan */
 .table-cell.kolom-angka {
     -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
     -fx-alignment: CENTER_RIGHT;
 }
 
@@ -420,39 +813,53 @@
 }
 
 .table-view .placeholder .label {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 12px;
-    -fx-text-fill: warna-teks-samar;
+    -fx-text-fill: warna-teks-redup;
 }
 
 .table-view .corner {
-    -fx-background-color: warna-panel-naik;
+    -fx-background-color: warna-panel;
 }
 
-.tab-pane > .tab-header-area {
+/* Tabel di dalam kartu: tanpa bingkai sendiri */
+.tabel-polos {
+    -fx-background-color: transparent;
     -fx-padding: 0;
 }
 
+.tabel-polos .column-header-background {
+    -fx-background-radius: 0;
+}
+
+/* ---------- 10. Tab: kontrol bersegmen ---------- */
+.tab-pane > .tab-header-area {
+    -fx-padding: 0 0 0 0;
+}
+
 .tab-pane > .tab-header-area > .tab-header-background {
-    -fx-background-color: warna-garis-kuat, warna-latar;
-    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-color: transparent;
+}
+
+.tab-pane > .tab-header-area > .headers-region {
+    -fx-background-color: #e9e9e8;
+    -fx-background-radius: 12;
+    -fx-padding: 4;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab {
     -fx-background-color: transparent;
+    -fx-background-radius: 8;
     -fx-border-color: transparent;
-    -fx-border-width: 0 0 2 0;
-    -fx-padding: 7 16 7 16;
+    -fx-padding: 6 12 6 12;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-border-color: warna-aksen;
+    -fx-background-color: warna-panel;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 2, 0, 0, 1);
 }
 
 .tab-pane .tab .tab-label {
-    -fx-font-family: "JetBrainsMonoNL NFM";
-    -fx-font-size: 12px;
-    -fx-text-fill: warna-teks-redup;
+    -fx-font-size: 14px;
+    -fx-text-fill: warna-teks-2;
 }
 
 .tab-pane .tab:selected .tab-label,
@@ -466,12 +873,41 @@
 
 .tab-pane > .tab-content-area {
     -fx-background-color: transparent;
-    -fx-padding: 14 0 0 0;
+    -fx-padding: 16 0 0 0;
 }
 
+/* ---------- 11. Login ---------- */
+/* Foto gym memenuhi panel kiri; lapisan gelap di atasnya menjaga teks tetap terbaca */
+.foto-login {
+    -fx-background-color: warna-sisi;
+    -fx-background-image: url("../gambar/login-gym.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.lapisan-login {
+    -fx-background-color: linear-gradient(to bottom, rgba(17, 17, 18, 0.35), rgba(17, 17, 18, 0.9));
+}
+
+.panel-login-gambar {
+    -fx-padding: 40;
+}
+
+.judul-login {
+    -fx-font-size: 44px;
+    -fx-font-family: "Plus Jakarta Sans Medium";
+    -fx-text-fill: warna-sisi-terang;
+}
+
+.sub-login {
+    -fx-font-size: 15px;
+    -fx-text-fill: warna-sisi-teks;
+}
+
+/* ---------- 12. Dialog dan scroll ---------- */
 .dialog-pane {
-    -fx-background-color: warna-garis-kuat, warna-panel;
-    -fx-background-insets: 0, 1;
+    -fx-background-color: warna-panel;
 }
 
 .dialog-pane > .content {
@@ -487,12 +923,21 @@
     -fx-background-color: transparent;
 }
 
+/* ScrollPane yang tampil sebagai kartu (panel detail pelanggan) */
+.kartu-gulir {
+    -fx-background-color: warna-garis, warna-panel;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 12, 11;
+    -fx-padding: 1;
+}
+
 .scroll-bar {
     -fx-background-color: transparent;
 }
 
 .scroll-bar .thumb {
     -fx-background-color: warna-garis-kuat;
+    -fx-background-radius: 4;
 }
 
 .scroll-bar .increment-button,

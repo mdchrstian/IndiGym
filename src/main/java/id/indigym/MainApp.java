@@ -34,7 +34,6 @@ public class MainApp extends Application {
     }
 
     public static void gantiLayar(String namaFxml) throws IOException {
-        layarAktif = namaFxml;
         Parent isi = FXMLLoader.load(MainApp.class.getResource("/fxml/" + namaFxml + ".fxml"));
 
         if (jendelaUtama.getScene() == null) {
@@ -53,7 +52,7 @@ public class MainApp extends Application {
     public static void pesanBerhasil(Label label, String pesan) {
         label.getStyleClass().removeAll("pesan-berhasil", "pesan-gagal");
         label.getStyleClass().add("pesan-berhasil");
-        label.setText("[OK] " + pesan);
+        label.setText(pesan);
         label.setVisible(true);
         label.setManaged(true);
     }
@@ -61,7 +60,7 @@ public class MainApp extends Application {
     public static void pesanGagal(Label label, String pesan) {
         label.getStyleClass().removeAll("pesan-berhasil", "pesan-gagal");
         label.getStyleClass().add("pesan-gagal");
-        label.setText("[GAGAL] " + pesan);
+        label.setText(pesan);
         label.setVisible(true);
         label.setManaged(true);
     }
