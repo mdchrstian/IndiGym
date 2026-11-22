@@ -9,20 +9,25 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
+// Aturan bisnis untuk akun: login, logout, dan hash password.
+// Jika ada yang salah, service melempar IllegalArgumentException dengan pesan yang siap ditampilkan.
 public class AkunService {
 
     private AkunDAO akunDAO = new AkunDAO();
 
     public Admin login(String username, String password) {
+        // input kosong tidak perlu dicek ke database
         if (username == null || username.isBlank() || password == null || password.isEmpty()) {
             throw new IllegalArgumentException("Username dan password wajib diisi.");
         }
 
         Admin admin = cariAdmin(username.trim());
 
+        // pesan sengaja sama agar orang luar tidak bisa menebak username yang ada
         if (admin == null || !admin.getPasswordHash().equals(hashPassword(password))) {
             throw new IllegalArgumentException("Username atau password salah.");
         }
+        // akun nonaktif tidak boleh masuk
         if (!admin.isAktif()) {
             throw new IllegalArgumentException("Akun ini sudah dinonaktifkan.");
         }
@@ -35,6 +40,8 @@ public class AkunService {
         Sesi.adminLogin = null;
     }
 
+    // ---------- Kelola akun (khusus SuperAdmin) ----------
+
     public List<Admin> daftarAdmin() {
         pastikanSuperAdmin();
         try {
@@ -46,11 +53,13 @@ public class AkunService {
 
     public void tambahAdmin(String nama, String username, String password) {
         pastikanSuperAdmin();
+        // validasi input dulu sebelum menyentuh database
         if (nama == null || nama.isBlank() || username == null || username.isBlank()) {
             throw new IllegalArgumentException("Nama dan username wajib diisi.");
         }
         pastikanPasswordValid(password);
 
+        // username harus unik
         if (cariAdmin(username.trim()) != null) {
             throw new IllegalArgumentException("Username sudah dipakai.");
         }
@@ -83,11 +92,14 @@ public class AkunService {
         }
     }
 
+    // ---------- Untuk semua petugas ----------
+
     public void gantiPasswordSendiri(String passwordLama, String passwordBaru) {
         Admin saya = Sesi.adminLogin;
         if (saya == null) {
             throw new IllegalArgumentException("Silakan login dulu.");
         }
+        // password lama harus benar
         if (passwordLama == null || !saya.getPasswordHash().equals(hashPassword(passwordLama))) {
             throw new IllegalArgumentException("Password lama salah.");
         }
@@ -99,10 +111,13 @@ public class AkunService {
         } catch (SQLException e) {
             throw errorDatabase(e);
         }
-        saya.setPasswordHash(hashBaru); 
+        saya.setPasswordHash(hashBaru); // samakan data sesi dengan database
     }
 
+    // ---------- Pemeriksaan kecil yang dipakai berulang ----------
+
     private void pastikanSuperAdmin() {
+        // polimorfisme: Admin biasa menghasilkan false, SuperAdmin menghasilkan true
         if (!Sesi.sudahLogin() || !Sesi.adminLogin.bolehKelolaAdmin()) {
             throw new IllegalArgumentException("Hanya SuperAdmin yang boleh melakukan ini.");
         }
@@ -112,6 +127,7 @@ public class AkunService {
         if (target == null) {
             throw new IllegalArgumentException("Pilih akun Admin di tabel dulu.");
         }
+        // akun SuperAdmin tidak boleh diubah lewat fitur ini
         if (target.bolehKelolaAdmin()) {
             throw new IllegalArgumentException("Akun SuperAdmin tidak boleh diubah di sini.");
         }
@@ -127,6 +143,7 @@ public class AkunService {
         return new IllegalArgumentException("Tidak bisa terhubung ke database: " + e.getMessage());
     }
 
+    // Password tidak disimpan apa adanya, melainkan diubah jadi 64 karakter hex (SHA-256).
     public String hashPassword(String password) {
         try {
             MessageDigest sha256 = MessageDigest.getInstance("SHA-256");

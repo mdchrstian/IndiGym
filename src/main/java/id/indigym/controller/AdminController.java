@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+// Layar Akun: akun saya (semua petugas) dan kelola akun Admin (hanya SuperAdmin).
 public class AdminController {
 
     @FXML
@@ -20,6 +21,7 @@ public class AdminController {
     @FXML
     private Label labelPesan;
 
+    // akun saya
     @FXML
     private Label labelNamaSaya;
     @FXML
@@ -31,6 +33,7 @@ public class AdminController {
     @FXML
     private PasswordField fieldPasswordUlang;
 
+    // kelola admin
     @FXML
     private VBox kotakKelola;
     @FXML
@@ -56,21 +59,25 @@ public class AdminController {
     private void initialize() {
         Admin saya = Sesi.adminLogin;
         labelNamaSaya.setText(saya.getNama());
-        labelInfoSaya.setText(saya.getUsername() + " / " + saya.getRole());
+        labelInfoSaya.setText(saya.getUsername() + " · " + saya.getRole());
 
+        // bagian kelola akun hanya untuk SuperAdmin (polimorfisme: bolehKelolaAdmin)
         boolean boleh = saya.bolehKelolaAdmin();
         kotakKelola.setVisible(boleh);
         kotakKelola.setManaged(boleh);
         if (boleh) {
-            labelKeterangan.setText("Ganti password Anda, atau kelola akun Admin lain.");
+            labelKeterangan.setText("Ganti password, atau kelola akun admin lain.");
             muatTabel();
         } else {
-            labelKeterangan.setText("Ganti password Anda. Akun Admin lain dikelola oleh SuperAdmin.");
+            labelKeterangan.setText("Ganti password akun ini.");
         }
     }
 
+    // ---------- Akun saya ----------
+
     @FXML
     private void gantiPasswordSendiri() {
+        // ulangan password dicek di sini karena ini hanya pengaman salah ketik di form
         if (!fieldPasswordBaru.getText().equals(fieldPasswordUlang.getText())) {
             MainApp.pesanGagal(labelPesan, "Password baru dan ulangannya tidak sama.");
             return;
@@ -80,24 +87,27 @@ public class AdminController {
             fieldPasswordLama.clear();
             fieldPasswordBaru.clear();
             fieldPasswordUlang.clear();
-            MainApp.pesanBerhasil(labelPesan, "Password Anda sudah diganti. Pakai password baru saat login berikutnya.");
+            MainApp.pesanBerhasil(labelPesan, "Password diganti.");
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
     }
 
+    // ---------- Kelola admin ----------
+
+    // Klik baris: tampilkan siapa yang dipilih, dan nyalakan tombol hanya untuk Admin biasa yang aktif.
     @FXML
     private void pilihAdmin() {
         Admin terpilih = tabelAdmin.getSelectionModel().getSelectedItem();
         if (terpilih == null) {
             return;
         }
-        labelAdminTerpilih.setText("ADMIN TERPILIH: " + terpilih.getUsername().toUpperCase() + " / " + terpilih.getStatus().toUpperCase());
-        boolean bisaDiubah = !terpilih.bolehKelolaAdmin(); 
+        labelAdminTerpilih.setText("Dipilih: " + terpilih.getUsername() + " (" + terpilih.getStatus() + ")");
+        boolean bisaDiubah = !terpilih.bolehKelolaAdmin(); // akun SuperAdmin tidak diubah di sini
         tombolReset.setDisable(!bisaDiubah);
         tombolNonaktif.setDisable(!bisaDiubah || !terpilih.isAktif());
         if (!bisaDiubah) {
-            labelAdminTerpilih.setText("ADMIN TERPILIH: " + terpilih.getUsername().toUpperCase() + " / SUPERADMIN TIDAK BISA DIUBAH DI SINI");
+            labelAdminTerpilih.setText("Dipilih: " + terpilih.getUsername() + " (SuperAdmin tidak bisa diubah)");
         }
     }
 
@@ -110,7 +120,7 @@ public class AdminController {
             fieldUsernameBaru.clear();
             fieldPasswordAdminBaru.clear();
             muatTabel();
-            MainApp.pesanBerhasil(labelPesan, "Admin " + username + " ditambahkan dan sudah bisa login.");
+            MainApp.pesanBerhasil(labelPesan, "Admin " + username + " ditambahkan.");
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
@@ -122,7 +132,7 @@ public class AdminController {
             Admin terpilih = tabelAdmin.getSelectionModel().getSelectedItem();
             akunService.resetPassword(terpilih, fieldPasswordReset.getText());
             fieldPasswordReset.clear();
-            MainApp.pesanBerhasil(labelPesan, "Password " + terpilih.getUsername() + " direset. Beritahukan password barunya.");
+            MainApp.pesanBerhasil(labelPesan, "Password " + terpilih.getUsername() + " direset.");
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
@@ -135,6 +145,7 @@ public class AdminController {
             MainApp.pesanGagal(labelPesan, "Pilih akun Admin di tabel dulu.");
             return;
         }
+        // minta konfirmasi karena belum ada tombol untuk mengaktifkan kembali
         if (!MainApp.konfirmasi("Nonaktifkan akun " + terpilih.getUsername() + "?\nAkun ini tidak bisa login lagi.")) {
             return;
         }
@@ -153,7 +164,8 @@ public class AdminController {
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
-        labelAdminTerpilih.setText("ADMIN TERPILIH: BELUM ADA (KLIK BARIS DI TABEL)");
+        // tabel dimuat ulang = pilihan hilang, jadi label dan tombolnya dikembalikan
+        labelAdminTerpilih.setText("Pilih akun di tabel untuk reset password atau menonaktifkan.");
         tombolReset.setDisable(true);
         tombolNonaktif.setDisable(true);
     }

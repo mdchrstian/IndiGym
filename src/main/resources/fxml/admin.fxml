@@ -18,26 +18,29 @@
     </left>
     <center>
         <VBox styleClass="isi-layar">
-            <Label styleClass="label-atas" text="INDIGYM / AKUN" />
-            <Label styleClass="judul" text="Akun petugas" />
-            <Label fx:id="labelKeterangan" styleClass="teks-redup" />
+            <VBox spacing="4">
+                <Label styleClass="judul" text="Akun" />
+                <Label fx:id="labelKeterangan" styleClass="subjudul" />
+            </VBox>
             <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
 
-            <HBox spacing="16" VBox.vgrow="ALWAYS">
-                <VBox maxHeight="-Infinity" minWidth="320" prefWidth="340" spacing="10" styleClass="panel">
-                    <Label styleClass="label-bagian" text="AKUN SAYA" />
-                    <Label fx:id="labelNamaSaya" styleClass="judul-sedang" />
-                    <Label fx:id="labelInfoSaya" styleClass="teks-mono, teks-redup" />
+            <HBox spacing="24" VBox.vgrow="ALWAYS">
+                <!-- Kiri: akun yang sedang login (untuk semua petugas) -->
+                <VBox maxHeight="-Infinity" minWidth="300" prefWidth="340" styleClass="panel">
+                    <VBox spacing="4">
+                        <Label fx:id="labelNamaSaya" styleClass="judul-kartu" />
+                        <Label fx:id="labelInfoSaya" styleClass="teks-meta" />
+                    </VBox>
                     <Region styleClass="garis-putus" />
-                    <Label styleClass="label-bagian" text="GANTI PASSWORD" />
+                    <Label styleClass="label-bagian" text="Ganti password" />
                     <PasswordField fx:id="fieldPasswordLama" promptText="Password lama" />
                     <PasswordField fx:id="fieldPasswordBaru" promptText="Password baru (minimal 6 karakter)" />
                     <PasswordField fx:id="fieldPasswordUlang" onAction="#gantiPasswordSendiri" promptText="Ulangi password baru" />
                     <Button maxWidth="Infinity" onAction="#gantiPasswordSendiri" styleClass="tombol-utama" text="Ganti password" />
                 </VBox>
 
-                <VBox fx:id="kotakKelola" spacing="10" HBox.hgrow="ALWAYS">
-                    <Label styleClass="label-bagian" text="KELOLA AKUN ADMIN" />
+                <!-- Kanan: kelola akun Admin (hanya SuperAdmin; disembunyikan AdminController untuk Admin biasa) -->
+                <VBox fx:id="kotakKelola" spacing="16" HBox.hgrow="ALWAYS">
                     <TableView fx:id="tabelAdmin" onKeyReleased="#pilihAdmin" onMouseClicked="#pilihAdmin" VBox.vgrow="ALWAYS">
                         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
                         <placeholder><Label text="Belum ada akun." /></placeholder>
@@ -48,30 +51,33 @@
                             <TableColumn prefWidth="130" styleClass="kolom-mono" text="Username">
                                 <cellValueFactory><PropertyValueFactory property="username" /></cellValueFactory>
                             </TableColumn>
-                            <TableColumn prefWidth="110" styleClass="kolom-mono" text="Peran">
+                            <TableColumn prefWidth="110" text="Peran">
                                 <cellValueFactory><PropertyValueFactory property="role" /></cellValueFactory>
                             </TableColumn>
-                            <TableColumn prefWidth="90" styleClass="kolom-mono" text="Status">
+                            <TableColumn prefWidth="90" text="Status">
                                 <cellValueFactory><PropertyValueFactory property="status" /></cellValueFactory>
                             </TableColumn>
                         </columns>
                     </TableView>
 
-                    <Label fx:id="labelAdminTerpilih" styleClass="label-bagian" text="ADMIN TERPILIH: BELUM ADA (KLIK BARIS DI TABEL)" />
-                    <HBox spacing="8">
-                        <PasswordField fx:id="fieldPasswordReset" promptText="Password baru untuk admin terpilih" HBox.hgrow="ALWAYS" />
-                        <Button minWidth="-Infinity" fx:id="tombolReset" disable="true" onAction="#resetPassword" text="Reset password" />
-                        <Button minWidth="-Infinity" fx:id="tombolNonaktif" disable="true" onAction="#nonaktifkanAdmin" styleClass="tombol-bahaya" text="Nonaktifkan" />
-                    </HBox>
+                    <VBox styleClass="panel">
+                        <Label fx:id="labelAdminTerpilih" minHeight="-Infinity" styleClass="label-bagian" text="Pilih akun di tabel untuk reset password atau menonaktifkan." wrapText="true" />
+                        <HBox spacing="8">
+                            <PasswordField fx:id="fieldPasswordReset" promptText="Password baru untuk admin terpilih" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="tombolReset" disable="true" minWidth="-Infinity" onAction="#resetPassword" text="Reset password" />
+                            <Button fx:id="tombolNonaktif" disable="true" minWidth="-Infinity" onAction="#nonaktifkanAdmin" styleClass="tombol-bahaya" text="Nonaktifkan" />
+                        </HBox>
+                    </VBox>
 
-                    <Region styleClass="garis-putus" />
-                    <Label styleClass="label-bagian" text="TAMBAH ADMIN BARU" />
-                    <HBox spacing="8">
-                        <TextField fx:id="fieldNamaBaru" promptText="Nama" HBox.hgrow="ALWAYS" />
-                        <TextField fx:id="fieldUsernameBaru" promptText="Username" styleClass="kolom-cari" />
-                        <PasswordField fx:id="fieldPasswordAdminBaru" promptText="Password (min. 6)" />
-                        <Button minWidth="-Infinity" onAction="#tambahAdmin" text="Tambah admin" />
-                    </HBox>
+                    <VBox styleClass="panel">
+                        <Label styleClass="label-bagian" text="Tambah admin" />
+                        <HBox spacing="8">
+                            <TextField fx:id="fieldNamaBaru" promptText="Nama" HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="fieldUsernameBaru" prefWidth="150" promptText="Username" />
+                            <PasswordField fx:id="fieldPasswordAdminBaru" prefWidth="160" promptText="Password (min. 6)" />
+                            <Button minWidth="-Infinity" onAction="#tambahAdmin" styleClass="tombol-utama" text="Tambah admin" />
+                        </HBox>
+                    </VBox>
                 </VBox>
             </HBox>
         </VBox>

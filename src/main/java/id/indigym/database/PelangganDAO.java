@@ -126,7 +126,9 @@ public class PelangganDAO {
     }
 
     public List<CheckIn> daftarCheckIn(Pelanggan pelanggan) throws SQLException {
-        String sql = "SELECT c.*, a.nama AS nama_admin FROM checkin c JOIN akun_admin a ON a.id = c.admin_id "
+        String sql = "SELECT c.*, a.nama AS nama_admin, p.nama_paket FROM checkin c "
+                + "JOIN akun_admin a ON a.id = c.admin_id "
+                + "LEFT JOIN pembayaran_akses p ON p.id = c.pembayaran_id "
                 + "WHERE c.pelanggan_id = ? ORDER BY c.id DESC";
         List<CheckIn> daftar = new ArrayList<>();
         try (Connection koneksi = Database.getConnection();
@@ -174,7 +176,7 @@ public class PelangganDAO {
     }
 
     private CheckIn bacaCheckIn(ResultSet hasil, Pelanggan pelanggan) throws SQLException {
-        return new CheckIn(
+        CheckIn checkIn = new CheckIn(
                 hasil.getLong("id"),
                 pelanggan,
                 hasil.getLong("admin_id"),
@@ -183,6 +185,8 @@ public class PelangganDAO {
                 hasil.getObject("waktu", LocalDateTime.class),
                 hasil.getString("hasil"),
                 hasil.getString("alasan"));
+        checkIn.setNamaPaket(hasil.getString("nama_paket"));
+        return checkIn;
     }
 
     private Pelanggan bacaBaris(ResultSet hasil) throws SQLException {

@@ -74,6 +74,12 @@ public class PelangganController {
     private void initialize() {
         muatTabel();
         tampilkanDetail(null);
+
+        if (MainApp.pelangganDibawa != null) {
+            pilihDiTabel(MainApp.pelangganDibawa.getId());
+            MainApp.pelangganDibawa = null;
+            MainApp.pesanBerhasil(labelPesan, "Membership aktif. Silakan check-in.");
+        }
     }
 
 
@@ -100,7 +106,7 @@ public class PelangganController {
             muatTabel();
             pilihDiTabel(baru.getId());
             MainApp.pesanBerhasil(labelPesan, baru.getNama() + " terdaftar dengan kode " + baru.getKode()
-                    + ". Jual visit atau membership agar bisa check-in.");
+                    + ".");
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
@@ -114,16 +120,16 @@ public class PelangganController {
 
             if (hasil == null) {
                 if (!MainApp.konfirmasi(terpilih.getNama() + " sudah check-in hari ini.\nCatat kunjungan tambahan tanpa biaya?")) {
-                    MainApp.pesanBerhasil(labelPesan, "Kunjungan tambahan dibatalkan. Tidak ada yang dicatat.");
+                    MainApp.pesanBerhasil(labelPesan, "Dibatalkan.");
                     return;
                 }
                 hasil = pelangganService.checkIn(terpilih.getKode(), true);
             }
 
             if (hasil.diizinkan()) {
-                MainApp.pesanBerhasil(labelPesan, "Check-in diizinkan untuk " + terpilih.getNama() + ".");
+                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " berhasil check-in.");
             } else {
-                MainApp.pesanGagal(labelPesan, "Check-in ditolak: " + hasil.getAlasan() + " Penolakan tetap tercatat di riwayat.");
+                MainApp.pesanGagal(labelPesan, "Check-in ditolak: " + hasil.getAlasan());
             }
             tampilkanDetail(terpilih);
         } catch (IllegalArgumentException e) {
@@ -136,15 +142,15 @@ public class PelangganController {
         try {
             PaketAkses paketHarian = aksesService.cariPaketHarian();
             if (paketHarian == null) {
-                MainApp.pesanGagal(labelPesan, "Paket harian belum tersedia. Tambahkan di layar Membership.");
+                MainApp.pesanGagal(labelPesan, "Paket harian belum tersedia.");
                 return;
             }
-            if (!MainApp.konfirmasi("Terima pembayaran LUNAS " + paketHarian.getHargaTeks() + " untuk "
-                    + paketHarian.getNama() + "?\nCheck-in pertama " + terpilih.getNama() + " langsung dicatat.")) {
+            if (!MainApp.konfirmasi("Terima pembayaran " + paketHarian.getHargaTeks() + " untuk "
+                    + paketHarian.getNama() + "?\n" + terpilih.getNama() + " langsung tercatat check-in.")) {
                 return;
             }
             PembayaranAkses pembayaran = pelangganService.beliVisit(terpilih.getKode());
-            MainApp.pesanBerhasil(labelPesan, "Visit dibayar dan check-in " + terpilih.getNama() + " tercatat.");
+            MainApp.pesanBerhasil(labelPesan, "Visit harian dibayar. " + terpilih.getNama() + " sudah check-in.");
             tampilkanDetail(terpilih);
             MainApp.tampilkanBukti(pembayaran);
         } catch (IllegalArgumentException e) {
@@ -177,10 +183,10 @@ public class PelangganController {
             Long id = terpilih.getId();
             if (terpilih.isDiarsipkan()) {
                 pelangganService.aktifkan(terpilih);
-                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " aktif kembali.");
+                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " aktif lagi.");
             } else {
                 pelangganService.arsipkan(terpilih);
-                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " diarsipkan. Riwayatnya tetap tersimpan.");
+                MainApp.pesanBerhasil(labelPesan, terpilih.getNama() + " diarsipkan.");
             }
             muatTabel();
             pilihDiTabel(id);
@@ -201,7 +207,7 @@ public class PelangganController {
             return;
         }
 
-        labelKodeDetail.setText(pelanggan.getKode() + " / " + pelanggan.getStatus().toUpperCase());
+        labelKodeDetail.setText(pelanggan.getKode() + " · " + pelanggan.getStatus());
         labelNamaDetail.setText(pelanggan.getNama());
         if (pelanggan.getKontak() == null) {
             labelKontakDetail.setText("Tanpa kontak");
@@ -211,7 +217,7 @@ public class PelangganController {
         fieldNama.setText(pelanggan.getNama());
         fieldKontak.setText(pelanggan.getKontak());
         if (pelanggan.isDiarsipkan()) {
-            tombolArsip.setText("Aktifkan kembali");
+            tombolArsip.setText("Aktifkan lagi");
         } else {
             tombolArsip.setText("Arsipkan");
         }
@@ -229,9 +235,8 @@ public class PelangganController {
         kotakAkses.getStyleClass().removeAll("akses-ada", "akses-tidak");
 
         if (pelanggan.isDiarsipkan()) {
-            labelStatusAkses.setText("PROFIL DIARSIPKAN");
-            labelDetailAkses.setText("Check-in akan ditolak. Aktifkan kembali profil di bagian Ubah Data.");
-            tombolCheckIn.setText("Catat check-in (akan ditolak)");
+            labelStatusAkses.setText("Profil diarsipkan");
+            labelDetailAkses.setText("Tidak bisa check-in atau membeli akses. Aktifkan lagi lewat tombol di bawah.");
             tombolVisit.setDisable(true);
             tombolMembership.setDisable(true);
             jadikanTombolUtama(null);
@@ -239,30 +244,28 @@ public class PelangganController {
         }
 
         PembayaranAkses akses = aksesService.cariAksesAktifHariIni(pelanggan);
+        boolean masihMember = aksesService.cariMembershipBelumBerakhir(pelanggan) != null;
+        tombolMembership.setDisable(masihMember);
 
         if (akses == null) {
             kotakAkses.getStyleClass().add("akses-tidak");
-            labelStatusAkses.setText("BELUM PUNYA AKSES");
-            labelDetailAkses.setText("Check-in akan ditolak. Jual visit harian atau membership dulu.");
-            tombolCheckIn.setText("Catat check-in (akan ditolak)");
+            labelStatusAkses.setText("Belum punya akses");
+            labelDetailAkses.setText("Jual visit harian atau membership dulu sebelum check-in.");
             tombolVisit.setDisable(false);
-            tombolMembership.setDisable(false);
             jadikanTombolUtama(tombolVisit);
             return;
         }
 
         kotakAkses.getStyleClass().add("akses-ada");
-        labelStatusAkses.setText("BOLEH MASUK");
+        labelStatusAkses.setText("Boleh masuk");
         String keterangan = akses.getNamaPaket() + ", berlaku " + akses.getPeriode() + ".";
         CheckIn hariIni = cariCheckInHariIni(riwayat);
         if (hariIni != null) {
-            keterangan = keterangan + " Sudah check-in hari ini pukul "
+            keterangan = keterangan + " Sudah check-in pukul "
                     + hariIni.getWaktu().format(DateTimeFormatter.ofPattern("HH:mm")) + ".";
         }
         labelDetailAkses.setText(keterangan);
-        tombolCheckIn.setText("Catat check-in");
         tombolVisit.setDisable(true);
-        tombolMembership.setDisable(false);
         jadikanTombolUtama(tombolCheckIn);
     }
 

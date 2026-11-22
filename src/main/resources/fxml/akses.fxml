@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.AksesController">
+    <left>
+        <fx:include source="navigasi.fxml" />
+    </left>
+    <center>
+        <VBox styleClass="isi-layar">
+            <VBox spacing="4">
+                <Label styleClass="judul" text="Membership" />
+                <Label styleClass="subjudul" text="Jual paket, lihat member aktif, dan atur daftar paket" />
+            </VBox>
+            <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
+
+            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab text="Jual membership">
+                        <HBox spacing="24">
+                            <VBox spacing="12" HBox.hgrow="ALWAYS">
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label styleClass="nomor-langkah" text="1" />
+                                    <Label styleClass="judul-langkah" text="Pilih pelanggan" />
+                                </HBox>
+                                <StackPane alignment="CENTER_LEFT">
+                                    <TextField fx:id="fieldCari" onKeyReleased="#cariPelanggan" promptText="Nama atau kode pelanggan" styleClass="kolom-cari" />
+                                    <Group mouseTransparent="true" StackPane.alignment="CENTER_LEFT">
+                                        <StackPane.margin><Insets left="12" /></StackPane.margin>
+                                        <SVGPath content="M4 11a7 7 0 1 0 14 0a7 7 0 1 0 -14 0M20.5 20.5L16 16" scaleX="0.75" scaleY="0.75" styleClass="ikon" />
+                                    </Group>
+                                </StackPane>
+                                <TableView fx:id="tabelPelanggan" onKeyReleased="#pilihPelanggan" onMouseClicked="#pilihPelanggan" VBox.vgrow="ALWAYS">
+                                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                    <placeholder><Label text="Tidak ada pelanggan yang cocok." /></placeholder>
+                                    <columns>
+                                        <TableColumn prefWidth="80" styleClass="kolom-mono" text="Kode">
+                                            <cellValueFactory><PropertyValueFactory property="kode" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="220" text="Nama">
+                                            <cellValueFactory><PropertyValueFactory property="nama" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="100" text="Profil">
+                                            <cellValueFactory><PropertyValueFactory property="status" /></cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+
+                            <VBox minWidth="360" prefWidth="400" styleClass="panel, panel-lega">
+                                <VBox spacing="12">
+                                    <HBox alignment="CENTER_LEFT" spacing="8">
+                                        <Label styleClass="nomor-langkah" text="2" />
+                                        <Label styleClass="judul-langkah" text="Pilih paket" />
+                                    </HBox>
+                                    <ComboBox fx:id="comboPaket" maxWidth="Infinity" onAction="#perbaruiRingkasan" promptText="Pilih paket membership" />
+                                </VBox>
+
+                                <VBox spacing="12">
+                                    <HBox alignment="CENTER_LEFT" spacing="8">
+                                        <Label styleClass="nomor-langkah" text="3" />
+                                        <Label styleClass="judul-langkah" text="Periksa lalu bayar" />
+                                    </HBox>
+                                    <VBox styleClass="kotak-ringkasan">
+                                        <Label fx:id="labelPelangganRingkas" styleClass="judul-langkah" />
+                                        <Label fx:id="labelPaketRingkas" styleClass="teks-redup" />
+                                        <Label fx:id="labelPeriodeRingkas" styleClass="teks-mono" />
+                                        <Label fx:id="labelCatatanRingkas" minHeight="-Infinity" styleClass="teks-meta" wrapText="true" />
+                                        <Region styleClass="garis-putus" />
+                                        <HBox alignment="BASELINE_LEFT">
+                                            <Label styleClass="teks-redup" text="Total" />
+                                            <Region HBox.hgrow="ALWAYS" />
+                                            <Label fx:id="labelHargaRingkas" styleClass="angka-besar" text="Rp 0" />
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                                <Button fx:id="tombolBayar" maxWidth="Infinity" onAction="#bayar" styleClass="tombol-transaksi, tombol-besar" text="Terima pembayaran" />
+
+                                <VBox spacing="8" VBox.vgrow="ALWAYS">
+                                    <Label styleClass="label-bagian" text="Riwayat pembayaran" />
+                                    <TableView fx:id="tabelRiwayat" VBox.vgrow="ALWAYS">
+                                        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                        <placeholder><Label text="Belum ada pembayaran." /></placeholder>
+                                        <columns>
+                                            <TableColumn prefWidth="45" styleClass="kolom-mono" text="No.">
+                                                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn prefWidth="110" text="Paket">
+                                                <cellValueFactory><PropertyValueFactory property="namaPaket" /></cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn prefWidth="185" styleClass="kolom-mono" text="Berlaku">
+                                                <cellValueFactory><PropertyValueFactory property="periode" /></cellValueFactory>
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                </VBox>
+                            </VBox>
+                        </HBox>
+                    </Tab>
+
+                    <Tab text="Membership aktif">
+                        <VBox spacing="16">
+                            <Label fx:id="labelJumlahMember" styleClass="teks-redup" />
+                            <TableView fx:id="tabelMembershipAktif" VBox.vgrow="ALWAYS">
+                                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                <placeholder><Label text="Belum ada member aktif." /></placeholder>
+                                <columns>
+                                    <TableColumn prefWidth="80" styleClass="kolom-mono" text="Kode">
+                                        <cellValueFactory><PropertyValueFactory property="kodePelanggan" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="200" text="Nama">
+                                        <cellValueFactory><PropertyValueFactory property="namaPelanggan" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="150" text="Paket">
+                                        <cellValueFactory><PropertyValueFactory property="namaPaket" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="190" styleClass="kolom-mono" text="Berlaku">
+                                        <cellValueFactory><PropertyValueFactory property="periode" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="200" text="Status membership">
+                                        <cellValueFactory><PropertyValueFactory property="statusMembership" /></cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+
+                    <Tab text="Kelola paket">
+                        <VBox spacing="16">
+                            <TableView fx:id="tabelPaket" onMouseClicked="#pilihPaket" VBox.vgrow="ALWAYS">
+                                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                <placeholder><Label text="Belum ada paket." /></placeholder>
+                                <columns>
+                                    <TableColumn prefWidth="240" text="Nama paket">
+                                        <cellValueFactory><PropertyValueFactory property="nama" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="130" text="Jenis">
+                                        <cellValueFactory><PropertyValueFactory property="jenis" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="150" styleClass="kolom-angka" text="Harga">
+                                        <cellValueFactory><PropertyValueFactory property="hargaTeks" /></cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="150" styleClass="kolom-mono" text="Durasi">
+                                        <cellValueFactory><PropertyValueFactory property="durasiTeks" /></cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label fx:id="labelPaketTerpilih" maxWidth="Infinity" styleClass="teks-redup" text="Pilih paket di tabel untuk mengarsipkan." HBox.hgrow="ALWAYS" />
+                                <Button fx:id="tombolArsipPaket" disable="true" minWidth="-Infinity" onAction="#arsipkanPaket" styleClass="tombol-bahaya" text="Arsipkan paket" />
+                            </HBox>
+                            <VBox styleClass="panel">
+                                <Label styleClass="label-bagian" text="Tambah paket membership" />
+                                <HBox spacing="8">
+                                    <TextField fx:id="fieldNamaPaket" promptText="Nama paket" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="fieldHargaPaket" prefWidth="180" promptText="Harga (Rp)" />
+                                    <TextField fx:id="fieldDurasiPaket" prefWidth="160" promptText="Durasi (bulan)" />
+                                    <Button minWidth="-Infinity" onAction="#tambahPaket" styleClass="tombol-utama" text="Tambah paket" />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
+    </center>
+</BorderPane>

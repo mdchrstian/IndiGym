@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,7 +12,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.PelangganController">
     <left>
@@ -18,15 +22,22 @@
     </left>
     <center>
         <VBox styleClass="isi-layar">
-            <Label styleClass="label-atas" text="INDIGYM / PELANGGAN" />
-            <Label styleClass="judul" text="Pelanggan dan check-in" />
-            <Label styleClass="teks-redup" text="Pilih pelanggan untuk melihat aksesnya hari ini, lalu catat check-in atau jual akses." />
+            <VBox spacing="4">
+                <Label styleClass="judul" text="Pelanggan" />
+                <Label styleClass="subjudul" text="Cari pelanggan untuk check-in atau menjual akses" />
+            </VBox>
             <Label fx:id="labelPesan" managed="false" minHeight="-Infinity" styleClass="pesan" visible="false" wrapText="true" />
 
-            <HBox spacing="16" VBox.vgrow="ALWAYS">
+            <HBox spacing="24" VBox.vgrow="ALWAYS">
                 <!-- Kiri: cari, daftar, dan pendaftaran pelanggan baru -->
-                <VBox spacing="10" HBox.hgrow="ALWAYS">
-                    <TextField fx:id="fieldCari" onKeyReleased="#cari" promptText="Ketik nama atau kode, contoh PLG1" styleClass="kolom-cari" />
+                <VBox spacing="16" HBox.hgrow="ALWAYS">
+                    <StackPane alignment="CENTER_LEFT">
+                        <TextField fx:id="fieldCari" onKeyReleased="#cari" promptText="Nama atau kode pelanggan" styleClass="kolom-cari" />
+                        <Group mouseTransparent="true" StackPane.alignment="CENTER_LEFT">
+                            <StackPane.margin><Insets left="12" /></StackPane.margin>
+                            <SVGPath content="M4 11a7 7 0 1 0 14 0a7 7 0 1 0 -14 0M20.5 20.5L16 16" scaleX="0.75" scaleY="0.75" styleClass="ikon" />
+                        </Group>
+                    </StackPane>
                     <TableView fx:id="tabelPelanggan" onKeyReleased="#pilihBaris" onMouseClicked="#pilihBaris" VBox.vgrow="ALWAYS">
                         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
                         <placeholder><Label text="Belum ada pelanggan. Daftarkan di bawah." /></placeholder>
@@ -40,68 +51,82 @@
                             <TableColumn prefWidth="140" styleClass="kolom-mono" text="Kontak">
                                 <cellValueFactory><PropertyValueFactory property="kontak" /></cellValueFactory>
                             </TableColumn>
-                            <TableColumn prefWidth="100" styleClass="kolom-mono" text="Profil">
+                            <TableColumn prefWidth="100" text="Profil">
                                 <cellValueFactory><PropertyValueFactory property="status" /></cellValueFactory>
                             </TableColumn>
                         </columns>
                     </TableView>
-                    <Region styleClass="garis-putus" />
-                    <Label styleClass="label-bagian" text="PELANGGAN BARU" />
-                    <HBox spacing="8">
-                        <TextField fx:id="fieldNamaBaru" onAction="#daftarBaru" promptText="Nama (wajib)" HBox.hgrow="ALWAYS" />
-                        <TextField fx:id="fieldKontakBaru" onAction="#daftarBaru" promptText="Kontak (boleh kosong)" />
-                        <Button minWidth="-Infinity" onAction="#daftarBaru" styleClass="tombol-utama" text="Daftarkan" />
-                    </HBox>
+                    <VBox styleClass="panel">
+                        <Label styleClass="label-bagian" text="Daftarkan pelanggan baru" />
+                        <HBox spacing="8">
+                            <TextField fx:id="fieldNamaBaru" onAction="#daftarBaru" promptText="Nama (wajib)" HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="fieldKontakBaru" onAction="#daftarBaru" prefWidth="200" promptText="Kontak (boleh kosong)" />
+                            <Button minWidth="-Infinity" onAction="#daftarBaru" styleClass="tombol-utama" text="Daftarkan" />
+                        </HBox>
+                    </VBox>
                 </VBox>
 
-                <!-- Kanan: detail pelanggan terpilih -->
-                <ScrollPane fitToWidth="true" minWidth="400" prefWidth="420">
-                    <VBox spacing="10" styleClass="panel">
-                        <VBox fx:id="kotakKosong" spacing="8">
-                            <Label styleClass="label-bagian" text="DETAIL PELANGGAN" />
-                            <Label minHeight="-Infinity" styleClass="teks-redup" text="Pilih pelanggan di tabel, atau daftarkan pelanggan baru di bawah tabel." wrapText="true" />
+                <!-- Kanan: detail pelanggan terpilih. Di dalam .panel-detail, tombol yang diberi
+                     "tombol-utama" oleh PelangganController tampil lime (tombol transaksi). -->
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" minWidth="340" prefWidth="400" styleClass="kartu-gulir">
+                    <VBox styleClass="panel-detail">
+                        <VBox fx:id="kotakKosong" alignment="CENTER" styleClass="kotak-kosong">
+                            <Label minHeight="-Infinity" styleClass="teks-redup" text="Pilih pelanggan di tabel untuk check-in atau menjual akses" textAlignment="CENTER" wrapText="true" />
                         </VBox>
 
-                        <VBox fx:id="kotakDetail" managed="false" spacing="10" visible="false">
-                            <Label fx:id="labelKodeDetail" styleClass="label-atas" />
-                            <Label fx:id="labelNamaDetail" styleClass="judul-sedang" wrapText="true" />
-                            <Label fx:id="labelKontakDetail" styleClass="teks-mono, teks-redup" />
-
-                            <VBox fx:id="kotakAkses" styleClass="kotak-akses">
-                                <Label styleClass="label-bagian" text="AKSES HARI INI" />
+                        <VBox fx:id="kotakDetail" managed="false" spacing="20" visible="false">
+                            <!-- Momen: kartu member. Kelas akses-ada / akses-tidak dipasang controller. -->
+                            <VBox fx:id="kotakAkses" styleClass="kartu-member">
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label styleClass="merek" text="indigym" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="labelKodeDetail" styleClass="tag" />
+                                </HBox>
+                                <VBox spacing="4">
+                                    <Label fx:id="labelNamaDetail" minHeight="-Infinity" styleClass="nama-member" wrapText="true" />
+                                    <Label fx:id="labelKontakDetail" styleClass="kontak-member" />
+                                </VBox>
                                 <Label fx:id="labelStatusAkses" styleClass="status-akses" />
-                                <Label fx:id="labelDetailAkses" minHeight="-Infinity" styleClass="teks-redup" wrapText="true" />
+                                <Label fx:id="labelDetailAkses" minHeight="-Infinity" styleClass="detail-member" wrapText="true" />
                             </VBox>
 
-                            <Button fx:id="tombolCheckIn" maxWidth="Infinity" onAction="#checkIn" styleClass="tombol-utama" text="Catat check-in" />
-                            <HBox spacing="8">
-                                <Button fx:id="tombolVisit" maxWidth="Infinity" onAction="#jualVisit" text="Jual visit harian" HBox.hgrow="ALWAYS" />
-                                <Button fx:id="tombolMembership" maxWidth="Infinity" onAction="#jualMembership" text="Jual membership" HBox.hgrow="ALWAYS" />
-                            </HBox>
+                            <VBox spacing="8">
+                                <Button fx:id="tombolCheckIn" maxWidth="Infinity" onAction="#checkIn" styleClass="tombol-besar" text="Check-in">
+                                    <graphic><StackPane styleClass="kotak-ikon"><Group><SVGPath content="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-4M10 17l5 -5l-5 -5M15 12H3" scaleX="0.67" scaleY="0.67" styleClass="ikon" /></Group></StackPane></graphic>
+                                </Button>
+                                <HBox spacing="8">
+                                    <Button fx:id="tombolVisit" maxWidth="Infinity" onAction="#jualVisit" text="Jual visit harian" HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="tombolMembership" maxWidth="Infinity" onAction="#jualMembership" text="Jual membership" HBox.hgrow="ALWAYS" />
+                                </HBox>
+                            </VBox>
 
-                            <Label styleClass="label-bagian" text="RIWAYAT KUNJUNGAN" />
-                            <TableView fx:id="tabelRiwayat" prefHeight="140">
-                                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
-                                <placeholder><Label text="Belum pernah datang." /></placeholder>
-                                <columns>
-                                    <TableColumn prefWidth="135" styleClass="kolom-mono" text="Waktu">
-                                        <cellValueFactory><PropertyValueFactory property="waktuTeks" /></cellValueFactory>
-                                    </TableColumn>
-                                    <TableColumn prefWidth="200" styleClass="kolom-mono" text="Hasil">
-                                        <cellValueFactory><PropertyValueFactory property="keterangan" /></cellValueFactory>
-                                    </TableColumn>
-                                </columns>
-                            </TableView>
+                            <VBox spacing="8">
+                                <Label styleClass="label-bagian" text="Riwayat kunjungan" />
+                                <TableView fx:id="tabelRiwayat" prefHeight="160">
+                                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" /></columnResizePolicy>
+                                    <placeholder><Label text="Belum pernah datang." /></placeholder>
+                                    <columns>
+                                        <TableColumn prefWidth="175" styleClass="kolom-mono" text="Waktu">
+                                            <cellValueFactory><PropertyValueFactory property="waktuTeks" /></cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Hasil">
+                                            <cellValueFactory><PropertyValueFactory property="keterangan" /></cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                            </VBox>
 
                             <Region styleClass="garis-putus" />
-                            <Label styleClass="label-bagian" text="UBAH DATA" />
-                            <TextField fx:id="fieldNama" promptText="Nama (wajib)" />
-                            <TextField fx:id="fieldKontak" promptText="Kontak (boleh kosong)" />
-                            <HBox spacing="8">
-                                <Button minWidth="-Infinity" onAction="#simpanPerubahan" text="Simpan perubahan" />
-                                <Region HBox.hgrow="ALWAYS" />
-                                <Button minWidth="-Infinity" fx:id="tombolArsip" onAction="#ubahStatusArsip" styleClass="tombol-bahaya" text="Arsipkan" />
-                            </HBox>
+                            <VBox spacing="12">
+                                <Label styleClass="label-bagian" text="Ubah data" />
+                                <TextField fx:id="fieldNama" promptText="Nama (wajib)" />
+                                <TextField fx:id="fieldKontak" promptText="Kontak (boleh kosong)" />
+                                <HBox spacing="8">
+                                    <Button minWidth="-Infinity" onAction="#simpanPerubahan" text="Simpan" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="tombolArsip" minWidth="-Infinity" onAction="#ubahStatusArsip" styleClass="tombol-bahaya" text="Arsipkan" />
+                                </HBox>
+                            </VBox>
                         </VBox>
                     </VBox>
                 </ScrollPane>
