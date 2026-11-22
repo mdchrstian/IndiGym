@@ -1,6 +1,10 @@
 package id.indigym.controller;
 
 import id.indigym.MainApp;
+import id.indigym.model.Rupiah;
+import id.indigym.service.AksesService;
+import id.indigym.service.PelangganService;
+import id.indigym.service.PenjualanService;
 import id.indigym.service.Sesi;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,6 +30,10 @@ public class DashboardController {
     @FXML
     private Label labelTotalPenjualan;
 
+    private PelangganService pelangganService = new PelangganService();
+    private AksesService aksesService = new AksesService();
+    private PenjualanService penjualanService = new PenjualanService();
+
     @FXML
     private void initialize() {
         labelSelamat.setText("Halo, " + Sesi.adminLogin.getNama());
@@ -34,7 +42,17 @@ public class DashboardController {
         DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale.of("id", "ID"));
         labelTanggal.setText(LocalDate.now().format(formatTanggal));
 
-        // TODO: panggil muatRingkasan() setelah service Pelanggan, Akses, dan Penjualan selesai.
+        muatRingkasan();
+    }
+
+    private void muatRingkasan() {
+        try {
+            labelJumlahCheckIn.setText(String.valueOf(pelangganService.jumlahCheckInHariIni()));
+            labelJumlahBerakses.setText(String.valueOf(aksesService.jumlahPelangganBeraksesHariIni()));
+            labelTotalPenjualan.setText(Rupiah.format(penjualanService.totalPenjualanHariIni()));
+        } catch (IllegalArgumentException e) {
+            MainApp.pesanGagal(labelPesan, e.getMessage());
+        }
     }
 
     @FXML
