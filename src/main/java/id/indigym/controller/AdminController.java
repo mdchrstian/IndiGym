@@ -13,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-// Layar Akun: akun saya (semua petugas) dan kelola akun Admin (hanya SuperAdmin).
 public class AdminController {
 
     @FXML
@@ -21,7 +20,6 @@ public class AdminController {
     @FXML
     private Label labelPesan;
 
-    // akun saya
     @FXML
     private Label labelNamaSaya;
     @FXML
@@ -33,7 +31,6 @@ public class AdminController {
     @FXML
     private PasswordField fieldPasswordUlang;
 
-    // kelola admin
     @FXML
     private VBox kotakKelola;
     @FXML
@@ -61,7 +58,6 @@ public class AdminController {
         labelNamaSaya.setText(saya.getNama());
         labelInfoSaya.setText(saya.getUsername() + " · " + saya.getRole());
 
-        // bagian kelola akun hanya untuk SuperAdmin (polimorfisme: bolehKelolaAdmin)
         boolean boleh = saya.bolehKelolaAdmin();
         kotakKelola.setVisible(boleh);
         kotakKelola.setManaged(boleh);
@@ -73,11 +69,8 @@ public class AdminController {
         }
     }
 
-    // ---------- Akun saya ----------
-
     @FXML
     private void gantiPasswordSendiri() {
-        // ulangan password dicek di sini karena ini hanya pengaman salah ketik di form
         if (!fieldPasswordBaru.getText().equals(fieldPasswordUlang.getText())) {
             MainApp.pesanGagal(labelPesan, "Password baru dan ulangannya tidak sama.");
             return;
@@ -93,9 +86,6 @@ public class AdminController {
         }
     }
 
-    // ---------- Kelola admin ----------
-
-    // Klik baris: tampilkan siapa yang dipilih, dan nyalakan tombol hanya untuk Admin biasa yang aktif.
     @FXML
     private void pilihAdmin() {
         Admin terpilih = tabelAdmin.getSelectionModel().getSelectedItem();
@@ -103,7 +93,7 @@ public class AdminController {
             return;
         }
         labelAdminTerpilih.setText("Dipilih: " + terpilih.getUsername() + " (" + terpilih.getStatus() + ")");
-        boolean bisaDiubah = !terpilih.bolehKelolaAdmin(); // akun SuperAdmin tidak diubah di sini
+        boolean bisaDiubah = !terpilih.bolehKelolaAdmin();
         tombolReset.setDisable(!bisaDiubah);
         tombolNonaktif.setDisable(!bisaDiubah || !terpilih.isAktif());
         if (!bisaDiubah) {
@@ -145,7 +135,6 @@ public class AdminController {
             MainApp.pesanGagal(labelPesan, "Pilih akun Admin di tabel dulu.");
             return;
         }
-        // minta konfirmasi karena belum ada tombol untuk mengaktifkan kembali
         if (!MainApp.konfirmasi("Nonaktifkan akun " + terpilih.getUsername() + "?\nAkun ini tidak bisa login lagi.")) {
             return;
         }
@@ -164,7 +153,6 @@ public class AdminController {
         } catch (IllegalArgumentException e) {
             MainApp.pesanGagal(labelPesan, e.getMessage());
         }
-        // tabel dimuat ulang = pilihan hilang, jadi label dan tombolnya dikembalikan
         labelAdminTerpilih.setText("Pilih akun di tabel untuk reset password atau menonaktifkan.");
         tombolReset.setDisable(true);
         tombolNonaktif.setDisable(true);

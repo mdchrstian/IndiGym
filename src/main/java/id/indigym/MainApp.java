@@ -19,11 +19,8 @@ public class MainApp extends Application {
 
     private static Stage jendelaUtama;
 
-    // Nama layar yang sedang tampil, dipakai navigasi samping untuk menandai menu aktif.
     private static String layarAktif = "";
 
-    // Pelanggan yang dibawa dari layar Pelanggan ke layar Membership (tombol "Jual membership"),
-    // dan kembali lagi setelah bayar. Layar tujuan membacanya sekali lalu mengosongkannya.
     public static Pelanggan pelangganDibawa = null;
 
     @Override
@@ -36,7 +33,6 @@ public class MainApp extends Application {
         jendelaUtama.show();
     }
 
-    // Mengganti isi jendela dengan layar FXML, contoh: gantiLayar("dashboard").
     public static void gantiLayar(String namaFxml) throws IOException {
 <<<<<<< HEAD
 =======
@@ -44,8 +40,6 @@ public class MainApp extends Application {
 >>>>>>> origin/main
         Parent isi = FXMLLoader.load(MainApp.class.getResource("/fxml/" + namaFxml + ".fxml"));
 
-        // Scene dibuat sekali saja; setelah itu cukup ganti isinya,
-        // supaya ukuran jendela yang sudah diubah pengguna tidak kembali ke awal.
         if (jendelaUtama.getScene() == null) {
             Scene scene = new Scene(isi, 1180, 720);
             scene.getStylesheets().add(MainApp.class.getResource("/css/application.css").toExternalForm());
@@ -59,7 +53,6 @@ public class MainApp extends Application {
         return layarAktif;
     }
 
-    // Pesan hijau di atas layar setelah aksi berhasil.
     public static void pesanBerhasil(Label label, String pesan) {
         label.getStyleClass().removeAll("pesan-berhasil", "pesan-gagal");
         label.getStyleClass().add("pesan-berhasil");
@@ -72,7 +65,6 @@ public class MainApp extends Application {
         label.setManaged(true);
     }
 
-    // Pesan merah di atas layar setelah aksi ditolak atau gagal.
     public static void pesanGagal(Label label, String pesan) {
         label.getStyleClass().removeAll("pesan-berhasil", "pesan-gagal");
         label.getStyleClass().add("pesan-gagal");
@@ -81,11 +73,10 @@ public class MainApp extends Application {
         label.setManaged(true);
     }
 
-    // Menampilkan bukti apa pun yang bisa dicetak (pembayaran akses maupun struk penjualan).
     public static void tampilkanBukti(Cetak bukti) {
         TextArea isi = new TextArea(bukti.cetakBukti());
         isi.setEditable(false);
-        isi.setPrefRowCount(18);   // cukup untuk struk beberapa produk tanpa digulir
+        isi.setPrefRowCount(18);
         isi.setPrefColumnCount(44);
 
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
@@ -96,7 +87,6 @@ public class MainApp extends Application {
         dialog.showAndWait();
     }
 
-    // Menampilkan pertanyaan OK/Batal. Mengembalikan true jika petugas menekan OK.
     public static boolean konfirmasi(String pertanyaan) {
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
         dialog.setTitle("Konfirmasi");
@@ -107,10 +97,9 @@ public class MainApp extends Application {
         return dialog.getResult() == ButtonType.OK;
     }
 
-    // Dialog punya jendela sendiri, jadi CSS aplikasi harus dipasang juga ke dialog.
     private static void pasangGaya(Dialog<?> dialog) {
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("/css/application.css").toExternalForm());
-        dialog.setGraphic(null); // ikon bawaan berbentuk bulat, tidak cocok dengan gaya tajam
+        dialog.setGraphic(null);
         dialog.getDialogPane().lookupButton(ButtonType.OK).getStyleClass().add("tombol-utama");
     }
 

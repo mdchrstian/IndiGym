@@ -10,10 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-// DAO = Data Access Object. Hanya berisi SQL untuk tabel akun_admin, tanpa aturan bisnis.
 public class AkunDAO {
 
-    // Mengembalikan Admin/SuperAdmin, atau null jika username tidak ada.
     public Admin cariByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM akun_admin WHERE username = ?";
         try (Connection koneksi = Database.getConnection();
@@ -73,7 +71,6 @@ public class AkunDAO {
         }
     }
 
-    // Mengubah satu baris tabel menjadi objek. Kolom role menentukan class mana yang dibuat.
     private Admin bacaBaris(ResultSet hasil) throws SQLException {
         Long id = hasil.getLong("id");
         String nama = hasil.getString("nama");

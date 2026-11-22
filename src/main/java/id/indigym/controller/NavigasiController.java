@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-// Navigasi samping yang sama di semua layar (disisipkan lewat fx:include).
 public class NavigasiController {
 
     @FXML
@@ -40,7 +39,6 @@ public class NavigasiController {
         tandaiMenuAktif();
     }
 
-    // Menu layar yang sedang dibuka diberi kelas "aktif" (garis aksen di kiri).
     private void tandaiMenuAktif() {
         String layar = MainApp.getLayarAktif();
         if (layar.equals("dashboard")) {
