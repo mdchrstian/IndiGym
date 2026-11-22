@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -8,26 +9,41 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
-<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.LoginController">
-    <VBox maxHeight="-Infinity" maxWidth="380" spacing="14">
-        <HBox>
-            <Label styleClass="logo" text="indigym" />
-            <Label styleClass="logo-kursor" text="_" />
-        </HBox>
-        <VBox spacing="10" styleClass="panel">
-            <Label styleClass="label-atas" text="PANEL PETUGAS" />
-            <Label styleClass="judul" text="Masuk" />
-            <Label styleClass="teks-redup" text="Gunakan akun petugas yang dibuat oleh SuperAdmin." wrapText="true" />
-            <Region minHeight="4" />
-            <Label styleClass="label-bagian" text="USERNAME" />
-            <TextField fx:id="fieldUsername" promptText="contoh: superadmin" styleClass="kolom-cari" />
-            <Label styleClass="label-bagian" text="PASSWORD" />
-            <PasswordField fx:id="fieldPassword" onAction="#masuk" />
-            <Region minHeight="4" />
-            <Button defaultButton="true" maxWidth="Infinity" onAction="#masuk" styleClass="tombol-utama" text="Masuk" />
-            <Label fx:id="labelError" managed="false" minHeight="-Infinity" styleClass="pesan-error" visible="false" wrapText="true" />
+<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.indigym.controller.LoginController">
+    <!-- Kiri: foto gym (lihat .foto-login di CSS), lapisan gelap, lalu nama aplikasi dan judul -->
+    <StackPane prefWidth="560" styleClass="foto-login" HBox.hgrow="ALWAYS">
+        <Region styleClass="lapisan-login" />
+        <VBox styleClass="panel-login-gambar">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Group styleClass="logo-ikon"><SVGPath content="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11" scaleX="0.85" scaleY="0.85" styleClass="ikon" /></Group>
+                <Label styleClass="logo" text="indigym" />
+            </HBox>
+            <Region VBox.vgrow="ALWAYS" />
+            <Label maxWidth="520" minHeight="-Infinity" styleClass="judul-login" text="Check-in, membership, dan kasir gym" wrapText="true" />
+            <Region minHeight="16" />
+            <Label maxWidth="420" minHeight="-Infinity" styleClass="sub-login" text="Dipakai petugas untuk mencatat kedatangan pelanggan, menjual paket dan produk, lalu melihat pendapatan" wrapText="true" />
         </VBox>
-        <Label styleClass="label-bagian" text="v1.0 / PROYEK AKHIR PBO" />
-    </VBox>
-</StackPane>
+    </StackPane>
+
+    <!-- Kanan: formulir masuk -->
+    <StackPane prefWidth="520" HBox.hgrow="ALWAYS">
+        <VBox maxHeight="-Infinity" maxWidth="360" spacing="20">
+            <VBox spacing="4">
+                <Label styleClass="judul" text="Masuk" />
+                <Label styleClass="subjudul" text="Pakai akun petugas dari Super Admin" />
+            </VBox>
+            <VBox spacing="8">
+                <Label styleClass="label-bagian" text="Username" />
+                <TextField fx:id="fieldUsername" />
+            </VBox>
+            <VBox spacing="8">
+                <Label styleClass="label-bagian" text="Password" />
+                <PasswordField fx:id="fieldPassword" onAction="#masuk" />
+            </VBox>
+            <Button defaultButton="true" maxWidth="Infinity" onAction="#masuk" styleClass="tombol-utama, tombol-besar" text="Masuk" />
+            <Label fx:id="labelError" managed="false" maxWidth="Infinity" minHeight="-Infinity" styleClass="pesan-error" visible="false" wrapText="true" />
+        </VBox>
+    </StackPane>
+</HBox>

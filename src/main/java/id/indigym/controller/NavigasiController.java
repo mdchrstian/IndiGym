@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
+// Navigasi samping yang sama di semua layar (disisipkan lewat fx:include).
 public class NavigasiController {
 
     @FXML
@@ -20,6 +21,8 @@ public class NavigasiController {
     private Button tombolAkses;
     @FXML
     private Button tombolPenjualan;
+    @FXML
+    private Button tombolLaporan;
     @FXML
     private Button tombolAkun;
     @FXML
@@ -33,10 +36,11 @@ public class NavigasiController {
     private void initialize() {
         Admin admin = Sesi.adminLogin;
         labelPetugas.setText(admin.getNama());
-        labelPeran.setText(admin.getRole() + " / " + admin.getUsername());
+        labelPeran.setText(admin.getUsername() + " · " + admin.getRole());
         tandaiMenuAktif();
     }
 
+    // Menu layar yang sedang dibuka diberi kelas "aktif" (garis aksen di kiri).
     private void tandaiMenuAktif() {
         String layar = MainApp.getLayarAktif();
         if (layar.equals("dashboard")) {
@@ -47,6 +51,8 @@ public class NavigasiController {
             tombolAkses.getStyleClass().add("aktif");
         } else if (layar.equals("penjualan")) {
             tombolPenjualan.getStyleClass().add("aktif");
+        } else if (layar.equals("laporan")) {
+            tombolLaporan.getStyleClass().add("aktif");
         } else if (layar.equals("admin")) {
             tombolAkun.getStyleClass().add("aktif");
         }
@@ -70,6 +76,11 @@ public class NavigasiController {
     @FXML
     private void bukaPenjualan() throws IOException {
         MainApp.gantiLayar("penjualan");
+    }
+
+    @FXML
+    private void bukaLaporan() throws IOException {
+        MainApp.gantiLayar("laporan");
     }
 
     @FXML

@@ -7,8 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+// Satu-satunya tempat yang tahu cara membuka koneksi ke MySQL.
 public class Database {
 
+    // Membaca config/db.properties lalu membuka koneksi baru.
     public static Connection getConnection() throws SQLException {
         Properties pengaturan = bacaPengaturan();
         String url = pengaturan.getProperty("db.url");

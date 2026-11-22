@@ -11,12 +11,14 @@ import id.indigym.service.AkunService;
 import id.indigym.service.Sesi;
 import org.junit.jupiter.api.Test;
 
+// Tes yang tidak butuh database.
 class AkunServiceTest {
 
     private AkunService akunService = new AkunService();
 
     @Test
     void hashPasswordSamaDenganDataAwal() {
+        // nilai ini sama dengan password_hash superadmin di 02_data_awal.sql
         assertEquals("240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
                 akunService.hashPassword("admin123"));
     }
