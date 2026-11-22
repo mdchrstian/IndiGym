@@ -40,7 +40,6 @@ public class Produk {
         return harga;
     }
 
-    // Teks harga untuk tabel, contoh "Rp 5.000".
     public String getHargaTeks() {
         return Rupiah.format(harga);
     }
