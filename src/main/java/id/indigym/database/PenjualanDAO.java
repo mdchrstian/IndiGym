@@ -192,6 +192,7 @@ public class PenjualanDAO {
         }
     }
 
+
     private void kurangiStok(Connection koneksi, DetailTransaksi detail) throws SQLException {
         String sql = "UPDATE produk SET stok = stok - ? WHERE id = ? AND stok >= ?";
         try (PreparedStatement perintah = koneksi.prepareStatement(sql)) {
@@ -248,7 +249,6 @@ public class PenjualanDAO {
     private Transaksi bacaTransaksi(Connection koneksi, ResultSet hasil) throws SQLException {
         Long id = hasil.getLong("id");
 
-        // pelanggan_id bernilai NULL untuk pembeli umum
         Pelanggan pelanggan = null;
         if (hasil.getObject("pelanggan_id") != null) {
             pelanggan = new Pelanggan(hasil.getLong("pelanggan_id"), hasil.getString("kode_pelanggan"),

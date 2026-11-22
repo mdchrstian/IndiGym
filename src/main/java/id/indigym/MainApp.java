@@ -38,7 +38,10 @@ public class MainApp extends Application {
 
     // Mengganti isi jendela dengan layar FXML, contoh: gantiLayar("dashboard").
     public static void gantiLayar(String namaFxml) throws IOException {
+<<<<<<< HEAD
+=======
         layarAktif = namaFxml; // diisi sebelum FXML dimuat agar navigasi bisa membacanya
+>>>>>>> origin/main
         Parent isi = FXMLLoader.load(MainApp.class.getResource("/fxml/" + namaFxml + ".fxml"));
 
         // Scene dibuat sekali saja; setelah itu cukup ganti isinya,
@@ -61,7 +64,11 @@ public class MainApp extends Application {
         label.getStyleClass().removeAll("pesan-berhasil", "pesan-gagal");
         label.getStyleClass().add("pesan-berhasil");
         label.setText(pesan);
+<<<<<<< HEAD
+        label.setVisible(true);
+=======
         label.setVisible(true);  // label pesan disembunyikan selama belum ada aksi
+>>>>>>> origin/main
         label.setManaged(true);
     }
 

@@ -2,8 +2,6 @@ package id.indigym.model;
 
 import java.math.BigDecimal;
 
-// Satu baris produk di dalam transaksi (atau di keranjang).
-// Nama dan harga disalin dari produk agar struk lama tidak berubah saat katalog diubah.
 public class DetailTransaksi {
 
     private Long produkId;
@@ -18,12 +16,10 @@ public class DetailTransaksi {
         this.jumlah = jumlah;
     }
 
-    // Subtotal = jumlah unit x harga satuan.
     public BigDecimal hitungSubtotal() {
         return hargaSatuan.multiply(BigDecimal.valueOf(jumlah));
     }
 
-    // Teks untuk kolom tabel dan struk, contoh "Rp 5.000".
     public String getHargaSatuanTeks() {
         return Rupiah.format(hargaSatuan);
     }

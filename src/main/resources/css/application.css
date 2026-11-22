@@ -40,6 +40,27 @@
 
 /* JavaFX memanggil JetBrains Mono dengan nama aslinya: "JetBrainsMonoNL NFM". */
 @font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url("../fonts/PlusJakartaSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    font-weight: bold;
+    src: url("../fonts/PlusJakartaSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Plus Jakarta Sans Medium";
+    src: url("../fonts/PlusJakartaSans-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Plus Jakarta Sans SemiBold";
+    src: url("../fonts/PlusJakartaSans-SemiBold.ttf");
+}
+
+@font-face {
     font-family: "JetBrainsMonoNL NFM";
     src: url("../fonts/JetBrainsMono-Regular.ttf");
 }
@@ -77,7 +98,10 @@
     warna-bahaya:       #b91c1c;
     warna-bahaya-latar: #fdeeee;
 
+<<<<<<< HEAD
+=======
     /* Memberi tahu tema bawaan JavaFX (Modena) bahwa latarnya terang. */
+>>>>>>> origin/main
     -fx-base: #f0f0ef;
     -fx-background: warna-latar;
     -fx-control-inner-background: warna-panel;
